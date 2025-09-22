@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\Karandash.Shared\Karandash.Shared.csproj" />
+      <ProjectReference Include="..\Karandash.Authentication.Core\Karandash.Authentication.Core.csproj" />
+    </ItemGroup>
+
 </Project>

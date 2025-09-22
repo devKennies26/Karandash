@@ -1,7 +1,16 @@
+using Karandash.Authentication.DataAccess;
+using Newtonsoft.Json;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDataAccessLayer(builder.Configuration);
 
 WebApplication app = builder.Build();
 
@@ -12,5 +21,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapControllers();
 
 app.Run();

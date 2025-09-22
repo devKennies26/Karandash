@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Shared\Karandash.Shared\Karandash.Shared.csproj"/>
+    </ItemGroup>
+
 </Project>
