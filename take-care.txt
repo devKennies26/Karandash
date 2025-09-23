@@ -1,0 +1,11 @@
+Comment'lər üçün qaydalar:
+* comment'lər ingilis-dilində olmalıdır
+* comment'lər balaca hərf ilə başlamalıdır və sonunda nöqtə və ya uyğunsuz başqa bir durğu işarəsi qoyulmamalıdır
+
+Proyekt'in ümumi strukturunda diqqət edilməsi gərəkən qaydalar:
+
+#Resource'lar üçün:
+* Error mesajlarının sonunda mütləq nida işarəsi əlavə olunmalıdır!
+
+#Exception'lar üçün:
+* Sistemdə custom, bilə-bilə atılan exception'ların hamısı IUserFriendlyException'dan törəməlidir və qeyd etməkdə fayda var ki, adından da göründüyü kimi bu exception mesajları son istifadəçiyə göstərilmək üçün mövcuddurlar. 

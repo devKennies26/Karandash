@@ -1,5 +1,6 @@
 using Karandash.Authentication.DataAccess;
 using Karandash.Shared.Filters.Language;
+using Karandash.Shared.Middlewares.Exception;
 using Karandash.Shared.Middlewares.Language;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
@@ -35,6 +36,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseMiddleware<LanguageMiddleware>();
+
+app.UseGlobalExceptionHandler();
 
 app.MapControllers();
 
