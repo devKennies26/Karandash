@@ -1,5 +1,5 @@
 using Karandash.Authentication.Core.Entities.Common;
-using Karandash.Shared.Enums;
+using Karandash.Shared.Enums.Auth;
 
 namespace Karandash.Authentication.Core.Entities;
 

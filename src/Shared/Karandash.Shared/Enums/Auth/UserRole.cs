@@ -1,4 +1,4 @@
-namespace Karandash.Shared.Enums;
+namespace Karandash.Shared.Enums.Auth;
 
 /* Xarici istifadəçi eyni zamanda sistemdəki birdən çox role'a sahib ola bilər, lakin bizə əsas role lazımdır və bunu ui'da bildirmək məcburiyyətindədir! */
 public enum UserRole : byte

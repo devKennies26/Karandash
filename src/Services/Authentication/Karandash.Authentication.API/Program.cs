@@ -1,4 +1,5 @@
 using Karandash.Authentication.DataAccess;
+using Karandash.Shared.Middlewares.Language;
 using Newtonsoft.Json;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<LanguageMiddleware>();
 
 app.MapControllers();
 
