@@ -27,4 +27,7 @@
     <data name="GreetingMessage" xml:space="preserve">
         <value>Merhaba, {0} {1}! Hoş geldiniz!</value>
     </data>
+    <data name="AnUnhandledException" xml:space="preserve">
+        <value>Beklenmeyen bir hata oluştu.</value>
+    </data>
 </root>

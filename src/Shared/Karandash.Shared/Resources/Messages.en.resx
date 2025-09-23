@@ -27,4 +27,7 @@
     <data name="GreetingMessage" xml:space="preserve">
         <value>Hello, {0} {1}! Welcome!</value>
     </data>
+    <data name="AnUnhandledException" xml:space="preserve">
+        <value>An unexpected error occurred.</value>
+    </data>
 </root>

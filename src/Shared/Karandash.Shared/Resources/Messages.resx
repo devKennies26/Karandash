@@ -27,4 +27,7 @@
     <data name="GreetingMessage" xml:space="preserve">
         <value />
     </data>
+    <data name="AnUnhandledException" xml:space="preserve">
+        <value />
+    </data>
 </root>

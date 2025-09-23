@@ -62,5 +62,11 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("GreetingMessage", resourceCulture);
             }
         }
+        
+        internal static string AnUnhandledException {
+            get {
+                return ResourceManager.GetString("AnUnhandledException", resourceCulture);
+            }
+        }
     }
 }
