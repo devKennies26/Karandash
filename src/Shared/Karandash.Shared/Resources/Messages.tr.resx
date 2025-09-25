@@ -30,4 +30,52 @@
     <data name="AnUnhandledException" xml:space="preserve">
         <value>Beklenmeyen bir hata oluştu.</value>
     </data>
+    <data name="TermsAndPolicyNotAccepted" xml:space="preserve">
+        <value>Kullanım şartlarını ve politikayı kabul etmediniz.</value>
+    </data>
+    <data name="EmailAlreadyExists" xml:space="preserve">
+        <value>Bu e-posta zaten sistemde mevcut.</value>
+    </data>
+    <data name="PasswordInvalid" xml:space="preserve">
+        <value>Parola en az 8 karakter uzunluğunda olmalı, bir büyük harf, bir rakam ve bir özel karakter içermelidir.</value>
+    </data>
+    <data name="UserRegistrationFailed" xml:space="preserve">
+        <value>Kullanıcı kaydı başarısız oldu.</value>
+    </data>
+    <data name="UserRegisteredSuccessfully" xml:space="preserve">
+        <value>Kullanıcı başarıyla kaydedildi.</value>
+    </data>
+    <data name="InvalidUserRole" xml:space="preserve">
+        <value>Geçersiz kullanıcı rolü.</value>
+    </data>
+    <data name="FieldRequired" xml:space="preserve">
+        <value>{0} alanı gereklidir.</value>
+    </data>
+    <data name="PasswordsDoNotMatch" xml:space="preserve">
+        <value>Şifreler eşleşmiyor.</value>
+    </data>
+    <data name="FieldMaxLength" xml:space="preserve">
+        <value>{0} en fazla {1} karakter olabilir.</value>
+    </data>
+    <data name="FieldMinLength" xml:space="preserve">
+        <value>{0} en az {1} karakter olmalıdır.</value>
+    </data>
+    <data name="InvalidEmailFormat" xml:space="preserve">
+        <value>Geçersiz email formatı.</value>
+    </data>
+    <data name="FieldName-Surname" xml:space="preserve">
+        <value>'Soyad'</value>
+    </data>
+    <data name="FieldName-Name" xml:space="preserve">
+        <value>'Ad'</value>
+    </data>
+    <data name="FieldName-Password" xml:space="preserve">
+        <value>'Şifre'</value>
+    </data>
+    <data name="FieldName-ConfirmPassword" xml:space="preserve">
+        <value>'Parol Onayı'</value>
+    </data>
+    <data name="FieldName-Email" xml:space="preserve">
+        <value>'Email'</value>
+    </data>
 </root>

@@ -30,4 +30,52 @@
     <data name="AnUnhandledException" xml:space="preserve">
         <value />
     </data>
+    <data name="TermsAndPolicyNotAccepted" xml:space="preserve">
+        <value />
+    </data>
+    <data name="EmailAlreadyExists" xml:space="preserve">
+        <value />
+    </data>
+    <data name="PasswordInvalid" xml:space="preserve">
+        <value />
+    </data>
+    <data name="UserRegisteredSuccessfully" xml:space="preserve">
+        <value />
+    </data>
+    <data name="UserRegistrationFailed" xml:space="preserve">
+        <value />
+    </data>
+    <data name="InvalidUserRole" xml:space="preserve">
+        <value />
+    </data>
+    <data name="PasswordsDoNotMatch" xml:space="preserve">
+        <value />
+    </data>
+    <data name="FieldRequired" xml:space="preserve">
+        <value />
+    </data>
+    <data name="FieldMaxLength" xml:space="preserve">
+        <value />
+    </data>
+    <data name="FieldMinLength" xml:space="preserve">
+        <value />
+    </data>
+    <data name="InvalidEmailFormat" xml:space="preserve">
+        <value />
+    </data>
+    <data name="FieldName-Name" xml:space="preserve">
+        <value />
+    </data>
+    <data name="FieldName-Surname" xml:space="preserve">
+        <value />
+    </data>
+    <data name="FieldName-Email" xml:space="preserve">
+        <value />
+    </data>
+    <data name="FieldName-Password" xml:space="preserve">
+        <value />
+    </data>
+    <data name="FieldName-ConfirmPassword" xml:space="preserve">
+        <value />
+    </data>
 </root>

@@ -68,5 +68,101 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("AnUnhandledException", resourceCulture);
             }
         }
+        
+        internal static string TermsAndPolicyNotAccepted {
+            get {
+                return ResourceManager.GetString("TermsAndPolicyNotAccepted", resourceCulture);
+            }
+        }
+        
+        internal static string EmailAlreadyExists {
+            get {
+                return ResourceManager.GetString("EmailAlreadyExists", resourceCulture);
+            }
+        }
+        
+        internal static string PasswordInvalid {
+            get {
+                return ResourceManager.GetString("PasswordInvalid", resourceCulture);
+            }
+        }
+        
+        internal static string UserRegistrationFailed {
+            get {
+                return ResourceManager.GetString("UserRegistrationFailed", resourceCulture);
+            }
+        }
+        
+        internal static string UserRegisteredSuccessfully {
+            get {
+                return ResourceManager.GetString("UserRegisteredSuccessfully", resourceCulture);
+            }
+        }
+        
+        internal static string InvalidUserRole {
+            get {
+                return ResourceManager.GetString("InvalidUserRole", resourceCulture);
+            }
+        }
+        
+        internal static string FieldRequired {
+            get {
+                return ResourceManager.GetString("FieldRequired", resourceCulture);
+            }
+        }
+        
+        internal static string PasswordsDoNotMatch {
+            get {
+                return ResourceManager.GetString("PasswordsDoNotMatch", resourceCulture);
+            }
+        }
+        
+        internal static string FieldMaxLength {
+            get {
+                return ResourceManager.GetString("FieldMaxLength", resourceCulture);
+            }
+        }
+        
+        internal static string FieldMinLength {
+            get {
+                return ResourceManager.GetString("FieldMinLength", resourceCulture);
+            }
+        }
+        
+        internal static string InvalidEmailFormat {
+            get {
+                return ResourceManager.GetString("InvalidEmailFormat", resourceCulture);
+            }
+        }
+        
+        internal static string FieldName_Surname {
+            get {
+                return ResourceManager.GetString("FieldName-Surname", resourceCulture);
+            }
+        }
+        
+        internal static string FieldName_Name {
+            get {
+                return ResourceManager.GetString("FieldName-Name", resourceCulture);
+            }
+        }
+        
+        internal static string FieldName_Password {
+            get {
+                return ResourceManager.GetString("FieldName-Password", resourceCulture);
+            }
+        }
+        
+        internal static string FieldName_ConfirmPassword {
+            get {
+                return ResourceManager.GetString("FieldName-ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        internal static string FieldName_Email {
+            get {
+                return ResourceManager.GetString("FieldName-Email", resourceCulture);
+            }
+        }
     }
 }

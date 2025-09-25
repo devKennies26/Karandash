@@ -30,4 +30,52 @@
     <data name="AnUnhandledException" xml:space="preserve">
         <value>An unexpected error occurred.</value>
     </data>
+    <data name="TermsAndPolicyNotAccepted" xml:space="preserve">
+        <value>You have not accepted the terms and policy.</value>
+    </data>
+    <data name="EmailAlreadyExists" xml:space="preserve">
+        <value>This email already exists in the system.</value>
+    </data>
+    <data name="PasswordInvalid" xml:space="preserve">
+        <value>Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character.</value>
+    </data>
+    <data name="UserRegistrationFailed" xml:space="preserve">
+        <value>User registration failed.</value>
+    </data>
+    <data name="UserRegisteredSuccessfully" xml:space="preserve">
+        <value>User registered successfully.</value>
+    </data>
+    <data name="InvalidUserRole" xml:space="preserve">
+        <value>Invalid user role.</value>
+    </data>
+    <data name="PasswordsDoNotMatch" xml:space="preserve">
+        <value>Passwords do not match.</value>
+    </data>
+    <data name="FieldRequired" xml:space="preserve">
+        <value>{0} is required.</value>
+    </data>
+    <data name="FieldMaxLength" xml:space="preserve">
+        <value>{0} cannot exceed {1} characters.</value>
+    </data>
+    <data name="FieldMinLength" xml:space="preserve">
+        <value>{0} must be at least {1} characters long.</value>
+    </data>
+    <data name="InvalidEmailFormat" xml:space="preserve">
+        <value>Invalid email format.</value>
+    </data>
+    <data name="FieldName-Name" xml:space="preserve">
+        <value>'Name'</value>
+    </data>
+    <data name="FieldName-Surname" xml:space="preserve">
+        <value>'Surname'</value>
+    </data>
+    <data name="FieldName-Email" xml:space="preserve">
+        <value>'Email'</value>
+    </data>
+    <data name="FieldName-Password" xml:space="preserve">
+        <value>'Password'</value>
+    </data>
+    <data name="FieldName-ConfirmPassword" xml:space="preserve">
+        <value>'Confirm Password'</value>
+    </data>
 </root>
