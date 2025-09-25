@@ -1,5 +1,10 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Karandash.Authentication.Business;
+using Karandash.Authentication.Business.DTOs.Register;
 using Karandash.Authentication.DataAccess;
 using Karandash.Shared.Filters.Language;
+using Karandash.Shared.Filters.Swagger;
 using Karandash.Shared.Middlewares.Exception;
 using Karandash.Shared.Middlewares.Language;
 using Microsoft.OpenApi.Models;
@@ -11,6 +16,10 @@ builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
+builder.Services.AddValidatorsFromAssemblyContaining<RegisterDto>()
+    .AddFluentValidationAutoValidation()
+    .AddFluentValidationClientsideAdapters();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -20,10 +29,12 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1"
     });
 
+    options.SchemaFilter<EnumSchemaFilter>();
     options.OperationFilter<AddLanguageHeaderParameter>();
 });
 
 builder.Services.AddDataAccessLayer(builder.Configuration);
+builder.Services.AddBusinessLayer();
 
 WebApplication app = builder.Build();
 

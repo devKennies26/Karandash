@@ -14,9 +14,6 @@
     <data name="AppName" xml:space="preserve">
         <value>Karandash</value>
     </data>
-    <data name="GeneralError" xml:space="preserve">
-        <value>Sistem xətası baş verdi!</value>
-    </data>
     <data name="GeneralMessageErrorOccured" xml:space="preserve">
         <value>Sistem xətası baş verdi!</value>
     </data>
@@ -25,5 +22,53 @@
     </data>
     <data name="AnUnhandledException" xml:space="preserve">
         <value>Gözlənilməz xəta baş verdi.</value>
+    </data>
+    <data name="TermsAndPolicyNotAccepted" xml:space="preserve">
+        <value>İstifadə şərtlərini və siyasəti qəbul etməmisiniz.</value>
+    </data>
+    <data name="EmailAlreadyExists" xml:space="preserve">
+        <value>Bu email artıq sistemdə mövcuddur.</value>
+    </data>
+    <data name="PasswordInvalid" xml:space="preserve">
+        <value>Şifrə üçün ən az 8 simvol, böyük hərf, rəqəm və simvol gərəklidir.</value>
+    </data>
+    <data name="UserRegisteredSuccessfully" xml:space="preserve">
+        <value>İstifadəçi uğurla qeydiyyatdan keçdi.</value>
+    </data>
+    <data name="UserRegistrationFailed" xml:space="preserve">
+        <value>İstifadəçinin qeydiyyatı uğursuz oldu.</value>
+    </data>
+    <data name="InvalidUserRole" xml:space="preserve">
+        <value>Yanlış istifadəçi rolu.</value>
+    </data>
+    <data name="PasswordsDoNotMatch" xml:space="preserve">
+        <value>Şifrələr üst-üstə düşmür.</value>
+    </data>
+    <data name="FieldRequired" xml:space="preserve">
+        <value>{0} daxil edilməlidir.</value>
+    </data>
+    <data name="FieldMaxLength" xml:space="preserve">
+        <value>{0} maksimum {1} simvol ola bilər.</value>
+    </data>
+    <data name="FieldMinLength" xml:space="preserve">
+        <value>{0} ən az {1} simvol olmalıdır.</value>
+    </data>
+    <data name="InvalidEmailFormat" xml:space="preserve">
+        <value>Email formatı düzgün deyil.</value>
+    </data>
+    <data name="FieldName-Name" xml:space="preserve">
+        <value>'Ad'</value>
+    </data>
+    <data name="FieldName-Surname" xml:space="preserve">
+        <value>'Soyad'</value>
+    </data>
+    <data name="FieldName-Email" xml:space="preserve">
+        <value>'Email'</value>
+    </data>
+    <data name="FieldName-Password" xml:space="preserve">
+        <value>'Parol'</value>
+    </data>
+    <data name="FieldName-ConfirmPassword" xml:space="preserve">
+        <value>'Təsdiq parolu'</value>
     </data>
 </root>

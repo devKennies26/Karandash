@@ -30,4 +30,52 @@
     <data name="AnUnhandledException" xml:space="preserve">
         <value>Произошла непредвиденная ошибка.</value>
     </data>
+    <data name="TermsAndPolicyNotAccepted" xml:space="preserve">
+        <value>Вы не приняли условия использования и политику.</value>
+    </data>
+    <data name="EmailAlreadyExists" xml:space="preserve">
+        <value>Этот email уже существует в системе.</value>
+    </data>
+    <data name="PasswordInvalid" xml:space="preserve">
+        <value>Пароль должен содержать минимум 8 символов, одну заглавную букву, одну цифру и один специальный символ.</value>
+    </data>
+    <data name="UserRegisteredSuccessfully" xml:space="preserve">
+        <value>Пользователь успешно зарегистрирован.</value>
+    </data>
+    <data name="UserRegistrationFailed" xml:space="preserve">
+        <value>Регистрация пользователя не удалась.</value>
+    </data>
+    <data name="InvalidUserRole" xml:space="preserve">
+        <value>Неверная роль пользователя.</value>
+    </data>
+    <data name="PasswordsDoNotMatch" xml:space="preserve">
+        <value>Пароли не совпадают.</value>
+    </data>
+    <data name="FieldRequired" xml:space="preserve">
+        <value>Требуется {0}.</value>
+    </data>
+    <data name="FieldMaxLength" xml:space="preserve">
+        <value>{0} не может превышать {1} символов.</value>
+    </data>
+    <data name="FieldMinLength" xml:space="preserve">
+        <value>{0} должен быть не менее {1} символов.</value>
+    </data>
+    <data name="InvalidEmailFormat" xml:space="preserve">
+        <value>Неверный формат email.</value>
+    </data>
+    <data name="FieldName-Name" xml:space="preserve">
+        <value>'Имя'</value>
+    </data>
+    <data name="FieldName-Surname" xml:space="preserve">
+        <value>'Фамилия'</value>
+    </data>
+    <data name="FieldName-Email" xml:space="preserve">
+        <value>'Эл. почта'</value>
+    </data>
+    <data name="FieldName-Password" xml:space="preserve">
+        <value>'Пароль'</value>
+    </data>
+    <data name="FieldName-ConfirmPassword" xml:space="preserve">
+        <value>'Подтверждение пароля'</value>
+    </data>
 </root>
