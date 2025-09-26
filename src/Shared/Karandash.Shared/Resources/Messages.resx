@@ -81,4 +81,7 @@
     <data name="EmailBelongsToDeletedUser" xml:space="preserve">
         <value />
     </data>
+    <data name="InvalidEmailOrPassword" xml:space="preserve">
+        <value />
+    </data>
 </root>

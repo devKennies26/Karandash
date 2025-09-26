@@ -4,6 +4,10 @@ Comment'lər üçün qaydalar:
 
 Proyekt'in ümumi strukturunda diqqət edilməsi gərəkən qaydalar:
 
+#NuGet paketləri üçün:
+* Bütün NuGet paketlər uyğun .NET versiyası ilə eyni olmalıdır (məsələn, .NET 8 istifadə olunursa bütün NuGet paketlər də .NET 8 uyğun olmalıdır)
+* Uyğun layer'lərdə sadəcə və sadəcə lazım olan NuGet paketlər istifadə olunmalıdır, digər lazım olan paketlər Shared layihəsində yerləşdirilməlidir. Çünki bütün layer'lər Shared layihəsinə istinad edir və bu yolla lazımsız NuGet paket yüklənməsinin qarşısı alınır.
+
 #Resource'lar üçün:
 * Error mesajlarının sonunda mütləq nida işarəsi əlavə olunmalıdır!
 

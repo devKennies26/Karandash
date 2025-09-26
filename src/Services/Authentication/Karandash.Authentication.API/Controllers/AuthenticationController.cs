@@ -1,3 +1,4 @@
+using Karandash.Authentication.Business.DTOs.Login;
 using Karandash.Authentication.Business.DTOs.Register;
 using Karandash.Authentication.Business.Services.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -45,5 +46,15 @@ public class AuthenticationController(AuthenticationService authenticationServic
         return !result
             ? StatusCode(StatusCodes.Status500InternalServerError, new { Message = message })
             : Ok(new { Message = message });
+    }
+
+    /// <summary>
+    /// Authenticates a user and returns a token.
+    /// </summary>
+    /// <param name="loginDto">Login credentials</param>
+    [HttpPost("[action]")]
+    public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+    {
+        return Ok(await _authenticationService.LoginAsync(loginDto));
     }
 }

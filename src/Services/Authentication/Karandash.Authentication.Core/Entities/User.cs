@@ -11,7 +11,9 @@ public class User : BaseEntity, ISoftDeletable
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public string Password { get; set; }
+
+    public string PasswordHash { get; set; }
+    public byte[] PasswordSalt { get; set; }
 
     public string Email { get; set; } /* Bu mail login zamanı istifadə olunacaq mail'dir və prioritet təşkil edir */
 

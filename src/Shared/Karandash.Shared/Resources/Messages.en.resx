@@ -81,4 +81,7 @@
     <data name="EmailBelongsToDeletedUser" xml:space="preserve">
         <value>This email was previously used, but the account has been deleted. Please use a different email or restore your old account.</value>
     </data>
+    <data name="InvalidEmailOrPassword" xml:space="preserve">
+        <value>The email or password you entered is incorrect. Please check your details and try again.</value>
+    </data>
 </root>

@@ -74,4 +74,7 @@
     <data name="EmailBelongsToDeletedUser" xml:space="preserve">
         <value>Bu email əvvəl istifadə olunub və hesab silinib. Zəhmət olmasa fərqli bir email seçin və ya köhnə hesabınızı bərpa edin.</value>
     </data>
+    <data name="InvalidEmailOrPassword" xml:space="preserve">
+        <value>E-poçt və ya şifrə düzgün deyil. Zəhmət olmasa, məlumatlarınızı yoxlayın və yenidən cəhd edin.</value>
+    </data>
 </root>

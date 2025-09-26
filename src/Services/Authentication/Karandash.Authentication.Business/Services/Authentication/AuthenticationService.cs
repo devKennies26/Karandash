@@ -1,4 +1,6 @@
+using Karandash.Authentication.Business.DTOs.Login;
 using Karandash.Authentication.Business.DTOs.Register;
+using Karandash.Authentication.Business.DTOs.Token;
 using Karandash.Authentication.Business.Exceptions;
 using Karandash.Authentication.Business.Services.Utils;
 using Karandash.Authentication.Core.Entities;
@@ -12,11 +14,13 @@ namespace Karandash.Authentication.Business.Services.Authentication;
 public class AuthenticationService(
     AuthenticationDbContext dbContext,
     PasswordHasher passwordHasher,
-    EmailService emailService)
+    EmailService emailService,
+    TokenHandler tokenHandler)
 {
     private readonly AuthenticationDbContext _dbContext = dbContext;
     private readonly PasswordHasher _passwordHasher = passwordHasher;
     private readonly EmailService _emailService = emailService;
+    private readonly TokenHandler _tokenHandler = tokenHandler;
 
     public async Task<(bool result, string message)> RegisterAsync(RegisterDto registerDto)
     {
@@ -26,14 +30,17 @@ public class AuthenticationService(
         await CheckEmailExistsAsync(registerDto.Email.Trim());
         ValidatePassword(registerDto.Password);
 
+        byte[] salt = _passwordHasher.GenerateSalt();
+
         User user = new User()
         {
             Id = Guid.NewGuid(),
             InsertedAt = DateTime.UtcNow,
             FirstName = registerDto.FirstName,
             LastName = registerDto.LastName,
-            Password = _passwordHasher.Hash(registerDto.Password),
             Email = registerDto.Email,
+            PasswordHash = _passwordHasher.Hash(registerDto.Password, salt),
+            PasswordSalt = salt,
             IsVerified = false,
             UserRole = registerDto.UserRole
         };
@@ -51,6 +58,33 @@ public class AuthenticationService(
         return result
             ? (true, MessageHelper.GetMessage("UserRegisteredSuccessfully"))
             : (false, MessageHelper.GetMessage("UserRegistrationFailed"));
+    }
+
+    public async Task<TokenResponseDto> LoginAsync(LoginDto loginDto)
+    {
+        User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email && !u.IsDeleted);
+        bool isValidUser =
+            user != null && _passwordHasher.Verify(loginDto.Password, user.PasswordHash, user.PasswordSalt);
+        if (!isValidUser)
+            throw new UserFriendlyBusinessException("InvalidEmailOrPassword");
+
+        string accessToken = _tokenHandler.GenerateAccessToken(user, expireMinutes: 1);
+        RefreshToken
+            refreshToken = _tokenHandler.GenerateRefreshToken(accessToken, minutes: 1440); // 1440 dəqiqə = 24 saat
+
+        user.RefreshToken = refreshToken.TokenValue;
+        user.RefreshTokenExpireDate = refreshToken.ExpiresAt;
+        await _dbContext.SaveChangesAsync();
+
+        return new TokenResponseDto()
+        {
+            UserId = user.Id.ToString(),
+            FullName = $"{user.FirstName} {user.LastName}",
+            RoleId = (byte)user.UserRole,
+            AccessToken = accessToken,
+            RefreshToken = refreshToken.TokenValue,
+            ExpiresDate = refreshToken.ExpiresAt
+        };
     }
 
     private async Task CheckEmailExistsAsync(string email)

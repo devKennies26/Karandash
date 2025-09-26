@@ -81,4 +81,7 @@
     <data name="EmailBelongsToDeletedUser" xml:space="preserve">
         <value>Bu e-posta daha önce kullanılmış ancak hesap silinmiştir. Lütfen farklı bir e-posta girin veya eski hesabınızı geri yükleyin.</value>
     </data>
+    <data name="InvalidEmailOrPassword" xml:space="preserve">
+        <value>Girdiğiniz e-posta veya şifre hatalı. Lütfen bilgilerinizi kontrol edip tekrar deneyin.</value>
+    </data>
 </root>

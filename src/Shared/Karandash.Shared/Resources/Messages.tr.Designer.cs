@@ -170,5 +170,11 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("EmailBelongsToDeletedUser", resourceCulture);
             }
         }
+        
+        internal static string InvalidEmailOrPassword {
+            get {
+                return ResourceManager.GetString("InvalidEmailOrPassword", resourceCulture);
+            }
+        }
     }
 }

@@ -18,6 +18,7 @@ public static class ServiceRegistration
         services.AddScoped<AuthenticationService>();
         services.AddScoped<EmailService>();
         services.AddScoped<EmailTemplate>();
+        services.AddScoped<TokenHandler>();
 
         return services;
     }

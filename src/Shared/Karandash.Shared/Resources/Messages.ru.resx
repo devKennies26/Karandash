@@ -81,4 +81,7 @@
     <data name="EmailBelongsToDeletedUser" xml:space="preserve">
         <value>Этот адрес электронной почты ранее использовался, но учетная запись была удалена. Пожалуйста, используйте другой адрес или восстановите старую учетную запись.</value>
     </data>
+    <data name="InvalidEmailOrPassword" xml:space="preserve">
+        <value>Адрес электронной почты или пароль введены неверно. Пожалуйста, проверьте данные и попробуйте снова.</value>
+    </data>
 </root>
