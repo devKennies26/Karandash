@@ -87,4 +87,10 @@
     <data name="AccountDeleted" xml:space="preserve">
         <value />
     </data>
+    <data name="InvalidRefreshToken" xml:space="preserve">
+        <value />
+    </data>
+    <data name="RefreshTokenExpired" xml:space="preserve">
+        <value />
+    </data>
 </root>

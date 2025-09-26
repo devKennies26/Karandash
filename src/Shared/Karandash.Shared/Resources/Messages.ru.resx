@@ -87,4 +87,10 @@
     <data name="AccountDeleted" xml:space="preserve">
         <value>Эта учетная запись была удалена. Чтобы продолжить, восстановите свой аккаунт.</value>
     </data>
+    <data name="InvalidRefreshToken" xml:space="preserve">
+        <value>Предоставлен недействительный refresh-токен.</value>
+    </data>
+    <data name="RefreshTokenExpired" xml:space="preserve">
+        <value>Срок действия refresh-токена истёк. Пожалуйста, войдите снова.</value>
+    </data>
 </root>

@@ -182,5 +182,17 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("AccountDeleted", resourceCulture);
             }
         }
+        
+        internal static string InvalidRefreshToken {
+            get {
+                return ResourceManager.GetString("InvalidRefreshToken", resourceCulture);
+            }
+        }
+        
+        internal static string RefreshTokenExpired {
+            get {
+                return ResourceManager.GetString("RefreshTokenExpired", resourceCulture);
+            }
+        }
     }
 }

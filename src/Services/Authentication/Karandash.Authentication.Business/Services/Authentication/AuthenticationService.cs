@@ -70,13 +70,14 @@ public class AuthenticationService(
             throw new UserFriendlyBusinessException("InvalidEmailOrPassword");
         if (user.IsDeleted)
             throw new UserFriendlyBusinessException("AccountDeleted");
-        
+
         if (!_passwordHasher.Verify(loginDto.Password, user.PasswordHash, user.PasswordSalt))
             throw new UserFriendlyBusinessException("InvalidEmailOrPassword");
-        
+
         string accessToken = _tokenHandler.GenerateAccessToken(user, expireMinutes: 60);
-        RefreshToken refreshToken = _tokenHandler.GenerateRefreshToken(accessToken, minutes: 10080); // 7 gün (tövsiyə olunur)
-        
+        RefreshToken
+            refreshToken = _tokenHandler.GenerateRefreshToken(accessToken, minutes: 10080); // 7 gün (tövsiyə olunur)
+
         user.RefreshToken = refreshToken.TokenValue;
         user.RefreshTokenExpireDate = refreshToken.ExpiresAt;
         await _dbContext.SaveChangesAsync();
@@ -89,6 +90,36 @@ public class AuthenticationService(
             AccessToken = accessToken,
             RefreshToken = refreshToken.TokenValue,
             ExpiresDate = refreshToken.ExpiresAt
+        };
+    }
+
+    public async Task<TokenResponseDto> LoginByRefreshTokenAsync(string refreshToken)
+    {
+        if (string.IsNullOrEmpty(refreshToken))
+            throw new UserFriendlyBusinessException("InvalidRefreshToken");
+
+        User user = await _dbContext.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken)
+                    ?? throw new UserFriendlyBusinessException("InvalidRefreshToken");
+
+        if (user.RefreshTokenExpireDate < DateTime.UtcNow)
+            throw new UserFriendlyBusinessException("RefreshTokenExpired");
+
+        string accessToken = _tokenHandler.GenerateAccessToken(user, expireMinutes: 60);
+        RefreshToken
+            newRefreshToken = _tokenHandler.GenerateRefreshToken(accessToken, minutes: 10080); // 7 gün (tövsiyə olunur)
+
+        user.RefreshToken = newRefreshToken.TokenValue;
+        user.RefreshTokenExpireDate = newRefreshToken.ExpiresAt;
+        await _dbContext.SaveChangesAsync();
+
+        return new TokenResponseDto()
+        {
+            UserId = user.Id.ToString(),
+            FullName = $"{user.FirstName} {user.LastName}",
+            RoleId = (byte)user.UserRole,
+            AccessToken = accessToken,
+            RefreshToken = newRefreshToken.TokenValue,
+            ExpiresDate = newRefreshToken.ExpiresAt
         };
     }
 

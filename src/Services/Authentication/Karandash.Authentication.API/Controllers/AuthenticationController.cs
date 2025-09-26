@@ -57,4 +57,14 @@ public class AuthenticationController(AuthenticationService authenticationServic
     {
         return Ok(await _authenticationService.LoginAsync(loginDto));
     }
+
+    /// <summary>
+    /// Generates a new access token using a valid refresh token.
+    /// </summary>
+    /// <param name="request">Refresh token request</param>
+    [HttpPost("[action]")]
+    public async Task<IActionResult> RefreshToken([FromBody] string refreshToken)
+    {
+        return Ok(await _authenticationService.LoginByRefreshTokenAsync(refreshToken));
+    }
 }
