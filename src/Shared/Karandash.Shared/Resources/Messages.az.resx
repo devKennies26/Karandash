@@ -27,7 +27,7 @@
         <value>İstifadə şərtlərini və siyasəti qəbul etməmisiniz.</value>
     </data>
     <data name="EmailAlreadyExists" xml:space="preserve">
-        <value>Bu email artıq sistemdə mövcuddur.</value>
+        <value>Bu email artıq aktiv hesab üçün istifadə olunur.</value>
     </data>
     <data name="PasswordInvalid" xml:space="preserve">
         <value>Şifrə üçün ən az 8 simvol, böyük hərf, rəqəm və simvol gərəklidir.</value>
@@ -70,5 +70,8 @@
     </data>
     <data name="FieldName-ConfirmPassword" xml:space="preserve">
         <value>'Təsdiq parolu'</value>
+    </data>
+    <data name="EmailBelongsToDeletedUser" xml:space="preserve">
+        <value>Bu email əvvəl istifadə olunub və hesab silinib. Zəhmət olmasa fərqli bir email seçin və ya köhnə hesabınızı bərpa edin.</value>
     </data>
 </root>

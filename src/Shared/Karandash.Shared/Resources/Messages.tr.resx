@@ -34,7 +34,7 @@
         <value>Kullanım şartlarını ve politikayı kabul etmediniz.</value>
     </data>
     <data name="EmailAlreadyExists" xml:space="preserve">
-        <value>Bu e-posta zaten sistemde mevcut.</value>
+        <value>Bu e-posta zaten aktif bir hesap tarafından kullanılmaktadır.</value>
     </data>
     <data name="PasswordInvalid" xml:space="preserve">
         <value>Parola en az 8 karakter uzunluğunda olmalı, bir büyük harf, bir rakam ve bir özel karakter içermelidir.</value>
@@ -77,5 +77,8 @@
     </data>
     <data name="FieldName-Email" xml:space="preserve">
         <value>'Email'</value>
+    </data>
+    <data name="EmailBelongsToDeletedUser" xml:space="preserve">
+        <value>Bu e-posta daha önce kullanılmış ancak hesap silinmiştir. Lütfen farklı bir e-posta girin veya eski hesabınızı geri yükleyin.</value>
     </data>
 </root>

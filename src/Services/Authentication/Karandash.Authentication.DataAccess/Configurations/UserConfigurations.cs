@@ -43,5 +43,8 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
         builder.Property(u => u.UserRole)
             .IsRequired()
             .HasConversion<byte>();
+
+        builder.Property(u => u.IsDeleted)
+            .HasDefaultValue(false);
     }
 }

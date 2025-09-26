@@ -34,7 +34,7 @@
         <value>Вы не приняли условия использования и политику.</value>
     </data>
     <data name="EmailAlreadyExists" xml:space="preserve">
-        <value>Этот email уже существует в системе.</value>
+        <value>Этот адрес электронной почты уже используется активной учетной записью.</value>
     </data>
     <data name="PasswordInvalid" xml:space="preserve">
         <value>Пароль должен содержать минимум 8 символов, одну заглавную букву, одну цифру и один специальный символ.</value>
@@ -77,5 +77,8 @@
     </data>
     <data name="FieldName-ConfirmPassword" xml:space="preserve">
         <value>'Подтверждение пароля'</value>
+    </data>
+    <data name="EmailBelongsToDeletedUser" xml:space="preserve">
+        <value>Этот адрес электронной почты ранее использовался, но учетная запись была удалена. Пожалуйста, используйте другой адрес или восстановите старую учетную запись.</value>
     </data>
 </root>

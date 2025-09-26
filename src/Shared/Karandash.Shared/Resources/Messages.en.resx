@@ -34,7 +34,7 @@
         <value>You have not accepted the terms and policy.</value>
     </data>
     <data name="EmailAlreadyExists" xml:space="preserve">
-        <value>This email already exists in the system.</value>
+        <value>This email is already in use by an active account.</value>
     </data>
     <data name="PasswordInvalid" xml:space="preserve">
         <value>Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character.</value>
@@ -77,5 +77,8 @@
     </data>
     <data name="FieldName-ConfirmPassword" xml:space="preserve">
         <value>'Confirm Password'</value>
+    </data>
+    <data name="EmailBelongsToDeletedUser" xml:space="preserve">
+        <value>This email was previously used, but the account has been deleted. Please use a different email or restore your old account.</value>
     </data>
 </root>

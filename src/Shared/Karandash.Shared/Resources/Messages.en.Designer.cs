@@ -164,5 +164,11 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("FieldName-ConfirmPassword", resourceCulture);
             }
         }
+        
+        internal static string EmailBelongsToDeletedUser {
+            get {
+                return ResourceManager.GetString("EmailBelongsToDeletedUser", resourceCulture);
+            }
+        }
     }
 }

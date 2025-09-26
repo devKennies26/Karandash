@@ -55,8 +55,18 @@ public class AuthenticationService(
 
     private async Task CheckEmailExistsAsync(string email)
     {
-        if (await _dbContext.Users.AnyAsync(u => u.Email == email))
-            throw new UserFriendlyBusinessException("EmailAlreadyExists");
+        User? existingUser = await _dbContext.Users
+            .IgnoreQueryFilters() /* NOTE: ola bilsin ki, soft delete işləmi üçün sistemdə sonraki zamanlarda query filter yazılsın, həmən səbəbdən onları ignore'a atırıq. */
+            .FirstOrDefaultAsync(u => u.Email == email);
+
+        if (existingUser is null)
+            return;
+
+        throw existingUser.IsDeleted switch
+        {
+            false => new UserFriendlyBusinessException("EmailAlreadyExists"),
+            true => new UserFriendlyBusinessException("EmailBelongsToDeletedUser")
+        };
     }
 
     private void ValidatePassword(string password)

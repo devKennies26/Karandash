@@ -78,4 +78,7 @@
     <data name="FieldName-ConfirmPassword" xml:space="preserve">
         <value />
     </data>
+    <data name="EmailBelongsToDeletedUser" xml:space="preserve">
+        <value />
+    </data>
 </root>
