@@ -176,5 +176,11 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("InvalidEmailOrPassword", resourceCulture);
             }
         }
+        
+        internal static string AccountDeleted {
+            get {
+                return ResourceManager.GetString("AccountDeleted", resourceCulture);
+            }
+        }
     }
 }

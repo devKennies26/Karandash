@@ -77,4 +77,7 @@
     <data name="InvalidEmailOrPassword" xml:space="preserve">
         <value>E-poçt və ya şifrə düzgün deyil. Zəhmət olmasa, məlumatlarınızı yoxlayın və yenidən cəhd edin.</value>
     </data>
+    <data name="AccountDeleted" xml:space="preserve">
+        <value>Bu hesab silinmişdir. Davam etmək üçün hesabınızı bərpa edin.</value>
+    </data>
 </root>

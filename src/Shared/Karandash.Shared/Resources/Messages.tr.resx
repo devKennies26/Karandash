@@ -84,4 +84,7 @@
     <data name="InvalidEmailOrPassword" xml:space="preserve">
         <value>Girdiğiniz e-posta veya şifre hatalı. Lütfen bilgilerinizi kontrol edip tekrar deneyin.</value>
     </data>
+    <data name="AccountDeleted" xml:space="preserve">
+        <value>Bu hesap silinmiştir. Devam etmek için lütfen hesabınızı geri yükleyin.</value>
+    </data>
 </root>

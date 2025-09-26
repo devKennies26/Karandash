@@ -84,4 +84,7 @@
     <data name="InvalidEmailOrPassword" xml:space="preserve">
         <value>The email or password you entered is incorrect. Please check your details and try again.</value>
     </data>
+    <data name="AccountDeleted" xml:space="preserve">
+        <value>This account has been deleted. Please restore your account to continue.</value>
+    </data>
 </root>

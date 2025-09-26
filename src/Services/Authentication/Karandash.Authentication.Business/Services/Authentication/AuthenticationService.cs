@@ -62,16 +62,21 @@ public class AuthenticationService(
 
     public async Task<TokenResponseDto> LoginAsync(LoginDto loginDto)
     {
-        User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email && !u.IsDeleted);
-        bool isValidUser =
-            user != null && _passwordHasher.Verify(loginDto.Password, user.PasswordHash, user.PasswordSalt);
-        if (!isValidUser)
+        User? user = await _dbContext.Users
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(u => u.Email == loginDto.Email);
+
+        if (user is null)
             throw new UserFriendlyBusinessException("InvalidEmailOrPassword");
-
+        if (user.IsDeleted)
+            throw new UserFriendlyBusinessException("AccountDeleted");
+        
+        if (!_passwordHasher.Verify(loginDto.Password, user.PasswordHash, user.PasswordSalt))
+            throw new UserFriendlyBusinessException("InvalidEmailOrPassword");
+        
         string accessToken = _tokenHandler.GenerateAccessToken(user, expireMinutes: 60);
-        RefreshToken
-            refreshToken = _tokenHandler.GenerateRefreshToken(accessToken, minutes: 1440); // 1440 dəqiqə = 24 saat
-
+        RefreshToken refreshToken = _tokenHandler.GenerateRefreshToken(accessToken, minutes: 10080); // 7 gün (tövsiyə olunur)
+        
         user.RefreshToken = refreshToken.TokenValue;
         user.RefreshTokenExpireDate = refreshToken.ExpiresAt;
         await _dbContext.SaveChangesAsync();

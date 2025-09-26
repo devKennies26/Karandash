@@ -84,4 +84,7 @@
     <data name="InvalidEmailOrPassword" xml:space="preserve">
         <value>Адрес электронной почты или пароль введены неверно. Пожалуйста, проверьте данные и попробуйте снова.</value>
     </data>
+    <data name="AccountDeleted" xml:space="preserve">
+        <value>Эта учетная запись была удалена. Чтобы продолжить, восстановите свой аккаунт.</value>
+    </data>
 </root>
