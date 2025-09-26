@@ -80,4 +80,10 @@
     <data name="AccountDeleted" xml:space="preserve">
         <value>Bu hesab silinmişdir. Davam etmək üçün hesabınızı bərpa edin.</value>
     </data>
+    <data name="InvalidRefreshToken" xml:space="preserve">
+        <value>InvalidRefreshToken</value>
+    </data>
+    <data name="RefreshTokenExpired" xml:space="preserve">
+        <value>Refresh token müddəti bitib. Zəhmət olmasa yenidən daxil olun.</value>
+    </data>
 </root>

@@ -87,4 +87,10 @@
     <data name="AccountDeleted" xml:space="preserve">
         <value>This account has been deleted. Please restore your account to continue.</value>
     </data>
+    <data name="InvalidRefreshToken" xml:space="preserve">
+        <value>Invalid refresh token provided.</value>
+    </data>
+    <data name="RefreshTokenExpired" xml:space="preserve">
+        <value>Refresh token has expired. Please log in again.</value>
+    </data>
 </root>
