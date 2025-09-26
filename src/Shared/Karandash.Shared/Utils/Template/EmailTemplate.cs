@@ -1,21 +1,53 @@
 using Karandash.Shared.DTOs;
+using Karandash.Shared.Enums.Language;
 using Microsoft.Extensions.Configuration;
 
 namespace Karandash.Shared.Utils.Template;
 
-public class EmailTemplate(IConfiguration configuration)
+public class EmailTemplate(IConfiguration configuration, ICurrentUser currentUser)
 {
     private readonly IConfiguration _configuration = configuration;
+    private readonly ICurrentUser _currentUser = currentUser;
 
-    /* TODO: Current User hissəsi yazıldıqdan sonra template user'in dilinə görə tərcümə olunmalıdır! Və təbii ki, formatı da düzənlənməlidir. */
     public EmailMessageDto RegisterCompleted(string fullName)
     {
-        string title = "Welcome to Karandash!";
-        string subject = "Your Registration is Complete!";
-        string greeting = $"Hello {fullName},";
-        string callToAction = "Click the button below to explore your account:";
-        string buttonText = "Get Started";
-        string followUs = "Follow us on social media for updates and news.";
+        LanguageCode lang = _currentUser.LanguageCode;
+
+        string title, subject, greeting, callToAction, buttonText, followUs, signature;
+
+        switch (lang)
+        {
+            case LanguageCode.En:
+                title = "Welcome to Karandash!";
+                subject = "Your Registration is Complete!";
+                greeting = $"Hello {fullName},";
+                callToAction = "Click the button below to explore your account:";
+                buttonText = "Get Started";
+                followUs = "Follow us on social media for updates and news.";
+                signature = "Best regards,<br/><b>The Karandash Team</b>";
+                break;
+
+            case LanguageCode.Ru:
+                title = "Добро пожаловать в Karandash!";
+                subject = "Ваша регистрация завершена!";
+                greeting = $"Здравствуйте, {fullName},";
+                callToAction = "Нажмите кнопку ниже, чтобы войти в ваш аккаунт:";
+                buttonText = "Начать";
+                followUs = "Подписывайтесь на нас в соцсетях для новостей и обновлений.";
+                signature = "С уважением,<br/><b>Команда Karandash</b>";
+                break;
+
+            case LanguageCode.Az:
+            default:
+                title = "Karandash-a xoş gəldiniz!";
+                subject = "Qeydiyyatınız tamamlandı!";
+                greeting = $"Salam {fullName},";
+                callToAction = "Aşağıdakı düyməyə klikləyərək hesabınızı araşdırın:";
+                buttonText = "Başla";
+                followUs = "Yeniliklər və xəbərlər üçün bizi sosial şəbəkələrdə izləyin.";
+                signature = "Hörmətlə,<br/><b>Karandash Komandası</b>";
+                break;
+        }
 
         string actionUrl = _configuration["Urls:RegisterCompleted"];
 
@@ -36,7 +68,7 @@ public class EmailTemplate(IConfiguration configuration)
                                 <td>
                                     <p style='font-size: 16px; color: #333;'>{greeting}</p>
                                     <p style='font-size: 16px; color: #333;'>
-                                        Thank you for registering with <b>Karandash</b>. We're excited to have you on board!
+                                        {subject}
                                     </p>
                                     <p style='font-size: 16px; color: #333;'>{callToAction}</p>
                                     <div style='text-align: center; margin: 30px 0;'>
@@ -50,8 +82,7 @@ public class EmailTemplate(IConfiguration configuration)
                                     <hr style='border: none; border-top: 1px solid #eee; margin: 30px 0;'/>
                                     <p style='font-size: 14px; color: #777;'>{followUs}</p>
                                     <p style='font-size: 14px; color: #777; margin-top: 20px;'>
-                                        Best regards,<br/>
-                                        <b>The Karandash Team</b>
+                                        {signature}
                                     </p>
                                 </td>
                             </tr>

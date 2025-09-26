@@ -8,6 +8,6 @@ public interface ICurrentUser
     public Guid? UserGuid { get; }
     public string? UserFullName { get; }
     public string? BaseUrl { get; }
-    public byte UserRole { get;}
+    public byte UserRole { get; }
     public LanguageCode LanguageCode { get; }
 }
