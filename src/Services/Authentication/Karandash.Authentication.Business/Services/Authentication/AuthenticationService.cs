@@ -68,7 +68,7 @@ public class AuthenticationService(
         if (!isValidUser)
             throw new UserFriendlyBusinessException("InvalidEmailOrPassword");
 
-        string accessToken = _tokenHandler.GenerateAccessToken(user, expireMinutes: 1);
+        string accessToken = _tokenHandler.GenerateAccessToken(user, expireMinutes: 60);
         RefreshToken
             refreshToken = _tokenHandler.GenerateRefreshToken(accessToken, minutes: 1440); // 1440 dəqiqə = 24 saat
 
