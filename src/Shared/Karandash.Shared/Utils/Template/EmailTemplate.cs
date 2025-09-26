@@ -37,6 +37,16 @@ public class EmailTemplate(IConfiguration configuration, ICurrentUser currentUse
                 signature = "С уважением,<br/><b>Команда Karandash</b>";
                 break;
 
+            case LanguageCode.Tr:
+                title = "Karandash’a Hoş Geldiniz!";
+                subject = "Kaydınız Tamamlandı!";
+                greeting = $"Merhaba {fullName},";
+                callToAction = "Hesabınızı keşfetmek için aşağıdaki butona tıklayın:";
+                buttonText = "Başla";
+                followUs = "Güncellemeler ve haberler için bizi sosyal medyada takip edin.";
+                signature = "Saygılarımızla,<br/><b>Karandash Ekibi</b>";
+                break;
+
             case LanguageCode.Az:
             default:
                 title = "Karandash-a xoş gəldiniz!";
