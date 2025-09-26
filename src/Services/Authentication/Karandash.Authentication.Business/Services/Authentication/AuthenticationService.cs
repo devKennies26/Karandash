@@ -9,10 +9,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Karandash.Authentication.Business.Services.Authentication;
 
-public class AuthenticationService(AuthenticationDbContext dbContext, PasswordHasher passwordHasher)
+public class AuthenticationService(
+    AuthenticationDbContext dbContext,
+    PasswordHasher passwordHasher,
+    EmailService emailService)
 {
     private readonly AuthenticationDbContext _dbContext = dbContext;
     private readonly PasswordHasher _passwordHasher = passwordHasher;
+    private readonly EmailService _emailService = emailService;
 
     public async Task<(bool result, string message)> RegisterAsync(RegisterDto registerDto)
     {
@@ -36,8 +40,15 @@ public class AuthenticationService(AuthenticationDbContext dbContext, PasswordHa
 
         await _dbContext.Users.AddAsync(user);
 
-        /* TODO: Aşağıdaki şərt yoxlamasına görə lazım olarsa, mail göndərmək və event göndərmək gərəkəcək! */
-        return await _dbContext.SaveChangesAsync() > 0
+        /* TODO: mail göndərildi, uyğun olan event'i göndərmək lazımdır (lazımlı məlumatlarla) */
+        bool result = await _dbContext.SaveChangesAsync() > 0;
+        if (result)
+            _emailService.SendRegistrationEmail(
+                user.Email,
+                $"{user.FirstName} {user.LastName}"
+            );
+
+        return result
             ? (true, MessageHelper.GetMessage("UserRegisteredSuccessfully"))
             : (false, MessageHelper.GetMessage("UserRegistrationFailed"));
     }

@@ -34,7 +34,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddDataAccessLayer(builder.Configuration);
-builder.Services.AddBusinessLayer();
+builder.Services.AddBusinessLayer(builder.Configuration);
 
 WebApplication app = builder.Build();
 
