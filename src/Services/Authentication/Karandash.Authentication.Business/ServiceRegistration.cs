@@ -1,6 +1,7 @@
 using Karandash.Authentication.Business.Services.Authentication;
 using Karandash.Authentication.Business.Services.Utils;
 using Karandash.Shared.DTOs;
+using Karandash.Shared.Utils;
 using Karandash.Shared.Utils.Methods;
 using Karandash.Shared.Utils.Template;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,8 @@ public static class ServiceRegistration
         services.AddScoped<EmailService>();
         services.AddScoped<EmailTemplate>();
         services.AddScoped<TokenHandler>();
+
+        services.AddScoped<ICurrentUser, CurrentUser>();
 
         return services;
     }
