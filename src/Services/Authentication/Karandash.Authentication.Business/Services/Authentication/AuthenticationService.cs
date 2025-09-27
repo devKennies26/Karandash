@@ -1,6 +1,6 @@
-using Karandash.Authentication.Business.DTOs.Login;
-using Karandash.Authentication.Business.DTOs.Register;
-using Karandash.Authentication.Business.DTOs.Token;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Karandash.Authentication.Business.DTOs.Auth;
 using Karandash.Authentication.Business.Exceptions;
 using Karandash.Authentication.Business.Services.Utils;
 using Karandash.Authentication.Core.Entities;
@@ -156,6 +156,36 @@ public class AuthenticationService(
         await _dbContext.SaveChangesAsync();
 
         _emailService.SendPasswordResetEmail(user.Email, $"{user.FirstName} {user.LastName}", token);
+    }
+
+    public async Task ConfirmPasswordResetAsync(PasswordResetDto passwordResetDto)
+    {
+        ValidatePassword(passwordResetDto.NewPassword);
+
+        JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+        var jwToken = handler.ReadJwtToken(passwordResetDto.Token);
+
+        string? email = jwToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+        User? user = await _dbContext.Users
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(u => u.Email == email);
+
+        if (user is null)
+            throw new UserFriendlyBusinessException("UserNotFoundForPasswordReset");
+        if (user.IsDeleted)
+            throw new UserFriendlyBusinessException("AccountDeleted");
+
+        PasswordToken? passwordToken = await _dbContext.PasswordTokens.FirstOrDefaultAsync(pt =>
+                                           pt.Value == passwordResetDto.Token && pt.UserId == user.Id &&
+                                           pt.ExpiresDate >= DateTime.UtcNow)
+                                       ?? throw new UserFriendlyBusinessException("InvalidPasswordToken");
+
+        byte[] salt = _passwordHasher.GenerateSalt();
+
+        user.PasswordHash = _passwordHasher.Hash(passwordResetDto.NewPassword, salt);
+        user.PasswordSalt = salt;
+        _dbContext.PasswordTokens.Remove(passwordToken);
+        await _dbContext.SaveChangesAsync();
     }
 
     private async Task CheckEmailExistsAsync(string email)

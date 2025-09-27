@@ -1,4 +1,4 @@
-namespace Karandash.Authentication.Business.DTOs.Token;
+namespace Karandash.Authentication.Business.DTOs.Auth;
 
 public class TokenResponseDto
 {

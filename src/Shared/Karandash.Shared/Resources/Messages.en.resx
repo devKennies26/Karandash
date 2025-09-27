@@ -99,4 +99,16 @@
     <data name="PasswordReset-EmailMessage" xml:space="preserve">
         <value>Request received. Please check your email for the password reset link.</value>
     </data>
+    <data name="FieldName-NewPassword" xml:space="preserve">
+        <value>'Новый пароль'</value>
+    </data>
+    <data name="FieldName-Token" xml:space="preserve">
+        <value>'Access Code'</value>
+    </data>
+    <data name="InvalidPasswordToken" xml:space="preserve">
+        <value>Password reset token not found or expired.</value>
+    </data>
+    <data name="PasswordReset-Success" xml:space="preserve">
+        <value>Password reset successfully.</value>
+    </data>
 </root>

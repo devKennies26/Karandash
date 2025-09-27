@@ -1,7 +1,7 @@
 using FluentValidation;
 using Karandash.Shared.Utils.Methods;
 
-namespace Karandash.Authentication.Business.DTOs.Login;
+namespace Karandash.Authentication.Business.DTOs.Auth;
 
 public class LoginDto
 {

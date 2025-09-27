@@ -99,4 +99,16 @@
     <data name="PasswordReset-EmailMessage" xml:space="preserve">
         <value>Запрос получен. Пожалуйста, проверьте свою электронную почту для сброса пароля.</value>
     </data>
+    <data name="FieldName-NewPassword" xml:space="preserve">
+        <value>'New Password'</value>
+    </data>
+    <data name="FieldName-Token" xml:space="preserve">
+        <value>'Код доступа'</value>
+    </data>
+    <data name="InvalidPasswordToken" xml:space="preserve">
+        <value>Токен для сброса пароля не найден или срок действия истек.</value>
+    </data>
+    <data name="PasswordReset-Success" xml:space="preserve">
+        <value>Пароль успешно изменен.</value>
+    </data>
 </root>

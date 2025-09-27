@@ -66,7 +66,7 @@
         <value>'Email'</value>
     </data>
     <data name="FieldName-Password" xml:space="preserve">
-        <value>'Parol'</value>
+        <value>'Şifrə'</value>
     </data>
     <data name="FieldName-ConfirmPassword" xml:space="preserve">
         <value>'Təsdiq parolu'</value>
@@ -81,7 +81,7 @@
         <value>Bu hesab silinmişdir. Davam etmək üçün hesabınızı bərpa edin.</value>
     </data>
     <data name="InvalidRefreshToken" xml:space="preserve">
-        <value>InvalidRefreshToken</value>
+        <value>Refresh token düzgün deyil.</value>
     </data>
     <data name="RefreshTokenExpired" xml:space="preserve">
         <value>Refresh token müddəti bitib. Zəhmət olmasa yenidən daxil olun.</value>
@@ -91,5 +91,17 @@
     </data>
     <data name="PasswordReset-EmailMessage" xml:space="preserve">
         <value>Sorğu qəbul edildi. Zəhmət olmasa şifrənizi sıfırlamaq üçün e-poçtunuzu yoxlayın.</value>
+    </data>
+    <data name="FieldName-NewPassword" xml:space="preserve">
+        <value>'Yeni Şifrə'</value>
+    </data>
+    <data name="FieldName-Token" xml:space="preserve">
+        <value>'İcazə kodu'</value>
+    </data>
+    <data name="InvalidPasswordToken" xml:space="preserve">
+        <value>Şifrə tokeni tapılmadı və ya müddəti bitmişdir.</value>
+    </data>
+    <data name="PasswordReset-Success" xml:space="preserve">
+        <value>Şifrə uğurla dəyişdirildi.</value>
     </data>
 </root>

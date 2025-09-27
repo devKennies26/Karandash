@@ -99,4 +99,16 @@
     <data name="PasswordReset-EmailMessage" xml:space="preserve">
         <value>İstek alındı. Lütfen şifre sıfırlama bağlantısı için e-postanızı kontrol edin.</value>
     </data>
+    <data name="FieldName-NewPassword" xml:space="preserve">
+        <value>'Yeni Parola'</value>
+    </data>
+    <data name="FieldName-Token" xml:space="preserve">
+        <value>'Erişim Kodu'</value>
+    </data>
+    <data name="InvalidPasswordToken" xml:space="preserve">
+        <value>Şifre sıfırlama jetonu bulunamadı veya süresi dolmuş.</value>
+    </data>
+    <data name="PasswordReset-Success" xml:space="preserve">
+        <value>Şifre başarıyla değiştirildi.</value>
+    </data>
 </root>
