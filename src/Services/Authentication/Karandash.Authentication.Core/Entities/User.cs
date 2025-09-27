@@ -5,7 +5,6 @@ namespace Karandash.Authentication.Core.Entities;
 
 /*
  * TODO: Login və register əməliyyatları üçün log tutmaq lazımdır
- * TODO: Şifrə bərpası əməliyyatı üçün lazımi field'lər əlavə olunmalıdır
  */
 public class User : BaseEntity, ISoftDeletable
 {

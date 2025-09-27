@@ -111,4 +111,7 @@
     <data name="PasswordReset-Success" xml:space="preserve">
         <value>Пароль успешно изменен.</value>
     </data>
+    <data name="UserRoleAreNotAllowed" xml:space="preserve">
+        <value>Выбранная роль пользователя недоступна для регистрации.</value>
+    </data>
 </root>

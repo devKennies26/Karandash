@@ -230,5 +230,11 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("PasswordReset-Success", resourceCulture);
             }
         }
+        
+        internal static string UserRoleAreNotAllowed {
+            get {
+                return ResourceManager.GetString("UserRoleAreNotAllowed", resourceCulture);
+            }
+        }
     }
 }
