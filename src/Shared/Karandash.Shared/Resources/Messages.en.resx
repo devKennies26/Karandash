@@ -111,4 +111,7 @@
     <data name="PasswordReset-Success" xml:space="preserve">
         <value>Password reset successfully.</value>
     </data>
+    <data name="UserRoleAreNotAllowed" xml:space="preserve">
+        <value>The selected user role is not allowed for registration.</value>
+    </data>
 </root>

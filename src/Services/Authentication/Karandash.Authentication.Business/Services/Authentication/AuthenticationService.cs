@@ -5,6 +5,7 @@ using Karandash.Authentication.Business.Exceptions;
 using Karandash.Authentication.Business.Services.Utils;
 using Karandash.Authentication.Core.Entities;
 using Karandash.Authentication.DataAccess.Contexts;
+using Karandash.Shared.Enums.Auth;
 using Karandash.Shared.Exceptions;
 using Karandash.Shared.Utils.Methods;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,9 @@ public class AuthenticationService(
     {
         if (!registerDto.HasAcceptedPolicy)
             throw new PolicyException();
+
+        if (registerDto.UserRole is < UserRole.Guest or > UserRole.Other)
+            return (false, MessageHelper.GetMessage("UserRoleAreNotAllowed"));
 
         await CheckEmailExistsAsync(registerDto.Email.Trim());
         ValidatePassword(registerDto.Password);

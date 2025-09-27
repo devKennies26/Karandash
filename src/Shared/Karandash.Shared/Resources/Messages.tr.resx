@@ -111,4 +111,7 @@
     <data name="PasswordReset-Success" xml:space="preserve">
         <value>Şifre başarıyla değiştirildi.</value>
     </data>
+    <data name="UserRoleAreNotAllowed" xml:space="preserve">
+        <value>Seçilen kullanıcı rolü kayıtta kullanılmasına izin verilmemektedir.</value>
+    </data>
 </root>
