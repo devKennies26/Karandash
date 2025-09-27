@@ -31,5 +31,7 @@ public class User : BaseEntity, ISoftDeletable
 
     public UserRole UserRole { get; set; }
 
+    public PasswordToken? PasswordToken { get; set; }
+
     public bool IsDeleted { get; set; }
 }
