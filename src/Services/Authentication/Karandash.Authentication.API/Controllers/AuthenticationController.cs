@@ -1,6 +1,7 @@
 using Karandash.Authentication.Business.DTOs.Login;
 using Karandash.Authentication.Business.DTOs.Register;
 using Karandash.Authentication.Business.Services.Authentication;
+using Karandash.Shared.Utils.Methods;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Karandash.Authentication.API.Controllers;
@@ -66,5 +67,19 @@ public class AuthenticationController(AuthenticationService authenticationServic
     public async Task<IActionResult> RefreshToken([FromBody] string refreshToken)
     {
         return Ok(await _authenticationService.LoginByRefreshTokenAsync(refreshToken));
+    }
+
+    /// <summary>
+    /// Generates and sends a password reset token to the specified email.
+    /// </summary>
+    /// <param name="email">The email of the user</param>
+    [HttpPost("[action]")]
+    public async Task<IActionResult> SendResetToken([FromQuery] string email)
+    {
+        await _authenticationService.GenerateAndSendPasswordResetTokenAsync(email);
+        return Accepted(new
+        {
+            Message = MessageHelper.GetMessage("PasswordReset-EmailMessage")
+        });
     }
 }

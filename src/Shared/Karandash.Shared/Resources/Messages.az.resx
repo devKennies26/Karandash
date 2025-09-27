@@ -86,4 +86,10 @@
     <data name="RefreshTokenExpired" xml:space="preserve">
         <value>Refresh token müddəti bitib. Zəhmət olmasa yenidən daxil olun.</value>
     </data>
+    <data name="UserNotFoundForPasswordReset" xml:space="preserve">
+        <value>Bu e-poçt ünvanı ilə qeydiyyatdan keçmiş istifadəçi tapılmadı.</value>
+    </data>
+    <data name="PasswordReset-EmailMessage" xml:space="preserve">
+        <value>Sorğu qəbul edildi. Zəhmət olmasa şifrənizi sıfırlamaq üçün e-poçtunuzu yoxlayın.</value>
+    </data>
 </root>

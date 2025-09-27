@@ -93,4 +93,10 @@
     <data name="RefreshTokenExpired" xml:space="preserve">
         <value>Refresh token has expired. Please log in again.</value>
     </data>
+    <data name="UserNotFoundForPasswordReset" xml:space="preserve">
+        <value>No user was found with this email address.</value>
+    </data>
+    <data name="PasswordReset-EmailMessage" xml:space="preserve">
+        <value>Request received. Please check your email for the password reset link.</value>
+    </data>
 </root>

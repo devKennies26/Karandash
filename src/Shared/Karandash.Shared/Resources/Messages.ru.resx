@@ -93,4 +93,10 @@
     <data name="RefreshTokenExpired" xml:space="preserve">
         <value>Срок действия refresh-токена истёк. Пожалуйста, войдите снова.</value>
     </data>
+    <data name="UserNotFoundForPasswordReset" xml:space="preserve">
+        <value>Пользователь с таким адресом электронной почты не найден.</value>
+    </data>
+    <data name="PasswordReset-EmailMessage" xml:space="preserve">
+        <value>Запрос получен. Пожалуйста, проверьте свою электронную почту для сброса пароля.</value>
+    </data>
 </root>

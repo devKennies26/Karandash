@@ -37,6 +37,28 @@ public class TokenHandler(IConfiguration configuration, PasswordHasher passwordH
         return token;
     }
 
+    public string GeneratePasswordResetToken(User user, DateTime expiresDate)
+    {
+        List<Claim> claims =
+        [
+            new Claim(ClaimTypes.Sid, user.Id.ToString()),
+            new Claim(ClaimTypes.Email, user.Email)
+        ];
+
+        SymmetricSecurityKey securityKey =
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SigningKey"]!));
+        SigningCredentials credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+        JwtSecurityToken token = new JwtSecurityToken(
+            _configuration["Jwt:Issuer"],
+            _configuration["Jwt:Audience"],
+            claims,
+            DateTime.UtcNow,
+            expires: expiresDate,
+            credentials);
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
     public RefreshToken GenerateRefreshToken(string accessToken, int minutes)
     {
         return new RefreshToken()

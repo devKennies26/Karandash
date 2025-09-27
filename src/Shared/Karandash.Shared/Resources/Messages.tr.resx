@@ -93,4 +93,10 @@
     <data name="RefreshTokenExpired" xml:space="preserve">
         <value>Yenileme tokeninin süresi dolmuş. Lütfen tekrar giriş yapın.</value>
     </data>
+    <data name="UserNotFoundForPasswordReset" xml:space="preserve">
+        <value>Bu e-posta adresi ile kayıtlı kullanıcı bulunamadı.</value>
+    </data>
+    <data name="PasswordReset-EmailMessage" xml:space="preserve">
+        <value>İstek alındı. Lütfen şifre sıfırlama bağlantısı için e-postanızı kontrol edin.</value>
+    </data>
 </root>

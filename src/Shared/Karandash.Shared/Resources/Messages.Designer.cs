@@ -194,5 +194,17 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("RefreshTokenExpired", resourceCulture);
             }
         }
+        
+        internal static string UserNotFoundForPasswordReset {
+            get {
+                return ResourceManager.GetString("UserNotFoundForPasswordReset", resourceCulture);
+            }
+        }
+        
+        internal static string PasswordReset_EmailMessage {
+            get {
+                return ResourceManager.GetString("PasswordReset-EmailMessage", resourceCulture);
+            }
+        }
     }
 }
