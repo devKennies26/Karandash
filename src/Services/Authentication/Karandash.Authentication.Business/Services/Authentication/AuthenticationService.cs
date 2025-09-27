@@ -123,6 +123,41 @@ public class AuthenticationService(
         };
     }
 
+    public async Task GenerateAndSendPasswordResetTokenAsync(string email)
+    {
+        User? user = await _dbContext.Users
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(u => u.Email == email);
+
+        if (user is null)
+            throw new UserFriendlyBusinessException("UserNotFoundForPasswordReset");
+        if (user.IsDeleted)
+            throw new UserFriendlyBusinessException("AccountDeleted");
+
+        PasswordToken? existsPasswordToken =
+            await _dbContext.PasswordTokens.FirstOrDefaultAsync(pt => pt.UserId == user.Id);
+        if (existsPasswordToken is not null)
+        {
+            _dbContext.PasswordTokens.Remove(existsPasswordToken);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        DateTime expiresDate = DateTime.UtcNow.AddHours(1);
+        string token = _tokenHandler.GeneratePasswordResetToken(user, expiresDate);
+        PasswordToken passwordToken = new PasswordToken()
+        {
+            Value = token,
+            UserId = user.Id,
+            InsertedAt = DateTime.UtcNow,
+            ExpiresDate = expiresDate
+        };
+
+        await _dbContext.PasswordTokens.AddAsync(passwordToken);
+        await _dbContext.SaveChangesAsync();
+
+        _emailService.SendPasswordResetEmail(user.Email, $"{user.FirstName} {user.LastName}", token);
+    }
+
     private async Task CheckEmailExistsAsync(string email)
     {
         User? existingUser = await _dbContext.Users

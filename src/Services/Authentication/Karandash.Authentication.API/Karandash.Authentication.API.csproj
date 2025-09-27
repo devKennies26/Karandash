@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Karandash.Authentication.Business\Karandash.Authentication.Business.csproj" />
+        <ProjectReference Include="..\Karandash.Authentication.Business\Karandash.Authentication.Business.csproj"/>
         <ProjectReference Include="..\Karandash.Authentication.DataAccess\Karandash.Authentication.DataAccess.csproj"/>
     </ItemGroup>
 

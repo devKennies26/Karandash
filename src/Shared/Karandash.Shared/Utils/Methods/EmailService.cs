@@ -13,13 +13,18 @@ public class EmailService(IOptions<SmtpSettings> smtpSettings, EmailTemplate ema
 
     public void SendRegistrationEmail(string toEmail, string fullName)
     {
-        /* TODO: current-user hissəsi yazılmalıdır və uyğun olaraq email'lər üçüm template hazırlamalıyıq. Ondan sonra bunları test edə bilərik! */
         EmailMessageDto emailMessage = _emailTemplate.RegisterCompleted(fullName);
         SendEmail(toEmail, new EmailMessageDto()
         {
             Subject = emailMessage.Subject,
             Content = emailMessage.Content
         });
+    }
+
+    public void SendPasswordResetEmail(string toEmail, string fullName, string token)
+    {
+        EmailMessageDto emailMessage = _emailTemplate.PasswordReset(fullName, token);
+        SendEmail(toEmail, emailMessage);
     }
 
     private void SendEmail(string toEmail, EmailMessageDto emailMessage)
