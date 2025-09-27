@@ -206,5 +206,29 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("PasswordReset-EmailMessage", resourceCulture);
             }
         }
+        
+        internal static string FieldName_NewPassword {
+            get {
+                return ResourceManager.GetString("FieldName-NewPassword", resourceCulture);
+            }
+        }
+        
+        internal static string FieldName_Token {
+            get {
+                return ResourceManager.GetString("FieldName-Token", resourceCulture);
+            }
+        }
+        
+        internal static string InvalidPasswordToken {
+            get {
+                return ResourceManager.GetString("InvalidPasswordToken", resourceCulture);
+            }
+        }
+        
+        internal static string PasswordReset_Success {
+            get {
+                return ResourceManager.GetString("PasswordReset-Success", resourceCulture);
+            }
+        }
     }
 }

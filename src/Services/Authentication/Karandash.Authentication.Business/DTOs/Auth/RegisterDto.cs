@@ -2,7 +2,7 @@ using FluentValidation;
 using Karandash.Shared.Enums.Auth;
 using Karandash.Shared.Utils.Methods;
 
-namespace Karandash.Authentication.Business.DTOs.Register;
+namespace Karandash.Authentication.Business.DTOs.Auth;
 
 public class RegisterDto
 {

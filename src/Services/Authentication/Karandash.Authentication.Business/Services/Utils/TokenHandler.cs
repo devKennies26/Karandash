@@ -1,7 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Karandash.Authentication.Business.DTOs.Token;
+using Karandash.Authentication.Business.DTOs.Auth;
 using Karandash.Authentication.Core.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

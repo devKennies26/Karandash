@@ -99,4 +99,16 @@
     <data name="PasswordReset-EmailMessage" xml:space="preserve">
         <value />
     </data>
+    <data name="FieldName-NewPassword" xml:space="preserve">
+        <value />
+    </data>
+    <data name="FieldName-Token" xml:space="preserve">
+        <value />
+    </data>
+    <data name="InvalidPasswordToken" xml:space="preserve">
+        <value />
+    </data>
+    <data name="PasswordReset-Success" xml:space="preserve">
+        <value />
+    </data>
 </root>

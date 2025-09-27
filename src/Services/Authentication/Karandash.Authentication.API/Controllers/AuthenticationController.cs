@@ -1,5 +1,4 @@
-using Karandash.Authentication.Business.DTOs.Login;
-using Karandash.Authentication.Business.DTOs.Register;
+using Karandash.Authentication.Business.DTOs.Auth;
 using Karandash.Authentication.Business.Services.Authentication;
 using Karandash.Shared.Utils.Methods;
 using Microsoft.AspNetCore.Mvc;
@@ -80,6 +79,20 @@ public class AuthenticationController(AuthenticationService authenticationServic
         return Accepted(new
         {
             Message = MessageHelper.GetMessage("PasswordReset-EmailMessage")
+        });
+    }
+
+    /// <summary>
+    /// Confirms password reset using the token sent to email.
+    /// </summary>
+    /// <param name="passwordResetDto">Password reset data including token and new password</param>
+    [HttpPost("[action]")]
+    public async Task<IActionResult> ConfirmPasswordReset([FromBody] PasswordResetDto passwordResetDto)
+    {
+        await _authenticationService.ConfirmPasswordResetAsync(passwordResetDto);
+        return Ok(new
+        {
+            Message = MessageHelper.GetMessage("PasswordReset-Success")
         });
     }
 }

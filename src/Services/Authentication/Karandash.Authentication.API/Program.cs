@@ -1,7 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Karandash.Authentication.Business;
-using Karandash.Authentication.Business.DTOs.Register;
+using Karandash.Authentication.Business.DTOs.Auth;
 using Karandash.Authentication.DataAccess;
 using Karandash.Shared;
 using Karandash.Shared.Middlewares.Exception;
