@@ -23,12 +23,14 @@ public class AuthenticationService(
     private readonly EmailService _emailService = emailService;
     private readonly TokenHandler _tokenHandler = tokenHandler;
 
-    public async Task<(bool result, string message)> RegisterAsync(RegisterDto registerDto)
+    public async Task<(bool result, string message)> RegisterAsync(RegisterDto registerDto,
+        bool isSystemSideRole =
+            false) /* NOTE: Məntiq olaraq isAdminSideRole dəyəri burada default olacaq, yəni false ilə işləməlidir. Test mərhələsində ehtiyac duyulan dəyərdir, sonraki zamanlarda bu dəyər ignore edilə bilinər. */
     {
         if (!registerDto.HasAcceptedPolicy)
             throw new PolicyException();
 
-        if (registerDto.UserRole is < UserRole.Guest or > UserRole.Other)
+        if (!isSystemSideRole && (registerDto.UserRole is < UserRole.Guest or > UserRole.Other))
             return (false, MessageHelper.GetMessage("UserRoleAreNotAllowed"));
 
         await CheckEmailExistsAsync(registerDto.Email.Trim());
@@ -45,7 +47,7 @@ public class AuthenticationService(
             Email = registerDto.Email,
             PasswordHash = _passwordHasher.Hash(registerDto.Password, salt),
             PasswordSalt = salt,
-            IsVerified = false,
+            IsVerified = isSystemSideRole,
             UserRole = registerDto.UserRole
         };
 
