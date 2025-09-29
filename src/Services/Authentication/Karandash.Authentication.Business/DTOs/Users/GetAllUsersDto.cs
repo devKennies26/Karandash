@@ -14,4 +14,6 @@ public class GetAllUsersDto
     public bool IsVerified { get; set; }
 
     public UserRole UserRole { get; set; }
+
+    public bool IsDeleted { get; set; }
 }

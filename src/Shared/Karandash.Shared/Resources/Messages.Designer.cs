@@ -248,5 +248,17 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("InvalidPageSize", resourceCulture);
             }
         }
+        
+        internal static string OldPasswordIncorrect {
+            get {
+                return ResourceManager.GetString("OldPasswordIncorrect", resourceCulture);
+            }
+        }
+        
+        internal static string NewPasswordCannotBeSameAsOld {
+            get {
+                return ResourceManager.GetString("NewPasswordCannotBeSameAsOld", resourceCulture);
+            }
+        }
     }
 }

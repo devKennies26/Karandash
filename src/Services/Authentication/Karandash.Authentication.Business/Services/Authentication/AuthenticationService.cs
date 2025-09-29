@@ -210,7 +210,7 @@ public class AuthenticationService(
         };
     }
 
-    private void ValidatePassword(string password)
+    public void ValidatePassword(string password)
     {
         if (password.Length < 8 ||
             password.Length > 64 ||

@@ -120,4 +120,10 @@
     <data name="InvalidPageNumber" xml:space="preserve">
         <value>Sayfa numarası 1’den küçük olamaz.</value>
     </data>
+    <data name="OldPasswordIncorrect" xml:space="preserve">
+        <value>Eski parola yanlış.</value>
+    </data>
+    <data name="NewPasswordCannotBeSameAsOld" xml:space="preserve">
+        <value>Yeni parola eski parola ile aynı olamaz.</value>
+    </data>
 </root>
