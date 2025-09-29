@@ -120,4 +120,10 @@
     <data name="InvalidPageSize" xml:space="preserve">
         <value>Page size must be between 1 and 50.</value>
     </data>
+    <data name="OldPasswordIncorrect" xml:space="preserve">
+        <value>The old password is incorrect.</value>
+    </data>
+    <data name="NewPasswordCannotBeSameAsOld" xml:space="preserve">
+        <value>The new password cannot be the same as the old password.</value>
+    </data>
 </root>

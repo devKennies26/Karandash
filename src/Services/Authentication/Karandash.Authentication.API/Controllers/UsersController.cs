@@ -1,8 +1,10 @@
+using Karandash.Authentication.Business.DTOs.Auth;
 using Karandash.Authentication.Business.DTOs.Users;
 using Karandash.Authentication.Business.Services.Users;
 using Karandash.Shared.Attributes;
 using Karandash.Shared.Enums.Auth;
 using Karandash.Shared.Filters.Pagination;
+using Karandash.Shared.Utils.Methods;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,5 +32,16 @@ public class UsersController(UserService userService) : ControllerBase
     {
         PagedResponse<GetAllUsersDto> result = await _userService.GetAllUsersAsync(filter);
         return Ok(result);
+    }
+
+    [AuthorizeRole]
+    [HttpPost("[action]")]
+    public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordDto updatePasswordDto)
+    {
+        await _userService.UpdatePasswordAsync(updatePasswordDto);
+        return Ok(new
+        {
+            Message = MessageHelper.GetMessage("PasswordReset-Success")
+        });
     }
 }

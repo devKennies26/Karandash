@@ -113,4 +113,10 @@
     <data name="InvalidPageSize" xml:space="preserve">
         <value>Səhifədəki element sayı 1–50 intervalında olmalıdır.</value>
     </data>
+    <data name="OldPasswordIncorrect" xml:space="preserve">
+        <value>Köhnə parol səhvdir.</value>
+    </data>
+    <data name="NewPasswordCannotBeSameAsOld" xml:space="preserve">
+        <value>Yeni parol köhnə parolla eyni ola bilməz.</value>
+    </data>
 </root>

@@ -10,6 +10,8 @@ public class GetAllUsersFilterDto : IPaginationFilter
     public int PageNumber { get; set; } = 1;
     public int PageSize { get; set; } = 10;
 
+    public bool IncludeDeleted { get; set; } = true;
+
     public UserRole? UserRole { get; set; }
 
     public bool? IsVerified { get; set; }
