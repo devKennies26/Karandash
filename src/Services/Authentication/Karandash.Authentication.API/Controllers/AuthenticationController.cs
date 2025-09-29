@@ -48,6 +48,20 @@ public class AuthenticationController(AuthenticationService authenticationServic
             : Ok(new { Message = message });
     }
 
+    /* NOTE: lazım olanda burası açılıb işləm görülə bilər, amma sql server local'da olmayandan sonra buranın silinməyi daha məsləhətdir! */
+    /*[HttpPost("[action]")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> RegisterWithSystemSideRoleParam([FromBody] RegisterDto registerDto,
+        bool isSystemSideRole)
+    {
+        (bool result, string message) = await _authenticationService.RegisterAsync(registerDto, isSystemSideRole);
+
+        return !result
+            ? StatusCode(StatusCodes.Status500InternalServerError, new { Message = message })
+            : Ok(new { Message = message });
+    }*/
+
     /// <summary>
     /// Authenticates a user and returns a token.
     /// </summary>
