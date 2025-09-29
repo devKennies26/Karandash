@@ -114,4 +114,10 @@
     <data name="UserRoleAreNotAllowed" xml:space="preserve">
         <value>Seçilen kullanıcı rolü kayıtta kullanılmasına izin verilmemektedir.</value>
     </data>
+    <data name="InvalidPageSize" xml:space="preserve">
+        <value>Sayfa boyutu 1 ile 50 arasında olmalıdır.</value>
+    </data>
+    <data name="InvalidPageNumber" xml:space="preserve">
+        <value>Sayfa numarası 1’den küçük olamaz.</value>
+    </data>
 </root>
