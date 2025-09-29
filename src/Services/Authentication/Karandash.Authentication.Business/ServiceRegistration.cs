@@ -1,4 +1,5 @@
 using Karandash.Authentication.Business.Services.Authentication;
+using Karandash.Authentication.Business.Services.Users;
 using Karandash.Authentication.Business.Services.Utils;
 using Karandash.Shared.DTOs;
 using Karandash.Shared.Utils;
@@ -15,10 +16,13 @@ public static class ServiceRegistration
     {
         services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));
 
-        services.AddScoped<PasswordHasher>();
         services.AddScoped<AuthenticationService>();
+        services.AddScoped<UserService>();
+
         services.AddScoped<EmailService>();
         services.AddScoped<EmailTemplate>();
+
+        services.AddScoped<PasswordHasher>();
         services.AddScoped<TokenHandler>();
 
         services.AddScoped<ICurrentUser, CurrentUser>();

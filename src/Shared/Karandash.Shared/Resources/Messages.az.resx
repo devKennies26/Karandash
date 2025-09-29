@@ -107,4 +107,10 @@
     <data name="UserRoleAreNotAllowed" xml:space="preserve">
         <value>Seçilmiş istifadəçi rolu qeydiyyat üçün icazəli deyil.</value>
     </data>
+    <data name="InvalidPageNumber" xml:space="preserve">
+        <value>Səhifə nömrəsi 1-dən kiçik ola bilməz.</value>
+    </data>
+    <data name="InvalidPageSize" xml:space="preserve">
+        <value>Səhifədəki element sayı 1–50 intervalında olmalıdır.</value>
+    </data>
 </root>

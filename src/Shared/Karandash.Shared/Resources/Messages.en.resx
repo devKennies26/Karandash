@@ -114,4 +114,10 @@
     <data name="UserRoleAreNotAllowed" xml:space="preserve">
         <value>The selected user role is not allowed for registration.</value>
     </data>
+    <data name="InvalidPageNumber" xml:space="preserve">
+        <value>Page number cannot be less than 1.</value>
+    </data>
+    <data name="InvalidPageSize" xml:space="preserve">
+        <value>Page size must be between 1 and 50.</value>
+    </data>
 </root>

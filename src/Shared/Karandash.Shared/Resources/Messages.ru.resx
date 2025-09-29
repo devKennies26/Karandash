@@ -114,4 +114,10 @@
     <data name="UserRoleAreNotAllowed" xml:space="preserve">
         <value>Выбранная роль пользователя недоступна для регистрации.</value>
     </data>
+    <data name="InvalidPageNumber" xml:space="preserve">
+        <value>Номер страницы не может быть меньше 1.</value>
+    </data>
+    <data name="InvalidPageSize" xml:space="preserve">
+        <value>Количество элементов на странице должно быть в пределах от 1 до 50.</value>
+    </data>
 </root>

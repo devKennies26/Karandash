@@ -236,5 +236,17 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("UserRoleAreNotAllowed", resourceCulture);
             }
         }
+        
+        internal static string InvalidPageSize {
+            get {
+                return ResourceManager.GetString("InvalidPageSize", resourceCulture);
+            }
+        }
+        
+        internal static string InvalidPageNumber {
+            get {
+                return ResourceManager.GetString("InvalidPageNumber", resourceCulture);
+            }
+        }
     }
 }
