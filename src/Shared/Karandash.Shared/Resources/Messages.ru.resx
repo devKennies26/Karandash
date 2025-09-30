@@ -138,4 +138,10 @@
     <data name="SystemRoleDeactivationNotAllowed" xml:space="preserve">
         <value>Деактивация аккаунта для этой роли недопустима.</value>
     </data>
+    <data name="PasswordChangedSuccessfully" xml:space="preserve">
+        <value>Ваш пароль был успешно изменён.</value>
+    </data>
+    <data name="PasswordChangeFailed" xml:space="preserve">
+        <value>Не удалось изменить пароль. Пожалуйста, попробуйте позже.</value>
+    </data>
 </root>

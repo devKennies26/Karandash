@@ -59,10 +59,10 @@ public class UserService(
         };
     }
 
-    /* TODO: Şifrə dəyişildikdən sonra uyğun şəkildə mail göndərilməlidir! */
-    public async Task UpdatePasswordAsync(UpdatePasswordDto updatePasswordDto)
+    public async Task<(bool result, string message)> UpdatePasswordAsync(UpdatePasswordDto updatePasswordDto)
     {
-        _authenticationService.ValidatePassword(updatePasswordDto.OldPassword);
+        /*_authenticationService.ValidatePassword(updatePasswordDto.OldPassword);*/
+        /* NOTE: köhnə şifrənin minimum 8 rəqəmli olduğunu bildikdən sonrası çox da önəmli deyil ki, biz burada onu validate edək. Sadəcə yenisinin formatını yoxladıqdan sonra aşağıda eyniliyini də yoxlayacayıq. */
         _authenticationService.ValidatePassword(updatePasswordDto.NewPassword);
 
         User? user = await _dbContext.Users
@@ -88,7 +88,17 @@ public class UserService(
         user.PasswordHash = newHashedPassword;
 
         _dbContext.Users.Update(user);
-        await _dbContext.SaveChangesAsync();
+        bool result = await _dbContext.SaveChangesAsync() > 0;
+
+        if (result)
+            _emailService.SendPasswordChangedEmail(
+                user.Email,
+                $"{user.FirstName} {user.LastName}"
+            );
+
+        return result
+            ? (true, MessageHelper.GetMessage("PasswordChangedSuccessfully"))
+            : (false, MessageHelper.GetMessage("PasswordChangeFailed"));
     }
 
     public async Task<(bool result, string message)> DeactivateAccountAsync()

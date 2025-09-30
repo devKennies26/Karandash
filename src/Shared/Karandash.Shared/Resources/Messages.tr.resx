@@ -138,4 +138,10 @@
     <data name="SystemRoleDeactivationNotAllowed" xml:space="preserve">
         <value>Bu rol için hesap devre dışı bırakmaya izin verilmez.</value>
     </data>
+    <data name="PasswordChangeFailed" xml:space="preserve">
+        <value>Şifre değiştirilemedi. Lütfen daha sonra tekrar deneyin.</value>
+    </data>
+    <data name="PasswordChangedSuccessfully" xml:space="preserve">
+        <value>Şifreniz başarıyla değiştirildi.</value>
+    </data>
 </root>

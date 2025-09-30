@@ -284,5 +284,17 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("SystemRoleDeactivationNotAllowed", resourceCulture);
             }
         }
+        
+        internal static string PasswordChangeFailed {
+            get {
+                return ResourceManager.GetString("PasswordChangeFailed", resourceCulture);
+            }
+        }
+        
+        internal static string PasswordChangedSuccessfully {
+            get {
+                return ResourceManager.GetString("PasswordChangedSuccessfully", resourceCulture);
+            }
+        }
     }
 }
