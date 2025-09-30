@@ -4,7 +4,6 @@ using Karandash.Authentication.Business.Services.Users;
 using Karandash.Shared.Attributes;
 using Karandash.Shared.Enums.Auth;
 using Karandash.Shared.Filters.Pagination;
-using Karandash.Shared.Utils.Methods;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,22 +33,23 @@ public class UsersController(UserService userService) : ControllerBase
         return Ok(result);
     }
 
-    [AuthorizeRole]
-    [HttpPost("[action]")]
-    public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordDto updatePasswordDto)
-    {
-        await _userService.UpdatePasswordAsync(updatePasswordDto);
-        return Ok(new
-        {
-            Message = MessageHelper.GetMessage("PasswordReset-Success")
-        });
-    }
-
-    [Authorize] /* Burada 3 role'a görə ignore situasiyası servis based olunub, ona görə də bir də burada yoxlamağa gərək yoxdur! */
     [HttpPost("[action]")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> DeactivateAccount()
+    public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordDto updatePasswordDto)
+    {
+        (bool result, string message) = await _userService.UpdatePasswordAsync(updatePasswordDto);
+
+        return !result
+            ? StatusCode(StatusCodes.Status500InternalServerError, new { Message = message })
+            : Ok(new { Message = message });
+    }
+
+    [HttpPost("[action]")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult>
+        DeactivateAccount() /* Burada 3 role'a görə ignore situasiyası servis based olunub, ona görə də bir də burada yoxlamağa gərək yoxdur! */
     {
         (bool result, string message) = await _userService.DeactivateAccountAsync();
 

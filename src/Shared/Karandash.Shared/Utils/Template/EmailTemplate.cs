@@ -292,4 +292,87 @@ public class EmailTemplate(IConfiguration configuration, ICurrentUser currentUse
             Content = content
         };
     }
+
+    public EmailMessageDto PasswordChanged(string fullName)
+    {
+        LanguageCode lang = _currentUser.LanguageCode;
+
+        string title, subject, greeting, body, signature;
+
+        switch (lang)
+        {
+            case LanguageCode.En:
+                title = "Your Password Has Been Changed";
+                subject = "Password Change Confirmation";
+                greeting = $"Hello, {fullName},";
+                body = "We wanted to let you know that your password has been successfully changed. " +
+                       "If you did not request this change, please reset your password immediately.";
+                signature = "Best regards,<br/><b>The Karandash Team</b>";
+                break;
+
+            case LanguageCode.Ru:
+                title = "Ваш пароль был изменен";
+                subject = "Подтверждение изменения пароля";
+                greeting = $"Здравствуйте, {fullName},";
+                body = "Ваш пароль был успешно изменен. " +
+                       "Если это были не вы, пожалуйста, немедленно сбросьте пароль.";
+                signature = "С уважением,<br/><b>Команда Karandash</b>";
+                break;
+
+            case LanguageCode.Tr:
+                title = "Şifreniz Değiştirildi";
+                subject = "Şifre Değişikliği Onayı";
+                greeting = $"Merhaba, {fullName},";
+                body = "Şifreniz başarıyla değiştirildi. " +
+                       "Eğer bu işlemi siz yapmadıysanız, lütfen hemen şifrenizi sıfırlayın.";
+                signature = "Saygılarımızla,<br/><b>Karandash Ekibi</b>";
+                break;
+
+            case LanguageCode.Az:
+            default:
+                title = "Şifrəniz dəyişdirildi";
+                subject = "Şifrə dəyişdirilməsinin təsdiqi";
+                greeting = $"Salam, {fullName},";
+                body = "Şifrəniz uğurla dəyişdirildi. " +
+                       "Əgər bu əməliyyatı siz etməmisinizsə, dərhal şifrənizi sıfırlayın.";
+                signature = "Hörmətlə,<br/><b>Karandash Komandası</b>";
+                break;
+        }
+
+        string content = $@"
+    <html>
+    <body style='font-family: Arial, sans-serif; background-color: #f7f7f7; margin: 0; padding: 0;'>
+        <table width='100%' cellspacing='0' cellpadding='0' style='background-color: #f7f7f7; padding: 20px 0;'>
+            <tr>
+                <td align='center'>
+                    <table width='600' cellpadding='20' cellspacing='0' 
+                           style='background-color: #ffffff; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);'>
+                        <tr>
+                            <td align='center' style='padding-bottom: 0;'>
+                                <h1 style='color: #4CAF50; margin: 0;'>{title}</h1>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p style='font-size: 16px; color: #333;'>{greeting}</p>
+                                <p style='font-size: 16px; color: #333;'>{body}</p>
+                                <hr style='border: none; border-top: 1px solid #eee; margin: 30px 0;'/>
+                                <p style='font-size: 14px; color: #777; margin-top: 20px;'>
+                                    {signature}
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+    </html>";
+
+        return new EmailMessageDto
+        {
+            Subject = subject,
+            Content = content
+        };
+    }
 }

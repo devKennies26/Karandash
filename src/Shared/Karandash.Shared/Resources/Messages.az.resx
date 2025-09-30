@@ -131,4 +131,10 @@
     <data name="SystemRoleDeactivationNotAllowed" xml:space="preserve">
         <value>Bu rol üçün hesabın deaktiv edilməsi icazəli deyil.</value>
     </data>
+    <data name="PasswordChangedSuccessfully" xml:space="preserve">
+        <value>Şifrəniz uğurla dəyişdirildi.</value>
+    </data>
+    <data name="PasswordChangeFailed" xml:space="preserve">
+        <value>Şifrənizi dəyişmək mümkün olmadı. Xahiş edirik, bir az sonra yenidən cəhd edin.</value>
+    </data>
 </root>

@@ -37,6 +37,16 @@ public class EmailService(IOptions<SmtpSettings> smtpSettings, EmailTemplate ema
         });
     }
 
+    public void SendPasswordChangedEmail(string toEmail, string fullName)
+    {
+        EmailMessageDto emailMessage = _emailTemplate.PasswordChanged(fullName);
+        SendEmail(toEmail, new EmailMessageDto
+        {
+            Subject = emailMessage.Subject,
+            Content = emailMessage.Content
+        });
+    }
+
     private void SendEmail(string toEmail, EmailMessageDto emailMessage)
     {
         MailAddress fromAddress = new MailAddress(_smtpSettings.Username, _smtpSettings.SenderName);
