@@ -105,7 +105,7 @@ public class UserService(
     {
         User? user = await _dbContext.Users
             .IgnoreQueryFilters()
-            .Where(u => u.Id == _currentUser.UserGuid).FirstOrDefaultAsync();
+            .Where(u => u.Id == _currentUser.UserGuid).Include(user => user.PasswordToken).FirstOrDefaultAsync();
 
         if (user is null)
             throw
@@ -118,6 +118,17 @@ public class UserService(
             throw new UserFriendlyBusinessException("SystemRoleDeactivationNotAllowed");
 
         user.IsDeleted = true;
+
+        /* NOTE: İstifadəçi deaktiv olandan sonra artıq refresh token dəyərindən istifadə edə bilməyəcək. */
+        user.RefreshToken = null;
+        user.RefreshTokenExpireDate = null;
+
+        if (user.PasswordToken is not null)
+        {
+            _dbContext.PasswordTokens.Remove(user.PasswordToken);
+            user.PasswordToken = null;
+        }
+
         user.UpdatedAt = DateTime.UtcNow;
         user.RemovedAt = DateTime.UtcNow;
 

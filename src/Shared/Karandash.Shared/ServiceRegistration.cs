@@ -22,7 +22,7 @@ public static class ServiceRegistration
             opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 In = ParameterLocation.Header,
-                Description = "Please enter the token",
+                Description = "Please enter the token (without 'bearer' key)",
                 Name = "Authorization",
                 Type = SecuritySchemeType.Http,
                 BearerFormat = "JWT",
