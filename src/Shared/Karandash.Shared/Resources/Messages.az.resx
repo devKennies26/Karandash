@@ -119,4 +119,16 @@
     <data name="NewPasswordCannotBeSameAsOld" xml:space="preserve">
         <value>Yeni parol köhnə parolla eyni ola bilməz.</value>
     </data>
+    <data name="UserNotFound" xml:space="preserve">
+        <value>İstifadəçi tapılmadı.</value>
+    </data>
+    <data name="AccountDeactivatedSuccessfully" xml:space="preserve">
+        <value>Hesabınız uğurla deaktiv edildi.</value>
+    </data>
+    <data name="AccountDeactivationFailed" xml:space="preserve">
+        <value>Hesabın deaktiv edilməsi zamanı xəta baş verdi.</value>
+    </data>
+    <data name="SystemRoleDeactivationNotAllowed" xml:space="preserve">
+        <value>Bu rol üçün hesabın deaktiv edilməsi icazəli deyil.</value>
+    </data>
 </root>

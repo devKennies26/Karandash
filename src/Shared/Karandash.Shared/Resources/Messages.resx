@@ -126,4 +126,16 @@
     <data name="NewPasswordCannotBeSameAsOld" xml:space="preserve">
         <value />
     </data>
+    <data name="UserNotFound" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AccountDeactivatedSuccessfully" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AccountDeactivationFailed" xml:space="preserve">
+        <value />
+    </data>
+    <data name="SystemRoleDeactivationNotAllowed" xml:space="preserve">
+        <value />
+    </data>
 </root>

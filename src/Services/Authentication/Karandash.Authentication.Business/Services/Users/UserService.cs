@@ -4,9 +4,11 @@ using Karandash.Authentication.Business.Services.Authentication;
 using Karandash.Authentication.Business.Services.Utils;
 using Karandash.Authentication.Core.Entities;
 using Karandash.Authentication.DataAccess.Contexts;
+using Karandash.Shared.Enums.Auth;
 using Karandash.Shared.Exceptions;
 using Karandash.Shared.Filters.Pagination;
 using Karandash.Shared.Utils;
+using Karandash.Shared.Utils.Methods;
 using Microsoft.EntityFrameworkCore;
 
 namespace Karandash.Authentication.Business.Services.Users;
@@ -15,12 +17,14 @@ public class UserService(
     AuthenticationDbContext dbContext,
     ICurrentUser currentUser,
     AuthenticationService authenticationService,
-    PasswordHasher passwordHasher)
+    PasswordHasher passwordHasher,
+    EmailService emailService)
 {
     private readonly AuthenticationDbContext _dbContext = dbContext;
     private readonly ICurrentUser _currentUser = currentUser;
     private readonly AuthenticationService _authenticationService = authenticationService;
     private readonly PasswordHasher _passwordHasher = passwordHasher;
+    private readonly EmailService _emailService = emailService;
 
     public async Task<PagedResponse<GetAllUsersDto>> GetAllUsersAsync(GetAllUsersFilterDto filter)
     {
@@ -85,6 +89,38 @@ public class UserService(
 
         _dbContext.Users.Update(user);
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<(bool result, string message)> DeactivateAccountAsync()
+    {
+        User? user = await _dbContext.Users
+            .IgnoreQueryFilters()
+            .Where(u => u.Id == _currentUser.UserGuid).FirstOrDefaultAsync();
+
+        if (user is null)
+            throw
+                new UserFriendlyBusinessException(
+                    "UserNotFound"); /* TODO: hər iki servisin kodlarına baxmaq lazımdır, uyğun olmayan yerlərdə buradaki key'i işlətmək lazımdır!  */
+        if (user.IsDeleted)
+            throw new UserFriendlyBusinessException("AccountDeleted");
+
+        if (user.UserRole is UserRole.Admin or UserRole.Moderator or UserRole.ContentCreator)
+            throw new UserFriendlyBusinessException("SystemRoleDeactivationNotAllowed");
+
+        user.IsDeleted = true;
+        user.UpdatedAt = DateTime.UtcNow;
+        user.RemovedAt = DateTime.UtcNow;
+
+        _dbContext.Users.Update(user);
+        bool success = await _dbContext.SaveChangesAsync() > 0;
+
+        if (!success) return (false, MessageHelper.GetMessage("AccountDeactivationFailed"));
+
+        _emailService.SendAccountDeactivationEmail(
+            user.Email,
+            $"{user.FirstName} {user.LastName}"
+        );
+        return (true, MessageHelper.GetMessage("AccountDeactivatedSuccessfully"));
     }
 
     private IQueryable<User> ApplyFilters(IQueryable<User> query, GetAllUsersFilterDto filter)

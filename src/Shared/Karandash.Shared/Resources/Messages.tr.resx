@@ -126,4 +126,16 @@
     <data name="NewPasswordCannotBeSameAsOld" xml:space="preserve">
         <value>Yeni parola eski parola ile aynı olamaz.</value>
     </data>
+    <data name="UserNotFound" xml:space="preserve">
+        <value>Kullanıcı bulunamadı.</value>
+    </data>
+    <data name="AccountDeactivatedSuccessfully" xml:space="preserve">
+        <value>Hesabınız başarıyla devre dışı bırakıldı.</value>
+    </data>
+    <data name="AccountDeactivationFailed" xml:space="preserve">
+        <value>Hesap devre dışı bırakılırken bir hata oluştu.</value>
+    </data>
+    <data name="SystemRoleDeactivationNotAllowed" xml:space="preserve">
+        <value>Bu rol için hesap devre dışı bırakmaya izin verilmez.</value>
+    </data>
 </root>

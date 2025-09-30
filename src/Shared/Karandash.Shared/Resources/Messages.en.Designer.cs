@@ -260,5 +260,29 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("NewPasswordCannotBeSameAsOld", resourceCulture);
             }
         }
+        
+        internal static string UserNotFound {
+            get {
+                return ResourceManager.GetString("UserNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string AccountDeactivatedSuccessfully {
+            get {
+                return ResourceManager.GetString("AccountDeactivatedSuccessfully", resourceCulture);
+            }
+        }
+        
+        internal static string AccountDeactivationFailed {
+            get {
+                return ResourceManager.GetString("AccountDeactivationFailed", resourceCulture);
+            }
+        }
+        
+        internal static string SystemRoleDeactivationNotAllowed {
+            get {
+                return ResourceManager.GetString("SystemRoleDeactivationNotAllowed", resourceCulture);
+            }
+        }
     }
 }

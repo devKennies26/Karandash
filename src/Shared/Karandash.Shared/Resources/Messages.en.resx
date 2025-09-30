@@ -126,4 +126,16 @@
     <data name="NewPasswordCannotBeSameAsOld" xml:space="preserve">
         <value>The new password cannot be the same as the old password.</value>
     </data>
+    <data name="UserNotFound" xml:space="preserve">
+        <value>User not found.</value>
+    </data>
+    <data name="AccountDeactivatedSuccessfully" xml:space="preserve">
+        <value>Your account has been deactivated successfully.</value>
+    </data>
+    <data name="AccountDeactivationFailed" xml:space="preserve">
+        <value>An error occurred while deactivating the account.</value>
+    </data>
+    <data name="SystemRoleDeactivationNotAllowed" xml:space="preserve">
+        <value>Account deactivation is not allowed for this role.</value>
+    </data>
 </root>

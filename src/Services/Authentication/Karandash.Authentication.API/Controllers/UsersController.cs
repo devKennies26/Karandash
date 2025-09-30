@@ -44,4 +44,17 @@ public class UsersController(UserService userService) : ControllerBase
             Message = MessageHelper.GetMessage("PasswordReset-Success")
         });
     }
+
+    [Authorize] /* Burada 3 role'a görə ignore situasiyası servis based olunub, ona görə də bir də burada yoxlamağa gərək yoxdur! */
+    [HttpPost("[action]")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> DeactivateAccount()
+    {
+        (bool result, string message) = await _userService.DeactivateAccountAsync();
+
+        return !result
+            ? StatusCode(StatusCodes.Status500InternalServerError, new { Message = message })
+            : Ok(new { Message = message });
+    }
 }
