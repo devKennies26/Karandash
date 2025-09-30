@@ -126,4 +126,16 @@
     <data name="NewPasswordCannotBeSameAsOld" xml:space="preserve">
         <value>Новый пароль не может совпадать со старым.</value>
     </data>
+    <data name="UserNotFound" xml:space="preserve">
+        <value>Пользователь не найден.</value>
+    </data>
+    <data name="AccountDeactivatedSuccessfully" xml:space="preserve">
+        <value>Ваш аккаунт успешно деактивирован.</value>
+    </data>
+    <data name="AccountDeactivationFailed" xml:space="preserve">
+        <value>Произошла ошибка при деактивации аккаунта.</value>
+    </data>
+    <data name="SystemRoleDeactivationNotAllowed" xml:space="preserve">
+        <value>Деактивация аккаунта для этой роли недопустима.</value>
+    </data>
 </root>

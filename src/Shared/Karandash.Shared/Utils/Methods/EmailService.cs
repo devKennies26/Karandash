@@ -27,6 +27,16 @@ public class EmailService(IOptions<SmtpSettings> smtpSettings, EmailTemplate ema
         SendEmail(toEmail, emailMessage);
     }
 
+    public void SendAccountDeactivationEmail(string toEmail, string fullName)
+    {
+        EmailMessageDto emailMessage = _emailTemplate.AccountDeactivated(fullName);
+        SendEmail(toEmail, new EmailMessageDto
+        {
+            Subject = emailMessage.Subject,
+            Content = emailMessage.Content
+        });
+    }
+
     private void SendEmail(string toEmail, EmailMessageDto emailMessage)
     {
         MailAddress fromAddress = new MailAddress(_smtpSettings.Username, _smtpSettings.SenderName);

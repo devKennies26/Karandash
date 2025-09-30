@@ -20,7 +20,7 @@ public class EmailTemplate(IConfiguration configuration, ICurrentUser currentUse
             case LanguageCode.En:
                 title = "Welcome to Karandash!";
                 subject = "Your Registration is Complete!";
-                greeting = $"Hello {fullName},";
+                greeting = $"Hello, {fullName},";
                 callToAction = "Click the button below to explore your account:";
                 buttonText = "Get Started";
                 followUs = "Follow us on social media for updates and news.";
@@ -40,7 +40,7 @@ public class EmailTemplate(IConfiguration configuration, ICurrentUser currentUse
             case LanguageCode.Tr:
                 title = "Karandash’a Hoş Geldiniz!";
                 subject = "Kaydınız Tamamlandı!";
-                greeting = $"Merhaba {fullName},";
+                greeting = $"Merhaba, {fullName},";
                 callToAction = "Hesabınızı keşfetmek için aşağıdaki butona tıklayın:";
                 buttonText = "Başla";
                 followUs = "Güncellemeler ve haberler için bizi sosyal medyada takip edin.";
@@ -51,7 +51,7 @@ public class EmailTemplate(IConfiguration configuration, ICurrentUser currentUse
             default:
                 title = "Karandash-a xoş gəldiniz!";
                 subject = "Qeydiyyatınız tamamlandı!";
-                greeting = $"Salam {fullName},";
+                greeting = $"Salam, {fullName},";
                 callToAction = "Aşağıdakı düyməyə klikləyərək hesabınızı araşdırın:";
                 buttonText = "Başla";
                 followUs = "Yeniliklər və xəbərlər üçün bizi sosial şəbəkələrdə izləyin.";
@@ -121,7 +121,7 @@ public class EmailTemplate(IConfiguration configuration, ICurrentUser currentUse
             case LanguageCode.En:
                 title = "Password Reset Request";
                 subject = "Reset Your Password";
-                greeting = $"Hello {fullName},";
+                greeting = $"Hello, {fullName},";
                 callToAction = "Click the button below to reset your password. The link will expire in 1 hour.";
                 buttonText = "Reset Password";
                 followUs = "If you did not request this, please ignore this email.";
@@ -141,7 +141,7 @@ public class EmailTemplate(IConfiguration configuration, ICurrentUser currentUse
             case LanguageCode.Tr:
                 title = "Şifre Sıfırlama Talebi";
                 subject = "Şifrenizi Sıfırlayın";
-                greeting = $"Merhaba {fullName},";
+                greeting = $"Merhaba, {fullName},";
                 callToAction = "Şifrenizi sıfırlamak için aşağıdaki butona tıklayın. Link 1 saat boyunca geçerlidir.";
                 buttonText = "Şifreyi Sıfırla";
                 followUs = "Eğer bu isteği siz yapmadıysanız, bu e-postayı görmezden gelin.";
@@ -152,7 +152,7 @@ public class EmailTemplate(IConfiguration configuration, ICurrentUser currentUse
             default:
                 title = "Şifrə Sıfırlama Sorğusu";
                 subject = "Şifrənizi Sıfırlayın";
-                greeting = $"Salam {fullName},";
+                greeting = $"Salam, {fullName},";
                 callToAction =
                     "Şifrənizi sıfırlamaq üçün aşağıdakı düyməyə klikləyin. Keçid 1 saat ərzində etibarlıdır.";
                 buttonText = "Şifrəni Sıfırla";
@@ -191,6 +191,89 @@ public class EmailTemplate(IConfiguration configuration, ICurrentUser currentUse
                                 </div>
                                 <hr style='border: none; border-top: 1px solid #eee; margin: 30px 0;'/>
                                 <p style='font-size: 14px; color: #777;'>{followUs}</p>
+                                <p style='font-size: 14px; color: #777; margin-top: 20px;'>
+                                    {signature}
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+    </html>";
+
+        return new EmailMessageDto
+        {
+            Subject = subject,
+            Content = content
+        };
+    }
+
+    public EmailMessageDto AccountDeactivated(string fullName)
+    {
+        LanguageCode lang = _currentUser.LanguageCode;
+
+        string title, subject, greeting, body, signature;
+
+        switch (lang)
+        {
+            case LanguageCode.En:
+                title = "Your Account Has Been Deactivated";
+                subject = "Account Deactivation Notice";
+                greeting = $"Hello, {fullName},";
+                body = "We wanted to let you know that your account has been successfully deactivated. " +
+                       "If this was not you, please contact our support team immediately.";
+                signature = "Best regards,<br/><b>The Karandash Team</b>";
+                break;
+
+            case LanguageCode.Ru:
+                title = "Ваш аккаунт был деактивирован";
+                subject = "Уведомление о деактивации аккаунта";
+                greeting = $"Здравствуйте, {fullName},";
+                body = "Ваш аккаунт был успешно деактивирован. " +
+                       "Если это были не вы, пожалуйста, свяжитесь с нашей службой поддержки.";
+                signature = "С уважением,<br/><b>Команда Karandash</b>";
+                break;
+
+            case LanguageCode.Tr:
+                title = "Hesabınız Devre Dışı Bırakıldı";
+                subject = "Hesap Devre Dışı Bırakma Bildirimi";
+                greeting = $"Merhaba, {fullName},";
+                body = "Hesabınız başarıyla devre dışı bırakıldı. " +
+                       "Eğer bu işlemi siz yapmadıysanız, lütfen hemen destek ekibimizle iletişime geçin.";
+                signature = "Saygılarımızla,<br/><b>Karandash Ekibi</b>";
+                break;
+
+            case LanguageCode.Az:
+            default:
+                title = "Hesabınız deaktiv edildi";
+                subject = "Hesabın deaktiv edilməsi haqqında bildiriş";
+                greeting = $"Salam, {fullName},";
+                body = "Hesabınız uğurla deaktiv edildi. " +
+                       "Əgər bu əməliyyatı siz etməmisinizsə, dərhal dəstək komandamızla əlaqə saxlayın.";
+                signature = "Hörmətlə,<br/><b>Karandash Komandası</b>";
+                break;
+        }
+
+        string content = $@"
+    <html>
+    <body style='font-family: Arial, sans-serif; background-color: #f7f7f7; margin: 0; padding: 0;'>
+        <table width='100%' cellspacing='0' cellpadding='0' style='background-color: #f7f7f7; padding: 20px 0;'>
+            <tr>
+                <td align='center'>
+                    <table width='600' cellpadding='20' cellspacing='0' 
+                           style='background-color: #ffffff; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);'>
+                        <tr>
+                            <td align='center' style='padding-bottom: 0;'>
+                                <h1 style='color: #E53935; margin: 0;'>{title}</h1>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p style='font-size: 16px; color: #333;'>{greeting}</p>
+                                <p style='font-size: 16px; color: #333;'>{body}</p>
+                                <hr style='border: none; border-top: 1px solid #eee; margin: 30px 0;'/>
                                 <p style='font-size: 14px; color: #777; margin-top: 20px;'>
                                     {signature}
                                 </p>
