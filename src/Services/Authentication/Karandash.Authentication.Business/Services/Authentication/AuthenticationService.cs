@@ -5,7 +5,6 @@ using Karandash.Authentication.Business.Exceptions;
 using Karandash.Authentication.Business.Services.Utils;
 using Karandash.Authentication.Core.Entities;
 using Karandash.Authentication.DataAccess.Contexts;
-using Karandash.Shared.Enums.Auth;
 using Karandash.Shared.Exceptions;
 using Karandash.Shared.Utils.Methods;
 using Microsoft.EntityFrameworkCore;
@@ -23,15 +22,16 @@ public class AuthenticationService(
     private readonly EmailService _emailService = emailService;
     private readonly TokenHandler _tokenHandler = tokenHandler;
 
-    public async Task<(bool result, string message)> RegisterAsync(RegisterDto registerDto,
+    public async Task<(bool result, string message)> RegisterAsync(RegisterDto registerDto /*,
         bool isSystemSideRole =
-            false) /* NOTE: Məntiq olaraq isAdminSideRole dəyəri burada default olacaq, yəni false ilə işləməlidir. Test mərhələsində ehtiyac duyulan dəyərdir, sonraki zamanlarda bu dəyər ignore edilə bilinər. */
+            false*/) /* NOTE: [isSystemSideRole] Əgər database dəyişilibsə və ya yenidən data seed'lənməsi gərəkirsə, o zaman isSystemSideRole parametri açılmalıdır. Controller'də də bu parametri açmaq lazımdır, təbii ki. */
     {
         if (!registerDto.HasAcceptedPolicy)
             throw new PolicyException();
 
-        if (!isSystemSideRole && (registerDto.UserRole is < UserRole.Guest or > UserRole.Other))
-            return (false, MessageHelper.GetMessage("UserRoleAreNotAllowed"));
+        /* NOTE: [isSystemSideRole] Və eynilə bu hissə də commit'dən çıxardılmalıdır. Beləliklə qısa müddətlik biz admin side role'ları da insert edə bilərik: Burada hər hansısa bir validation yoxdur, sonraki zamanlarda buraya diqqət yetimrək olar, amma hazırki situasiya üçün o qədər də vacib bir işləm deyil. */
+        /*if (!isSystemSideRole && (registerDto.UserRole is < UserRole.Guest or > UserRole.Other))
+            return (false, MessageHelper.GetMessage("UserRoleAreNotAllowed"));*/
 
         await CheckEmailExistsAsync(registerDto.Email.Trim());
         ValidatePassword(registerDto.Password);
@@ -41,25 +41,34 @@ public class AuthenticationService(
         User user = new User()
         {
             Id = Guid.NewGuid(),
-            InsertedAt = DateTime.UtcNow,
             FirstName = registerDto.FirstName,
             LastName = registerDto.LastName,
             Email = registerDto.Email,
+            /*PendingEmail = null,*/
+            IsVerified = /*isSystemSideRole*/
+                false, /* NOTE: [isSystemSideRole] Əgər yuxarıdakilar nəzərə alınarsa, o zaman buradaki şərt də admin side role olub-olmaması ilə üst-üstə düşə bilər!  */
+            /*RefreshToken = null,*/
+            /*RefreshTokenExpireDate = null,*/
+            UserRole = registerDto.UserRole,
+            InsertedAt = DateTime.UtcNow,
+            /*UpdatedAt = null,*/
+            /*RemovedAt = null,*/
+            /*IsDeleted = false,*/
             PasswordHash = _passwordHasher.Hash(registerDto.Password, salt),
             PasswordSalt = salt,
-            IsVerified = isSystemSideRole,
-            UserRole = registerDto.UserRole
         };
-
         await _dbContext.Users.AddAsync(user);
-
-        /* TODO: mail göndərildi, uyğun olan event'i göndərmək lazımdır (lazımlı məlumatlarla) */
+        
         bool result = await _dbContext.SaveChangesAsync() > 0;
         if (result)
+        {
+            /* NOTE: Blog servisi kodlanan zaman register'dən varsa bir consume istəyi, həmən istəkdəki məlumatlar burada event olaraq göndərilməlidir! */
+
             _emailService.SendRegistrationEmail(
                 user.Email,
                 $"{user.FirstName} {user.LastName}"
             );
+        }
 
         return result
             ? (true, MessageHelper.GetMessage("UserRegisteredSuccessfully"))
@@ -197,7 +206,7 @@ public class AuthenticationService(
     private async Task CheckEmailExistsAsync(string email)
     {
         User? existingUser = await _dbContext.Users
-            .IgnoreQueryFilters() /* NOTE: ola bilsin ki, soft delete işləmi üçün sistemdə sonraki zamanlarda query filter yazılsın, həmən səbəbdən onları ignore'a atırıq. */
+            .IgnoreQueryFilters() /* NOTE: Ola bilsin ki, soft delete işləmi üçün sistemdə sonraki zamanlarda query filter yazılsın, və həmən səbəbdən onları ignore'a atırıq ki, son istifadəçiyə daha da user-friendly xəta mesajı verə bilək. */
             .FirstOrDefaultAsync(u => u.Email == email);
 
         if (existingUser is null)

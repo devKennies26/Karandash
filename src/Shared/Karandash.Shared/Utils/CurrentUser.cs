@@ -26,7 +26,7 @@ public class CurrentUser(IHttpContextAccessor httpContextAccessor) : ICurrentUse
             if (Enum.TryParse(roleClaim, out UserRole role))
                 return (byte)role;
 
-            return 14;
+            return (byte)Enums.Auth.UserRole.Other;
         }
     }
 

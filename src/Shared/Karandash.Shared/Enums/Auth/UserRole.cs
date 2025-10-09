@@ -7,24 +7,23 @@ public enum UserRole : byte
     Moderator = 1, /* Şərhləri və forumu idarə edən */
     ContentCreator = 2, /* Blog kontenti idarə edən */
 
-    Guest = 3,
+    Student = 3, /* Ya məktəb, ya da universitet şagirdləri/tələbələri üçün */
+    Alumni = 4, /* Məzunlar üçün */
 
-    Student = 4,
-    Alumni = 5, /* Məzunlar üçün */
+    Parent = 5, /* Valideynlər üçün */
 
-    Parent = 6,
+    Mentor = 6, /* Mentorluq edənlər üçün */
 
-    Mentor = 7, /* Mentorluq edənlər üçün */
+    Teacher = 7, /* Əsasən, məktəb müəllimləri (ibtidai, orta, lisey) üçün */
+    TeacherStaff = 8, /* Məktəb administrativ və digər personal (direktor, müavin, təlim koordinatoru) */
 
-    Teacher = 8, /* Əsasən, məktəb müəllimləri (ibtidai, orta, lisey) */
-    TeacherStaff = 9, /* Məktəb administrativ və digər personal (direktor, müavin, təlim koordinatoru) */
+    Lecturer = 9, /* Universitet müəllimləri üçün */
+    Professor = 10, /* Universitet professorları üçün */
 
-    Lecturer = 10, /* Universitet müəllimləri üçün */
-    Professor = 11, /* Universitet professorları üçün */
+    UniversityStaff =
+        11, /* Universitet administrativ və digər personal (rektorluq, dekan, departament rəhbəri) heyəti üçün */
 
-    UniversityStaff = 12, /* Universitet administrativ və digər personal (rektorluq, dekan, departament rəhbəri) */
+    Researcher = 12, /* Elm və tədqiqat fəaliyyəti aparanlar üçün */
 
-    Researcher = 13, /* Elm və tədqiqat fəaliyyəti aparanlar üçün */
-
-    Other = 14
+    Other = 13 /* Sadalanan role'lardan heç birinə uyğun olmayanlar üçün */
 }
