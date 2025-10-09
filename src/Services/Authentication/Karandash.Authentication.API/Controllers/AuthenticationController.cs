@@ -18,18 +18,17 @@ public class AuthenticationController(AuthenticationService authenticationServic
     /// - <c>Admin</c> = 0
     /// - <c>Moderator</c> = 1 — Şərhləri və forumu idarə edən
     /// - <c>ContentCreator</c> = 2 — Blog kontenti idarə edən
-    /// - <c>Guest</c> = 3
-    /// - <c>Student</c> = 4
-    /// - <c>Alumni</c> = 5 — Məzunlar üçün
-    /// - <c>Parent</c> = 6
-    /// - <c>Mentor</c> = 7 — Mentorluq edənlər üçün
-    /// - <c>Teacher</c> = 8 — Məktəb müəllimləri (ibtidai, orta, lisey)
-    /// - <c>TeacherStaff</c> = 9 — Məktəb administrativ və digər personal
-    /// - <c>Lecturer</c> = 10 — Universitet müəllimləri üçün
-    /// - <c>Professor</c> = 11 — Universitet professorları üçün
-    /// - <c>UniversityStaff</c> = 12 — Universitet administrativ və digər personal
-    /// - <c>Researcher</c> = 13 — Elm və tədqiqat fəaliyyəti aparanlar üçün
-    /// - <c>Other</c> = 14
+    /// - <c>Student</c> = 3 - Ya məktəb, ya da universitet şagirdləri/tələbələri üçün
+    /// - <c>Alumni</c> = 4 — Məzunlar üçün
+    /// - <c>Parent</c> = 5 - Valideynlər üçün
+    /// - <c>Mentor</c> = 6 — Mentorluq edənlər üçün
+    /// - <c>Teacher</c> = 7 — Əsasən, məktəb müəllimləri (ibtidai, orta, lisey) üçün
+    /// - <c>TeacherStaff</c> = 8 — Məktəb administrativ və digər personal
+    /// - <c>Lecturer</c> = 9 — Universitet müəllimləri üçün
+    /// - <c>Professor</c> = 10 — Universitet professorları üçün
+    /// - <c>UniversityStaff</c> = 11 — Universitet administrativ və digər personal (rektorluq, dekan, departament rəhbəri) heyəti üçün
+    /// - <c>Researcher</c> = 12 — Elm və tədqiqat fəaliyyəti aparanlar üçün
+    /// - <c>Other</c> = 13 - Sadalanan role'lardan heç birinə uyğun olmayanlar üçün
     /// </remarks>
     /// <param name="registerDto">Registration data for the new user</param>
     /// <returns>
