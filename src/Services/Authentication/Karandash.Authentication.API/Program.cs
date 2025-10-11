@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Karandash.Authentication.API.BackgroundServices;
 using Karandash.Authentication.Business;
 using Karandash.Authentication.Business.DTOs.Auth;
 using Karandash.Authentication.Core.Entities;
@@ -26,6 +27,8 @@ builder.Services.AddValidatorsFromAssemblyContaining<RegisterDto>()
 
 builder.Services.AddDataAccessLayer(builder.Configuration);
 builder.Services.AddBusinessLayer(builder.Configuration);
+
+builder.Services.AddHostedService<OutboxProcessorHostedService>();
 
 IConfigurationSection jwtSection = builder.Configuration.GetSection("Jwt");
 builder.Services.AddAuthenticationService(

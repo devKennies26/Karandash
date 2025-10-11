@@ -1,6 +1,7 @@
 using System.Net;
 using System.Net.Mail;
 using Karandash.Shared.DTOs;
+using Karandash.Shared.Enums.Language;
 using Karandash.Shared.Utils.Template;
 using Microsoft.Extensions.Options;
 
@@ -11,10 +12,14 @@ public class EmailService(IOptions<SmtpSettings> smtpSettings, EmailTemplate ema
     private readonly SmtpSettings _smtpSettings = smtpSettings.Value;
     private readonly EmailTemplate _emailTemplate = emailTemplate;
 
-    public void SendRegistrationEmail(string toEmail, string fullName)
+    public void SendRegistrationEmail(string toEmail, string fullName, string languageCode)
     {
-        EmailMessageDto emailMessage = _emailTemplate.RegisterCompleted(fullName);
-        SendEmail(toEmail, new EmailMessageDto()
+        LanguageCode lang = Enum.TryParse(languageCode, out LanguageCode parsedLang)
+            ? parsedLang
+            : LanguageCode.Az;
+
+        EmailMessageDto emailMessage = _emailTemplate.RegisterCompleted(fullName, lang);
+        SendEmail(toEmail, new EmailMessageDto
         {
             Subject = emailMessage.Subject,
             Content = emailMessage.Content

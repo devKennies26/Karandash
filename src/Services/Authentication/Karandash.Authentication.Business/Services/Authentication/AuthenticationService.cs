@@ -1,11 +1,14 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text.Json;
 using Karandash.Authentication.Business.DTOs.Auth;
 using Karandash.Authentication.Business.Exceptions;
 using Karandash.Authentication.Business.Services.Utils;
 using Karandash.Authentication.Core.Entities;
 using Karandash.Authentication.DataAccess.Contexts;
 using Karandash.Shared.Exceptions;
+using Karandash.Shared.Utils;
+using Karandash.Shared.Utils.Infrastructure;
 using Karandash.Shared.Utils.Methods;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,12 +18,14 @@ public class AuthenticationService(
     AuthenticationDbContext dbContext,
     PasswordHasher passwordHasher,
     EmailService emailService,
-    TokenHandler tokenHandler)
+    TokenHandler tokenHandler,
+    ICurrentUser currentUser)
 {
     private readonly AuthenticationDbContext _dbContext = dbContext;
     private readonly PasswordHasher _passwordHasher = passwordHasher;
     private readonly EmailService _emailService = emailService;
     private readonly TokenHandler _tokenHandler = tokenHandler;
+    private readonly ICurrentUser _currentUser = currentUser;
 
     public async Task<(bool result, string message)> RegisterAsync(RegisterDto registerDto /*,
         bool isSystemSideRole =
@@ -58,18 +63,23 @@ public class AuthenticationService(
             PasswordSalt = salt,
         };
         await _dbContext.Users.AddAsync(user);
-        
-        bool result = await _dbContext.SaveChangesAsync() > 0;
-        if (result)
+
+        OutboxEvent outboxEvent = new OutboxEvent()
         {
-            /* NOTE: Blog servisi kodlanan zaman register'dən varsa bir consume istəyi, həmən istəkdəki məlumatlar burada event olaraq göndərilməlidir! */
+            Id = Guid.NewGuid(),
+            CreatedAt = DateTime.UtcNow,
+            Type = "UserRegisteredEvent",
+            Payload = JsonSerializer.Serialize(new
+            {
+                Email = user.Email,
+                FullName = $"{user.FirstName} {user.LastName}",
+                Language = _currentUser.LanguageCode.ToString()
+            }),
+            RetryCount = 0
+        };
+        await _dbContext.OutboxEvents.AddAsync(outboxEvent);
 
-            _emailService.SendRegistrationEmail(
-                user.Email,
-                $"{user.FirstName} {user.LastName}"
-            );
-        }
-
+        bool result = await _dbContext.SaveChangesAsync() > 0;
         return result
             ? (true, MessageHelper.GetMessage("UserRegisteredSuccessfully"))
             : (false, MessageHelper.GetMessage("UserRegistrationFailed"));

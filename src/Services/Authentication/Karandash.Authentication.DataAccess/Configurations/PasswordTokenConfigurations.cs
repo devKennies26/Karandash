@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Karandash.Authentication.DataAccess.Configurations;
 
-public class PasswordTokenConfiguration : IEntityTypeConfiguration<PasswordToken>
+public class PasswordTokenConfigurations : IEntityTypeConfiguration<PasswordToken>
 {
     public void Configure(EntityTypeBuilder<PasswordToken> builder)
     {

@@ -9,10 +9,8 @@ public class EmailTemplate(IConfiguration configuration, ICurrentUser currentUse
     private readonly IConfiguration _configuration = configuration;
     private readonly ICurrentUser _currentUser = currentUser;
 
-    public EmailMessageDto RegisterCompleted(string fullName)
+    public EmailMessageDto RegisterCompleted(string fullName, LanguageCode lang)
     {
-        LanguageCode lang = _currentUser.LanguageCode;
-
         string title, subject, greeting, callToAction, buttonText, followUs, signature;
 
         switch (lang)
