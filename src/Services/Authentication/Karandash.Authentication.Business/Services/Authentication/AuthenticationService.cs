@@ -38,7 +38,7 @@ public class AuthenticationService(
         /*if (!isSystemSideRole && (registerDto.UserRole is < UserRole.Guest or > UserRole.Other))
             return (false, MessageHelper.GetMessage("UserRoleAreNotAllowed"));*/
 
-        await CheckEmailExistsAsync(registerDto.Email.Trim());
+        await CheckEmailExistsAsync(registerDto.Email);
         ValidatePassword(registerDto.Password);
 
         byte[] salt = _passwordHasher.GenerateSalt();
