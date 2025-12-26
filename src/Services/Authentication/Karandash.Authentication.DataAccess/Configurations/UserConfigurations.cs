@@ -1,4 +1,5 @@
 using Karandash.Authentication.Core.Entities;
+using Karandash.Shared.Enums.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -48,5 +49,32 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
 
         builder.Property(u => u.IsDeleted)
             .HasDefaultValue(false);
+
+        builder.HasData(new User()
+        {
+            Id = Guid.Parse("88B608C2-94A6-4C7D-9D55-B128018CAB4E"),
+
+            InsertedAt = DateTime.UtcNow,
+            UpdatedAt = null,
+            RemovedAt = null,
+
+            FirstName = "System",
+            LastName = "Administrator",
+
+            Email = "info.karandashmmc@gmail.com",
+            PendingEmail = null,
+
+            PasswordSalt = Convert.FromBase64String("6m1PBsQHAHrzvbDJYrPx6A=="),
+            PasswordHash = "gmr+kg55gqEC0RJIlql4CKFHsB2uWTXubsgPiZLr/qU=",
+
+            UserRole = UserRole.Admin,
+
+            IsVerified = true,
+
+            RefreshToken = null,
+            RefreshTokenExpireDate = null,
+
+            IsDeleted = false
+        });
     }
 }

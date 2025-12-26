@@ -23,12 +23,12 @@ public class User : BaseEntity, ISoftDeletable
         set;
     } /* Bu mail isə istifadəçi mail'ini dəyişmək istədiyi zaman istifadə olunacaq mail'dir */
 
+    public UserRole UserRole { get; set; }
+
     public bool IsVerified { get; set; }
 
     public string? RefreshToken { get; set; }
     public DateTime? RefreshTokenExpireDate { get; set; }
-
-    public UserRole UserRole { get; set; }
 
     public PasswordToken? PasswordToken { get; set; }
 
