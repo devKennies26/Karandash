@@ -6,13 +6,45 @@ namespace Karandash.Authentication.Business.DTOs.Auth;
 
 public class RegisterDto
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    private string? _firstName;
 
-    public string Email { get; set; }
+    public string FirstName
+    {
+        get => _firstName!;
+        set => _firstName = value?.Trim();
+    }
 
-    public string Password { get; set; }
-    public string ConfirmPassword { get; set; }
+    private string? _lastName;
+
+    public string LastName
+    {
+        get => _lastName!;
+        set => _lastName = value?.Trim();
+    }
+
+    private string? _email;
+
+    public string Email
+    {
+        get => _email!;
+        set => _email = value?.Trim();
+    }
+
+    private string? _password;
+
+    public string Password
+    {
+        get => _password!;
+        set => _password = value?.Trim();
+    }
+
+    private string? _confirmPassword;
+
+    public string ConfirmPassword
+    {
+        get => _confirmPassword!;
+        set => _confirmPassword = value?.Trim();
+    }
 
     public UserRole UserRole { get; set; }
 
