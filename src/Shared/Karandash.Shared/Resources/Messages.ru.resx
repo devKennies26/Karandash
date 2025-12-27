@@ -144,4 +144,7 @@
     <data name="PasswordChangeFailed" xml:space="preserve">
         <value>Не удалось изменить пароль. Пожалуйста, попробуйте позже.</value>
     </data>
+    <data name="AdminCannotBeRegistered" xml:space="preserve">
+        <value>Регистрация с выбранной ролью администратора невозможна.</value>
+    </data>
 </root>

@@ -6,6 +6,7 @@ using Karandash.Authentication.Business.Exceptions;
 using Karandash.Authentication.Business.Services.Utils;
 using Karandash.Authentication.Core.Entities;
 using Karandash.Authentication.DataAccess.Contexts;
+using Karandash.Shared.Enums.Auth;
 using Karandash.Shared.Exceptions;
 using Karandash.Shared.Utils;
 using Karandash.Shared.Utils.Infrastructure;
@@ -27,16 +28,18 @@ public class AuthenticationService(
     private readonly TokenHandler _tokenHandler = tokenHandler;
     private readonly ICurrentUser _currentUser = currentUser;
 
-    public async Task<(bool result, string message)> RegisterAsync(RegisterDto registerDto /*,
-        bool isSystemSideRole =
-            false*/) /* NOTE: [isSystemSideRole] Əgər database dəyişilibsə və ya yenidən data seed'lənməsi gərəkirsə, o zaman isSystemSideRole parametri açılmalıdır. Controller'də də bu parametri açmaq lazımdır, təbii ki. */
+    public async Task<(bool result, string message)> RegisterAsync(RegisterDto registerDto, bool isAdminAction)
     {
         if (!registerDto.HasAcceptedPolicy)
             throw new PolicyException();
 
-        /* NOTE: [isSystemSideRole] Və eynilə bu hissə də commit'dən çıxardılmalıdır. Beləliklə qısa müddətlik biz admin side role'ları da insert edə bilərik: Burada hər hansısa bir validation yoxdur, sonraki zamanlarda buraya diqqət yetimrək olar, amma hazırki situasiya üçün o qədər də vacib bir işləm deyil. */
-        /*if (!isSystemSideRole && (registerDto.UserRole is < UserRole.Guest or > UserRole.Other))
-            return (false, MessageHelper.GetMessage("UserRoleAreNotAllowed"));*/
+        switch (isAdminAction)
+        {
+            case false when IsSystemSideRole(registerDto.UserRole):
+                return (false, MessageHelper.GetMessage("UserRoleAreNotAllowed"));
+            case true when registerDto.UserRole == UserRole.Admin:
+                return (false, MessageHelper.GetMessage("AdminCannotBeRegistered"));
+        }
 
         await CheckEmailExistsAsync(registerDto.Email);
         ValidatePassword(registerDto.Password);
@@ -50,8 +53,8 @@ public class AuthenticationService(
             LastName = registerDto.LastName,
             Email = registerDto.Email,
             /*PendingEmail = null,*/
-            IsVerified = /*isSystemSideRole*/
-                false, /* NOTE: [isSystemSideRole] Əgər yuxarıdakilar nəzərə alınarsa, o zaman buradaki şərt də admin side role olub-olmaması ilə üst-üstə düşə bilər!  */
+            IsVerified =
+                isAdminAction, /* NOTE: [isAdminAction] Əgər yuxarıdakilar nəzərə alınarsa, o zaman buradaki şərt də admin side role olub-olmaması ilə üst-üstə düşür!  */
             /*RefreshToken = null,*/
             /*RefreshTokenExpireDate = null,*/
             UserRole = registerDto.UserRole,
@@ -64,20 +67,7 @@ public class AuthenticationService(
         };
         await _dbContext.Users.AddAsync(user);
 
-        OutboxEvent outboxEvent = new OutboxEvent()
-        {
-            Id = Guid.NewGuid(),
-            CreatedAt = DateTime.UtcNow,
-            Type = "UserRegisteredEvent",
-            Payload = JsonSerializer.Serialize(new
-            {
-                Email = user.Email,
-                FullName = $"{user.FirstName} {user.LastName}",
-                Language = _currentUser.LanguageCode.ToString()
-            }),
-            RetryCount = 0
-        };
-        await _dbContext.OutboxEvents.AddAsync(outboxEvent);
+        await AddOutboxEventAsync(user);
 
         bool result = await _dbContext.SaveChangesAsync() > 0;
         return result
@@ -213,6 +203,9 @@ public class AuthenticationService(
         await _dbContext.SaveChangesAsync();
     }
 
+    private static bool IsSystemSideRole(UserRole role) =>
+        role is UserRole.Admin or UserRole.Moderator or UserRole.ContentCreator;
+
     private async Task CheckEmailExistsAsync(string email)
     {
         User? existingUser = await _dbContext.Users
@@ -237,5 +230,23 @@ public class AuthenticationService(
             !password.Any(char.IsNumber) ||
             !password.Any(char.IsPunctuation))
             throw new UserFriendlyBusinessException("PasswordInvalid");
+    }
+
+    private async Task AddOutboxEventAsync(User user)
+    {
+        var outboxEvent = new OutboxEvent
+        {
+            Id = Guid.NewGuid(),
+            CreatedAt = DateTime.UtcNow,
+            Type = "UserRegisteredEvent",
+            Payload = JsonSerializer.Serialize(new
+            {
+                Email = user.Email,
+                FullName = $"{user.FirstName} {user.LastName}"
+            }),
+            RetryCount = 0
+        };
+
+        await _dbContext.OutboxEvents.AddAsync(outboxEvent);
     }
 }
