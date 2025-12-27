@@ -144,4 +144,7 @@
     <data name="PasswordChangedSuccessfully" xml:space="preserve">
         <value>Şifreniz başarıyla değiştirildi.</value>
     </data>
+    <data name="AdminCannotBeRegistered" xml:space="preserve">
+        <value>Yönetici rolü ile kayıt oluşturulamaz.</value>
+    </data>
 </root>

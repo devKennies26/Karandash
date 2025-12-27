@@ -144,4 +144,7 @@
     <data name="PasswordChangedSuccessfully" xml:space="preserve">
         <value>Your password has been successfully changed.</value>
     </data>
+    <data name="AdminCannotBeRegistered" xml:space="preserve">
+        <value>Registration with the administrator role is not allowed.</value>
+    </data>
 </root>

@@ -1,6 +1,9 @@
 using Karandash.Authentication.Business.DTOs.Auth;
 using Karandash.Authentication.Business.Services.Authentication;
+using Karandash.Shared.Attributes;
+using Karandash.Shared.Enums.Auth;
 using Karandash.Shared.Utils.Methods;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Karandash.Authentication.API.Controllers;
@@ -35,31 +38,31 @@ public class AuthenticationController(AuthenticationService authenticationServic
     /// Returns 200 OK with success message if registration succeeds, 
     /// or 500 Internal Server Error with failure message if registration fails.
     /// </returns>
+    [AllowAnonymous]
     [HttpPost("[action]")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
     {
-        (bool result, string message) = await _authenticationService.RegisterAsync(registerDto);
+        (bool result, string message) = await _authenticationService.RegisterAsync(registerDto, isAdminAction: false);
 
         return !result
             ? StatusCode(StatusCodes.Status500InternalServerError, new { Message = message })
             : Ok(new { Message = message });
     }
 
-    /* NOTE: lazım olanda burası açılıb işləm görülə bilər, amma sql server local'da olmayandan sonra buranın silinməyi daha məsləhətdir! */
-    /*[HttpPost("[action]")]
+    [AuthorizeRole(UserRole.Admin)]
+    [HttpPost("[action]")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> RegisterWithSystemSideRoleParam([FromBody] RegisterDto registerDto,
-        bool isSystemSideRole)
+    public async Task<IActionResult> RegisterByAdmin([FromBody] RegisterDto registerDto)
     {
-        (bool result, string message) = await _authenticationService.RegisterAsync(registerDto, isSystemSideRole);
+        (bool result, string message) = await _authenticationService.RegisterAsync(registerDto, isAdminAction: true);
 
         return !result
             ? StatusCode(StatusCodes.Status500InternalServerError, new { Message = message })
             : Ok(new { Message = message });
-    }*/
+    }
 
     /// <summary>
     /// Authenticates a user and returns a token.

@@ -137,4 +137,7 @@
     <data name="PasswordChangeFailed" xml:space="preserve">
         <value>Şifrənizi dəyişmək mümkün olmadı. Xahiş edirik, bir az sonra yenidən cəhd edin.</value>
     </data>
+    <data name="AdminCannotBeRegistered" xml:space="preserve">
+        <value>Seçilmiş administrator rolu ilə qeydiyyat aparıla bilməz.</value>
+    </data>
 </root>

@@ -296,5 +296,11 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("PasswordChangeFailed", resourceCulture);
             }
         }
+        
+        internal static string AdminCannotBeRegistered {
+            get {
+                return ResourceManager.GetString("AdminCannotBeRegistered", resourceCulture);
+            }
+        }
     }
 }
