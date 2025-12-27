@@ -5,8 +5,21 @@ namespace Karandash.Authentication.Business.DTOs.Auth;
 
 public class LoginDto
 {
-    public string Email { get; set; }
-    public string Password { get; set; }
+    private string? _email;
+
+    public string Email
+    {
+        get => _email!;
+        set => _email = value?.Trim();
+    }
+
+    private string? _password;
+
+    public string Password
+    {
+        get => _password!;
+        set => _password = value?.Trim();
+    }
 }
 
 public class LoginDtoValidator : AbstractValidator<LoginDto>
