@@ -10,14 +10,14 @@ public class GetAllUsersFilterDto : IPaginationFilter
     public int PageNumber { get; set; } = 1;
     public int PageSize { get; set; } = 10;
 
-    public bool IncludeDeleted { get; set; } = true;
+    public string? FullName { get; set; }
+    public string? Email { get; set; }
 
     public UserRole? UserRole { get; set; }
 
+    public bool IncludeSystemRoles { get; set; } = false;
+    public bool IncludeDeleted { get; set; } = true;
     public bool? IsVerified { get; set; }
-
-    public string? FullName { get; set; }
-    public string? Email { get; set; }
 }
 
 public class GetAllUsersFilterDtoValidator : AbstractValidator<GetAllUsersFilterDto>

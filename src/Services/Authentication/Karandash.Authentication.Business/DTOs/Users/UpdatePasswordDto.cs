@@ -1,12 +1,25 @@
 using FluentValidation;
 using Karandash.Shared.Utils.Methods;
 
-namespace Karandash.Authentication.Business.DTOs.Auth;
+namespace Karandash.Authentication.Business.DTOs.Users;
 
 public class UpdatePasswordDto
 {
-    public string OldPassword { get; set; }
-    public string NewPassword { get; set; }
+    private string? _oldPassword;
+
+    public string OldPassword
+    {
+        get => _oldPassword!;
+        set => _oldPassword = value?.Trim();
+    }
+
+    private string? _newPassword;
+
+    public string? NewPassword
+    {
+        get => _newPassword!;
+        set => _newPassword = value?.Trim();
+    }
 }
 
 public class UpdatePasswordDtoValidator : AbstractValidator<UpdatePasswordDto>

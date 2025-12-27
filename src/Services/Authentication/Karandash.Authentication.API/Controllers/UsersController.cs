@@ -1,4 +1,3 @@
-using Karandash.Authentication.Business.DTOs.Auth;
 using Karandash.Authentication.Business.DTOs.Users;
 using Karandash.Authentication.Business.Services.Users;
 using Karandash.Shared.Attributes;
@@ -11,7 +10,7 @@ namespace Karandash.Authentication.API.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]/[action]")]
 public class UsersController(UserService userService) : ControllerBase
 {
     private readonly UserService _userService = userService;
@@ -26,14 +25,14 @@ public class UsersController(UserService userService) : ControllerBase
     /// - <c>FullName</c>: Search by full name (first + last name).
     /// - <c>Email</c>: Search by email.
     [AuthorizeRole(UserRole.Admin, UserRole.Moderator)]
-    [HttpGet("[action]")]
+    [HttpGet]
     public async Task<ActionResult<PagedResponse<GetAllUsersDto>>> GetAllUsers([FromQuery] GetAllUsersFilterDto filter)
     {
         PagedResponse<GetAllUsersDto> result = await _userService.GetAllUsersAsync(filter);
         return Ok(result);
     }
 
-    [HttpPost("[action]")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordDto updatePasswordDto)
@@ -45,7 +44,7 @@ public class UsersController(UserService userService) : ControllerBase
             : Ok(new { Message = message });
     }
 
-    [HttpPost("[action]")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult>
