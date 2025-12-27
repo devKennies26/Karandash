@@ -1,4 +1,3 @@
-using Karandash.Authentication.Business.DTOs.Auth;
 using Karandash.Authentication.Business.DTOs.Users;
 using Karandash.Authentication.Business.Services.Authentication;
 using Karandash.Authentication.Business.Services.Utils;
@@ -63,33 +62,34 @@ public class UserService(
     {
         /*_authenticationService.ValidatePassword(updatePasswordDto.OldPassword);*/
         /* NOTE: köhnə şifrənin minimum 8 rəqəmli olduğunu bildikdən sonrası çox da önəmli deyil ki, biz burada onu validate edək. Sadəcə yenisinin formatını yoxladıqdan sonra aşağıda eyniliyini də yoxlayacayıq. */
-        _authenticationService.ValidatePassword(updatePasswordDto.NewPassword);
+        _authenticationService.ValidatePassword(updatePasswordDto.NewPassword!);
 
         User? user = await _dbContext.Users
             .IgnoreQueryFilters()
             .Where(u => u.Id == _currentUser.UserGuid).FirstOrDefaultAsync();
 
         if (user is null)
-            throw new UserFriendlyBusinessException("InvalidEmailOrPassword");
+            throw new UserFriendlyBusinessException("UserNotFound");
         if (user.IsDeleted)
             throw new UserFriendlyBusinessException("AccountDeleted");
 
         if (!_passwordHasher.Verify(updatePasswordDto.OldPassword, user.PasswordHash, user.PasswordSalt))
             throw new UserFriendlyBusinessException("OldPasswordIncorrect"); /* Köhnə parolu yoxlayırıq */
-        if (_passwordHasher.Verify(updatePasswordDto.NewPassword, user.PasswordHash, user.PasswordSalt))
+        if (_passwordHasher.Verify(updatePasswordDto.NewPassword!, user.PasswordHash, user.PasswordSalt))
             throw
                 new UserFriendlyBusinessException(
                     "NewPasswordCannotBeSameAsOld"); /* Köhnə parol yenisi ilə eyni olarsa, extra database işləmi görməkdənsə istəyi geri çeviririk! */
 
         byte[] newSalt = _passwordHasher.GenerateSalt();
-        string newHashedPassword = _passwordHasher.Hash(updatePasswordDto.NewPassword, newSalt);
+        string newHashedPassword = _passwordHasher.Hash(updatePasswordDto.NewPassword!, newSalt);
 
         user.PasswordSalt = newSalt;
         user.PasswordHash = newHashedPassword;
+        user.UpdatedAt = DateTime.UtcNow;
 
         _dbContext.Users.Update(user);
-        bool result = await _dbContext.SaveChangesAsync() > 0;
 
+        bool result = await _dbContext.SaveChangesAsync() > 0;
         if (result)
             _emailService.SendPasswordChangedEmail(
                 user.Email,
@@ -110,7 +110,7 @@ public class UserService(
         if (user is null)
             throw
                 new UserFriendlyBusinessException(
-                    "UserNotFound"); /* TODO: hər iki servisin kodlarına baxmaq lazımdır, uyğun olmayan yerlərdə buradaki key'i işlətmək lazımdır!  */
+                    "UserNotFound");
         if (user.IsDeleted)
             throw new UserFriendlyBusinessException("AccountDeleted");
 
@@ -144,23 +144,32 @@ public class UserService(
         return (true, MessageHelper.GetMessage("AccountDeactivatedSuccessfully"));
     }
 
+    private static readonly UserRole[] SystemRoles =
+    [
+        UserRole.Admin,
+        UserRole.Moderator,
+        UserRole.ContentCreator
+    ];
+
     private IQueryable<User> ApplyFilters(IQueryable<User> query, GetAllUsersFilterDto filter)
     {
+        if (!string.IsNullOrWhiteSpace(filter.FullName))
+            query = query.Where(u => (u.FirstName + " " + u.LastName).Contains(filter.FullName));
+        if (!string.IsNullOrWhiteSpace(filter.Email))
+            query = query.Where(u => u.Email.Contains(filter.Email));
+
         if (filter.UserRole.HasValue)
             query = query.Where(u => u.UserRole == filter.UserRole.Value);
 
-        if (filter.IsVerified.HasValue)
-            query = query.Where(u => u.IsVerified == filter.IsVerified.Value);
+        if (!filter.IncludeSystemRoles)
+            query = query.Where(u => !SystemRoles.Contains(u.UserRole));
 
         if (!filter.IncludeDeleted)
             query = query.Where(u =>
                 !u.IsDeleted); /* Əgər IncludeDeleted false'dursa, yalnız deleted olmayanları gətir */
 
-        if (!string.IsNullOrWhiteSpace(filter.FullName))
-            query = query.Where(u => (u.FirstName + " " + u.LastName).Contains(filter.FullName));
-
-        if (!string.IsNullOrWhiteSpace(filter.Email))
-            query = query.Where(u => u.Email.Contains(filter.Email));
+        if (filter.IsVerified.HasValue)
+            query = query.Where(u => u.IsVerified == filter.IsVerified.Value);
 
         return query;
     }
