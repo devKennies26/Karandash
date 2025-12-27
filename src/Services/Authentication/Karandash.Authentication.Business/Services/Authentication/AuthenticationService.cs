@@ -93,8 +93,10 @@ public class AuthenticationService(
         RefreshToken
             refreshToken = _tokenHandler.GenerateRefreshToken(accessToken, minutes: 10080); // 7 gün (tövsiyə olunur)
 
+        user.UpdatedAt = DateTime.UtcNow;
         user.RefreshToken = refreshToken.TokenValue;
         user.RefreshTokenExpireDate = refreshToken.ExpiresAt;
+        
         await _dbContext.SaveChangesAsync();
 
         return new TokenResponseDto()
@@ -108,8 +110,10 @@ public class AuthenticationService(
         };
     }
 
-    public async Task<TokenResponseDto> LoginByRefreshTokenAsync(string refreshToken)
+    public async Task<TokenResponseDto> LoginByRefreshTokenAsync(string? refreshToken)
     {
+        refreshToken = refreshToken?.Trim();
+        
         if (string.IsNullOrEmpty(refreshToken))
             throw new UserFriendlyBusinessException("InvalidRefreshToken");
 
@@ -123,8 +127,10 @@ public class AuthenticationService(
         RefreshToken
             newRefreshToken = _tokenHandler.GenerateRefreshToken(accessToken, minutes: 10080); // 7 gün (tövsiyə olunur)
 
+        user.UpdatedAt = DateTime.UtcNow;
         user.RefreshToken = newRefreshToken.TokenValue;
         user.RefreshTokenExpireDate = newRefreshToken.ExpiresAt;
+        
         await _dbContext.SaveChangesAsync();
 
         return new TokenResponseDto()

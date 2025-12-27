@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Karandash.Authentication.API.Controllers;
 
-[Route("api/[controller]"), ApiController]
+[Route("api/[controller]/[action]"), ApiController]
 public class AuthenticationController(AuthenticationService authenticationService) : ControllerBase
 {
     private readonly AuthenticationService _authenticationService = authenticationService;
@@ -39,7 +39,7 @@ public class AuthenticationController(AuthenticationService authenticationServic
     /// or 500 Internal Server Error with failure message if registration fails.
     /// </returns>
     [AllowAnonymous]
-    [HttpPost("[action]")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
@@ -52,7 +52,7 @@ public class AuthenticationController(AuthenticationService authenticationServic
     }
 
     [AuthorizeRole(UserRole.Admin)]
-    [HttpPost("[action]")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> RegisterByAdmin([FromBody] RegisterDto registerDto)
@@ -68,27 +68,23 @@ public class AuthenticationController(AuthenticationService authenticationServic
     /// Authenticates a user and returns a token.
     /// </summary>
     /// <param name="loginDto">Login credentials</param>
-    [HttpPost("[action]")]
-    public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
-    {
-        return Ok(await _authenticationService.LoginAsync(loginDto));
-    }
+    [HttpPost]
+    public async Task<IActionResult> Login([FromBody] LoginDto loginDto) =>
+        Ok(await _authenticationService.LoginAsync(loginDto));
 
     /// <summary>
     /// Generates a new access token using a valid refresh token.
     /// </summary>
-    /// <param name="request">Refresh token request</param>
-    [HttpPost("[action]")]
-    public async Task<IActionResult> RefreshToken([FromBody] string refreshToken)
-    {
-        return Ok(await _authenticationService.LoginByRefreshTokenAsync(refreshToken));
-    }
+    /// <param name="requestDto"></param>
+    [HttpPost]
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequestDto requestDto) =>
+        Ok(await _authenticationService.LoginByRefreshTokenAsync(requestDto.RefreshToken));
 
     /// <summary>
     /// Generates and sends a password reset token to the specified email.
     /// </summary>
     /// <param name="email">The email of the user</param>
-    [HttpPost("[action]")]
+    [HttpPost]
     public async Task<IActionResult> SendResetToken([FromQuery] string email)
     {
         await _authenticationService.GenerateAndSendPasswordResetTokenAsync(email);
@@ -102,7 +98,7 @@ public class AuthenticationController(AuthenticationService authenticationServic
     /// Confirms password reset using the token sent to email.
     /// </summary>
     /// <param name="passwordResetDto">Password reset data including token and new password</param>
-    [HttpPost("[action]")]
+    [HttpPost]
     public async Task<IActionResult> ConfirmPasswordReset([FromBody] PasswordResetDto passwordResetDto)
     {
         await _authenticationService.ConfirmPasswordResetAsync(passwordResetDto);
