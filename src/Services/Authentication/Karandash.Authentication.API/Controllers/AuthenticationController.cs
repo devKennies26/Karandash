@@ -75,7 +75,7 @@ public class AuthenticationController(AuthenticationService authenticationServic
     /// <summary>
     /// Generates a new access token using a valid refresh token.
     /// </summary>
-    /// <param name="requestDto"></param>
+    /// <param name="requestDto">Contains the refresh token required to generate a new access token.</param>
     [HttpPost]
     public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequestDto requestDto) =>
         Ok(await _authenticationService.LoginByRefreshTokenAsync(requestDto.RefreshToken));
@@ -83,11 +83,11 @@ public class AuthenticationController(AuthenticationService authenticationServic
     /// <summary>
     /// Generates and sends a password reset token to the specified email.
     /// </summary>
-    /// <param name="email">The email of the user</param>
+    /// <param name="requestDto">Contains the email address of the user requesting a password reset.</param>
     [HttpPost]
-    public async Task<IActionResult> SendResetToken([FromQuery] string email)
+    public async Task<IActionResult> SendResetToken([FromQuery] SendResetTokenRequestDto requestDto)
     {
-        await _authenticationService.GenerateAndSendPasswordResetTokenAsync(email);
+        await _authenticationService.GenerateAndSendPasswordResetTokenAsync(requestDto.Email);
         return Accepted(new
         {
             Message = MessageHelper.GetMessage("PasswordReset-EmailMessage")

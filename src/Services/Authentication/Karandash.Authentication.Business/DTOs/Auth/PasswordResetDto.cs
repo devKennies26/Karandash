@@ -5,8 +5,21 @@ namespace Karandash.Authentication.Business.DTOs.Auth;
 
 public class PasswordResetDto
 {
-    public string Token { get; set; }
-    public string NewPassword { get; set; }
+    private string? _token;
+
+    public string Token
+    {
+        get => _token!;
+        set => _token = value?.Trim();
+    }
+
+    private string? _newPassword;
+
+    public string NewPassword
+    {
+        get => _newPassword!;
+        set => _newPassword = value?.Trim();
+    }
 }
 
 public class PasswordResetDtoValidator : AbstractValidator<PasswordResetDto>

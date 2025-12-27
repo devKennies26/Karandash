@@ -147,4 +147,7 @@
     <data name="AdminCannotBeRegistered" xml:space="preserve">
         <value>Yönetici rolü ile kayıt oluşturulamaz.</value>
     </data>
+    <data name="InvalidEmail" xml:space="preserve">
+        <value>Geçersiz {0}.</value>
+    </data>
 </root>

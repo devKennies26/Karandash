@@ -147,4 +147,7 @@
     <data name="AdminCannotBeRegistered" xml:space="preserve">
         <value>Регистрация с выбранной ролью администратора невозможна.</value>
     </data>
+    <data name="InvalidEmail" xml:space="preserve">
+        <value>Неверный {0}.</value>
+    </data>
 </root>

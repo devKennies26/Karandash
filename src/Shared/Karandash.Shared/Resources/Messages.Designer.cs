@@ -302,5 +302,11 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("AdminCannotBeRegistered", resourceCulture);
             }
         }
+        
+        internal static string InvalidEmail {
+            get {
+                return ResourceManager.GetString("InvalidEmail", resourceCulture);
+            }
+        }
     }
 }
