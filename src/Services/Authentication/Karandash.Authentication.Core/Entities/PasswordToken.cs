@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Karandash.Authentication.Core.Entities.Common;
 
 namespace Karandash.Authentication.Core.Entities;
@@ -9,4 +10,6 @@ public class PasswordToken : BaseEntity
 
     public Guid UserId { get; set; }
     public User? User { get; set; }
+
+    [NotMapped] public override DateTime? RemovedAt { get; set; }
 }

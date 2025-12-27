@@ -147,4 +147,7 @@
     <data name="AdminCannotBeRegistered" xml:space="preserve">
         <value>Registration with the administrator role is not allowed.</value>
     </data>
+    <data name="InvalidEmail" xml:space="preserve">
+        <value>Invalid {0}.</value>
+    </data>
 </root>

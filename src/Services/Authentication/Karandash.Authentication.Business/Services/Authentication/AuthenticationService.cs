@@ -96,7 +96,7 @@ public class AuthenticationService(
         user.UpdatedAt = DateTime.UtcNow;
         user.RefreshToken = refreshToken.TokenValue;
         user.RefreshTokenExpireDate = refreshToken.ExpiresAt;
-        
+
         await _dbContext.SaveChangesAsync();
 
         return new TokenResponseDto()
@@ -113,7 +113,6 @@ public class AuthenticationService(
     public async Task<TokenResponseDto> LoginByRefreshTokenAsync(string? refreshToken)
     {
         refreshToken = refreshToken?.Trim();
-        
         if (string.IsNullOrEmpty(refreshToken))
             throw new UserFriendlyBusinessException("InvalidRefreshToken");
 
@@ -130,7 +129,7 @@ public class AuthenticationService(
         user.UpdatedAt = DateTime.UtcNow;
         user.RefreshToken = newRefreshToken.TokenValue;
         user.RefreshTokenExpireDate = newRefreshToken.ExpiresAt;
-        
+
         await _dbContext.SaveChangesAsync();
 
         return new TokenResponseDto()
@@ -144,8 +143,12 @@ public class AuthenticationService(
         };
     }
 
-    public async Task GenerateAndSendPasswordResetTokenAsync(string email)
+    public async Task GenerateAndSendPasswordResetTokenAsync(string? email)
     {
+        email = email?.Trim();
+        if (string.IsNullOrEmpty(email))
+            throw new UserFriendlyBusinessException("InvalidEmail", MessageHelper.GetMessage("FieldName-Email"));
+
         User? user = await _dbContext.Users
             .IgnoreQueryFilters()
             .FirstOrDefaultAsync(u => u.Email == email);
@@ -155,25 +158,35 @@ public class AuthenticationService(
         if (user.IsDeleted)
             throw new UserFriendlyBusinessException("AccountDeleted");
 
-        PasswordToken? existsPasswordToken =
+        PasswordToken? passwordToken =
             await _dbContext.PasswordTokens.FirstOrDefaultAsync(pt => pt.UserId == user.Id);
-        if (existsPasswordToken is not null)
-        {
-            _dbContext.PasswordTokens.Remove(existsPasswordToken);
-            await _dbContext.SaveChangesAsync();
-        }
 
         DateTime expiresDate = DateTime.UtcNow.AddHours(1);
         string token = _tokenHandler.GeneratePasswordResetToken(user, expiresDate);
-        PasswordToken passwordToken = new PasswordToken()
-        {
-            Value = token,
-            UserId = user.Id,
-            InsertedAt = DateTime.UtcNow,
-            ExpiresDate = expiresDate
-        };
 
-        await _dbContext.PasswordTokens.AddAsync(passwordToken);
+        if (passwordToken is null)
+        {
+            passwordToken = new PasswordToken
+            {
+                UserId = user.Id,
+                Value = token,
+                ExpiresDate = expiresDate,
+                InsertedAt = DateTime.UtcNow,
+                UpdatedAt = null /* NOTE: ilk dəfə şifrəni dəyişmək istədikdə update at dəyəri null olmalıdır! */
+            };
+
+            await _dbContext.PasswordTokens.AddAsync(passwordToken);
+        }
+        else
+        {
+            passwordToken.Value = token;
+            passwordToken.ExpiresDate = expiresDate;
+            passwordToken.UpdatedAt = DateTime.UtcNow;
+
+            _dbContext.PasswordTokens.Update(passwordToken);
+        }
+
+        user.UpdatedAt = DateTime.UtcNow;
         await _dbContext.SaveChangesAsync();
 
         _emailService.SendPasswordResetEmail(user.Email, $"{user.FirstName} {user.LastName}", token);
@@ -205,6 +218,8 @@ public class AuthenticationService(
 
         user.PasswordHash = _passwordHasher.Hash(passwordResetDto.NewPassword, salt);
         user.PasswordSalt = salt;
+        user.UpdatedAt = DateTime.UtcNow;
+
         _dbContext.PasswordTokens.Remove(passwordToken);
         await _dbContext.SaveChangesAsync();
     }
