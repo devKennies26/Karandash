@@ -150,4 +150,16 @@
     <data name="InvalidEmail" xml:space="preserve">
         <value>Geçersiz {0}.</value>
     </data>
+    <data name="UserNotFoundForUpdatePassword" xml:space="preserve">
+        <value>Şifre değiştirilemedi. Lütfen hesabınızla ilgili bilgilerin doğruluğunu kontrol edip tekrar deneyin.</value>
+    </data>
+    <data name="UserNotFoundForDeactivation" xml:space="preserve">
+        <value>Hesap devre dışı bırakılamadı. Lütfen hesap bilgilerinizi kontrol edip tekrar deneyin.</value>
+    </data>
+    <data name="SessionExpired" xml:space="preserve">
+        <value>Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.</value>
+    </data>
+    <data name="PasswordResetNotAllowed" xml:space="preserve">
+        <value>Şifre sıfırlanamadı. Lütfen bağlantının geçerli olduğundan emin olup tekrar deneyin.</value>
+    </data>
 </root>

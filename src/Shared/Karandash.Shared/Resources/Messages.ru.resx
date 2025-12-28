@@ -150,4 +150,16 @@
     <data name="InvalidEmail" xml:space="preserve">
         <value>Неверный {0}.</value>
     </data>
+    <data name="UserNotFoundForUpdatePassword" xml:space="preserve">
+        <value>Не удалось изменить пароль. Пожалуйста, проверьте корректность данных вашей учетной записи и попробуйте снова.</value>
+    </data>
+    <data name="UserNotFoundForDeactivation" xml:space="preserve">
+        <value>Не удалось деактивировать учетную запись. Пожалуйста, проверьте данные учетной записи и попробуйте снова.</value>
+    </data>
+    <data name="SessionExpired" xml:space="preserve">
+        <value>Срок действия вашей сессии истек. Пожалуйста, войдите снова.</value>
+    </data>
+    <data name="PasswordResetNotAllowed" xml:space="preserve">
+        <value>Не удалось сбросить пароль. Пожалуйста, проверьте корректность ссылки и попробуйте снова.</value>
+    </data>
 </root>

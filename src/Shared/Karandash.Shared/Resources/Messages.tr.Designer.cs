@@ -308,5 +308,29 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("InvalidEmail", resourceCulture);
             }
         }
+        
+        internal static string UserNotFoundForUpdatePassword {
+            get {
+                return ResourceManager.GetString("UserNotFoundForUpdatePassword", resourceCulture);
+            }
+        }
+        
+        internal static string UserNotFoundForDeactivation {
+            get {
+                return ResourceManager.GetString("UserNotFoundForDeactivation", resourceCulture);
+            }
+        }
+        
+        internal static string SessionExpired {
+            get {
+                return ResourceManager.GetString("SessionExpired", resourceCulture);
+            }
+        }
+        
+        internal static string PasswordResetNotAllowed {
+            get {
+                return ResourceManager.GetString("PasswordResetNotAllowed", resourceCulture);
+            }
+        }
     }
 }

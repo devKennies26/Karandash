@@ -113,14 +113,15 @@ public class AuthenticationService(
     public async Task<TokenResponseDto> LoginByRefreshTokenAsync(string? refreshToken)
     {
         refreshToken = refreshToken?.Trim();
-        if (string.IsNullOrEmpty(refreshToken))
-            throw new UserFriendlyBusinessException("InvalidRefreshToken");
+        if (string.IsNullOrWhiteSpace(refreshToken))
+            throw new UserFriendlyBusinessException("SessionExpired");
 
-        User user = await _dbContext.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken)
-                    ?? throw new UserFriendlyBusinessException("InvalidRefreshToken");
+        User user = await _dbContext.Users
+                        .FirstOrDefaultAsync(u => u.RefreshToken == refreshToken)
+                    ?? throw new UserFriendlyBusinessException("SessionExpired");
 
         if (user.RefreshTokenExpireDate < DateTime.UtcNow)
-            throw new UserFriendlyBusinessException("RefreshTokenExpired");
+            throw new UserFriendlyBusinessException("SessionExpired");
 
         string accessToken = _tokenHandler.GenerateAccessToken(user, expireMinutes: 60);
         RefreshToken
@@ -197,22 +198,20 @@ public class AuthenticationService(
         ValidatePassword(passwordResetDto.NewPassword);
 
         JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-        var jwToken = handler.ReadJwtToken(passwordResetDto.Token);
+        JwtSecurityToken? jwToken = handler.ReadJwtToken(passwordResetDto.Token);
 
         string? email = jwToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
         User? user = await _dbContext.Users
             .IgnoreQueryFilters()
             .FirstOrDefaultAsync(u => u.Email == email);
 
-        if (user is null)
-            throw new UserFriendlyBusinessException("UserNotFoundForPasswordReset");
-        if (user.IsDeleted)
-            throw new UserFriendlyBusinessException("AccountDeleted");
+        if (user is null || user.IsDeleted)
+            throw new UserFriendlyBusinessException("PasswordResetNotAllowed");
 
         PasswordToken? passwordToken = await _dbContext.PasswordTokens.FirstOrDefaultAsync(pt =>
                                            pt.Value == passwordResetDto.Token && pt.UserId == user.Id &&
                                            pt.ExpiresDate >= DateTime.UtcNow)
-                                       ?? throw new UserFriendlyBusinessException("InvalidPasswordToken");
+                                       ?? throw new UserFriendlyBusinessException("PasswordResetNotAllowed");
 
         byte[] salt = _passwordHasher.GenerateSalt();
 

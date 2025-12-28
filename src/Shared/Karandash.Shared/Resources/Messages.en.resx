@@ -150,4 +150,16 @@
     <data name="InvalidEmail" xml:space="preserve">
         <value>Invalid {0}.</value>
     </data>
+    <data name="UserNotFoundForUpdatePassword" xml:space="preserve">
+        <value>Unable to change the password. Please verify that your account information is correct and try again.</value>
+    </data>
+    <data name="UserNotFoundForDeactivation" xml:space="preserve">
+        <value>Unable to deactivate the account. Please verify your account information and try again.</value>
+    </data>
+    <data name="SessionExpired" xml:space="preserve">
+        <value>Your session has expired. Please sign in again.</value>
+    </data>
+    <data name="PasswordResetNotAllowed" xml:space="preserve">
+        <value>Unable to reset the password. Please make sure the link is valid and try again.</value>
+    </data>
 </root>
