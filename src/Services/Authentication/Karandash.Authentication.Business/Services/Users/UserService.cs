@@ -5,7 +5,9 @@ using Karandash.Authentication.Core.Entities;
 using Karandash.Authentication.DataAccess.Contexts;
 using Karandash.Shared.Enums.Auth;
 using Karandash.Shared.Exceptions;
+using Karandash.Shared.Extensions.Role;
 using Karandash.Shared.Filters.Pagination;
+using Karandash.Shared.Policies.Role;
 using Karandash.Shared.Utils;
 using Karandash.Shared.Utils.Methods;
 using Microsoft.EntityFrameworkCore;
@@ -142,6 +144,43 @@ public class UserService(
             $"{user.FirstName} {user.LastName}"
         );
         return (true, MessageHelper.GetMessage("AccountDeactivatedSuccessfully"));
+    }
+
+    public async Task<(bool result, string message)> ChangeUserRoleAsync(
+        Guid targetUserId,
+        UserRole newRole)
+    {
+        User actor = await _dbContext.Users
+                         .IgnoreQueryFilters()
+                         .FirstOrDefaultAsync(u => u.Id == _currentUser.UserGuid)
+                     ?? throw new UserFriendlyBusinessException("ActorUserNotFound");
+
+        User target = await _dbContext.Users
+                          .IgnoreQueryFilters()
+                          .FirstOrDefaultAsync(u => u.Id == targetUserId)
+                      ?? throw new UserFriendlyBusinessException("TargetUserNotFound");
+
+        bool isSelfService = actor.Id == target.Id;
+
+        if (target.UserRole == newRole)
+            return (true, MessageHelper.GetMessage("RoleChangedSuccessfully"));
+        
+        if (!RoleChangePolicy.CanChangeRole(actor.UserRole, target.UserRole, newRole, isSelfService))
+            throw new UserFriendlyBusinessException("RoleChangeNotAllowed");
+
+        target.UserRole = newRole;
+        target.UpdatedAt = DateTime.UtcNow;
+
+        target.IsVerified = newRole.IsSystemRole();
+        
+        _dbContext.Users.Update(target);
+        bool success = await _dbContext.SaveChangesAsync() > 0;
+
+        string message = success
+            ? MessageHelper.GetMessage("RoleChangedSuccessfully")
+            : MessageHelper.GetMessage("RoleChangeFailed");
+
+        return (success, message);
     }
 
     private static readonly UserRole[] SystemRoles =

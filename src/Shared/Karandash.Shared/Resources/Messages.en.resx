@@ -162,4 +162,19 @@
     <data name="PasswordResetNotAllowed" xml:space="preserve">
         <value>Unable to reset the password. Please make sure the link is valid and try again.</value>
     </data>
+    <data name="RoleChangeNotAllowed" xml:space="preserve">
+        <value>You are not allowed to change this role.</value>
+    </data>
+    <data name="RoleChangedSuccessfully" xml:space="preserve">
+        <value>Role changed successfully.</value>
+    </data>
+    <data name="RoleChangeFailed" xml:space="preserve">
+        <value>Role change failed.</value>
+    </data>
+    <data name="ActorUserNotFound" xml:space="preserve">
+        <value>Actor user not found.</value>
+    </data>
+    <data name="TargetUserNotFound" xml:space="preserve">
+        <value>Target user not found.</value>
+    </data>
 </root>

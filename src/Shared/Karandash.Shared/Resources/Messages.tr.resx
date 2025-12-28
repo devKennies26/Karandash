@@ -162,4 +162,19 @@
     <data name="PasswordResetNotAllowed" xml:space="preserve">
         <value>Şifre sıfırlanamadı. Lütfen bağlantının geçerli olduğundan emin olup tekrar deneyin.</value>
     </data>
+    <data name="RoleChangeNotAllowed" xml:space="preserve">
+        <value>Bu rolü değiştirme yetkiniz yok.</value>
+    </data>
+    <data name="RoleChangedSuccessfully" xml:space="preserve">
+        <value>Rol başarıyla değiştirildi.</value>
+    </data>
+    <data name="RoleChangeFailed" xml:space="preserve">
+        <value>Rol değişimi başarısız oldu.</value>
+    </data>
+    <data name="ActorUserNotFound" xml:space="preserve">
+        <value>İşlem yapan kullanıcı bulunamadı.</value>
+    </data>
+    <data name="TargetUserNotFound" xml:space="preserve">
+        <value>Hedef kullanıcı bulunamadı.</value>
+    </data>
 </root>

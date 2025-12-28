@@ -4,8 +4,8 @@ namespace Karandash.Shared.Enums.Auth;
 public enum UserRole : byte
 {
     Admin = 0,
-    Moderator = 1, /* Şərhləri və forumu idarə edən */
-    ContentCreator = 2, /* Blog kontenti idarə edən */
+    Moderator = 1, /* Admindən sonra sistem idarəetməsindən cavabdeh olan */
+    ContentCreator = 2, /* Blog və onun kontentlərini idarə edən */
 
     Student = 3, /* Ya məktəb, ya da universitet şagirdləri/tələbələri üçün */
     Alumni = 4, /* Məzunlar üçün */

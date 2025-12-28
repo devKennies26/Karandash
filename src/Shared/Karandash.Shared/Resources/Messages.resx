@@ -150,4 +150,19 @@
     <data name="PasswordResetNotAllowed" xml:space="preserve">
         <value />
     </data>
+    <data name="RoleChangeNotAllowed" xml:space="preserve">
+        <value />
+    </data>
+    <data name="RoleChangedSuccessfully" xml:space="preserve">
+        <value />
+    </data>
+    <data name="RoleChangeFailed" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ActorUserNotFound" xml:space="preserve">
+        <value />
+    </data>
+    <data name="TargetUserNotFound" xml:space="preserve">
+        <value />
+    </data>
 </root>

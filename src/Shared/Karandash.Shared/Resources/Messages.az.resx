@@ -155,4 +155,19 @@
     <data name="PasswordResetNotAllowed" xml:space="preserve">
         <value>Şifrəni sıfırlamaq mümkün olmadı. Zəhmət olmasa linkin etibarlı olduğunu yoxlayıb yenidən cəhd edin.</value>
     </data>
+    <data name="RoleChangeNotAllowed" xml:space="preserve">
+        <value>Bu rolu dəyişdirməyə icazəniz yoxdur.</value>
+    </data>
+    <data name="RoleChangedSuccessfully" xml:space="preserve">
+        <value>Rol uğurla dəyişdirildi.</value>
+    </data>
+    <data name="RoleChangeFailed" xml:space="preserve">
+        <value>Rol dəyişdirilməsi uğursuz oldu.</value>
+    </data>
+    <data name="ActorUserNotFound" xml:space="preserve">
+        <value>İcraçı istifadəçi tapılmadı.</value>
+    </data>
+    <data name="TargetUserNotFound" xml:space="preserve">
+        <value>Hədəf istifadəçi tapılmadı.</value>
+    </data>
 </root>

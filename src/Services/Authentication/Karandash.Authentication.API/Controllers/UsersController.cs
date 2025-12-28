@@ -56,4 +56,17 @@ public class UsersController(UserService userService) : ControllerBase
             ? StatusCode(StatusCodes.Status500InternalServerError, new { Message = message })
             : Ok(new { Message = message });
     }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> ChangeUserRole([FromBody] ChangeUserRoleDto changeUserRoleDto)
+    {
+        (bool result, string message) =
+            await _userService.ChangeUserRoleAsync(changeUserRoleDto.TargetUserId, changeUserRoleDto.NewRole);
+
+        return !result
+            ? StatusCode(StatusCodes.Status500InternalServerError, new { Message = message })
+            : Ok(new { Message = message });
+    }
 }
