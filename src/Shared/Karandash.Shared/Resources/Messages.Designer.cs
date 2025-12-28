@@ -183,18 +183,6 @@ namespace Karandash.Shared.Resources {
             }
         }
         
-        internal static string InvalidRefreshToken {
-            get {
-                return ResourceManager.GetString("InvalidRefreshToken", resourceCulture);
-            }
-        }
-        
-        internal static string RefreshTokenExpired {
-            get {
-                return ResourceManager.GetString("RefreshTokenExpired", resourceCulture);
-            }
-        }
-        
         internal static string UserNotFoundForPasswordReset {
             get {
                 return ResourceManager.GetString("UserNotFoundForPasswordReset", resourceCulture);
@@ -216,12 +204,6 @@ namespace Karandash.Shared.Resources {
         internal static string FieldName_Token {
             get {
                 return ResourceManager.GetString("FieldName-Token", resourceCulture);
-            }
-        }
-        
-        internal static string InvalidPasswordToken {
-            get {
-                return ResourceManager.GetString("InvalidPasswordToken", resourceCulture);
             }
         }
         
@@ -258,12 +240,6 @@ namespace Karandash.Shared.Resources {
         internal static string NewPasswordCannotBeSameAsOld {
             get {
                 return ResourceManager.GetString("NewPasswordCannotBeSameAsOld", resourceCulture);
-            }
-        }
-        
-        internal static string UserNotFound {
-            get {
-                return ResourceManager.GetString("UserNotFound", resourceCulture);
             }
         }
         
@@ -306,6 +282,30 @@ namespace Karandash.Shared.Resources {
         internal static string InvalidEmail {
             get {
                 return ResourceManager.GetString("InvalidEmail", resourceCulture);
+            }
+        }
+        
+        internal static string UserNotFoundForUpdatePassword {
+            get {
+                return ResourceManager.GetString("UserNotFoundForUpdatePassword", resourceCulture);
+            }
+        }
+        
+        internal static string UserNotFoundForDeactivation {
+            get {
+                return ResourceManager.GetString("UserNotFoundForDeactivation", resourceCulture);
+            }
+        }
+        
+        internal static string SessionExpired {
+            get {
+                return ResourceManager.GetString("SessionExpired", resourceCulture);
+            }
+        }
+        
+        internal static string PasswordResetNotAllowed {
+            get {
+                return ResourceManager.GetString("PasswordResetNotAllowed", resourceCulture);
             }
         }
     }

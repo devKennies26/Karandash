@@ -143,4 +143,16 @@
     <data name="InvalidEmail" xml:space="preserve">
         <value>{0} düzgün deyil.</value>
     </data>
+    <data name="UserNotFoundForUpdatePassword" xml:space="preserve">
+        <value>Şifrəni dəyişmək mümkün olmadı. Zəhmət olmasa hesabınızla bağlı hər şeyin düzgünlüyünü yoxladıqdan sonra yenidən cəhd edin.</value>
+    </data>
+    <data name="UserNotFoundForDeactivation" xml:space="preserve">
+        <value>Hesabı deaktiv etmək mümkün olmadı. Zəhmət olmasa hesab məlumatlarınızı yoxlayıb yenidən cəhd edin.</value>
+    </data>
+    <data name="SessionExpired" xml:space="preserve">
+        <value>Sessiyanızın müddəti bitib. Zəhmət olmasa yenidən daxil olun.</value>
+    </data>
+    <data name="PasswordResetNotAllowed" xml:space="preserve">
+        <value>Şifrəni sıfırlamaq mümkün olmadı. Zəhmət olmasa linkin etibarlı olduğunu yoxlayıb yenidən cəhd edin.</value>
+    </data>
 </root>

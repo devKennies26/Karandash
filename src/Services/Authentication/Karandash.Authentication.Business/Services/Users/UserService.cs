@@ -69,7 +69,7 @@ public class UserService(
             .Where(u => u.Id == _currentUser.UserGuid).FirstOrDefaultAsync();
 
         if (user is null)
-            throw new UserFriendlyBusinessException("UserNotFound");
+            throw new UserFriendlyBusinessException("UserNotFoundForUpdatePassword");
         if (user.IsDeleted)
             throw new UserFriendlyBusinessException("AccountDeleted");
 
@@ -110,7 +110,7 @@ public class UserService(
         if (user is null)
             throw
                 new UserFriendlyBusinessException(
-                    "UserNotFound");
+                    "UserNotFoundForDeactivation");
         if (user.IsDeleted)
             throw new UserFriendlyBusinessException("AccountDeleted");
 

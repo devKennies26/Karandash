@@ -87,12 +87,6 @@
     <data name="AccountDeleted" xml:space="preserve">
         <value />
     </data>
-    <data name="InvalidRefreshToken" xml:space="preserve">
-        <value />
-    </data>
-    <data name="RefreshTokenExpired" xml:space="preserve">
-        <value />
-    </data>
     <data name="UserNotFoundForPasswordReset" xml:space="preserve">
         <value />
     </data>
@@ -103,9 +97,6 @@
         <value />
     </data>
     <data name="FieldName-Token" xml:space="preserve">
-        <value />
-    </data>
-    <data name="InvalidPasswordToken" xml:space="preserve">
         <value />
     </data>
     <data name="PasswordReset-Success" xml:space="preserve">
@@ -124,9 +115,6 @@
         <value />
     </data>
     <data name="NewPasswordCannotBeSameAsOld" xml:space="preserve">
-        <value />
-    </data>
-    <data name="UserNotFound" xml:space="preserve">
         <value />
     </data>
     <data name="AccountDeactivatedSuccessfully" xml:space="preserve">
@@ -148,6 +136,18 @@
         <value />
     </data>
     <data name="InvalidEmail" xml:space="preserve">
+        <value />
+    </data>
+    <data name="UserNotFoundForUpdatePassword" xml:space="preserve">
+        <value />
+    </data>
+    <data name="UserNotFoundForDeactivation" xml:space="preserve">
+        <value />
+    </data>
+    <data name="SessionExpired" xml:space="preserve">
+        <value />
+    </data>
+    <data name="PasswordResetNotAllowed" xml:space="preserve">
         <value />
     </data>
 </root>
