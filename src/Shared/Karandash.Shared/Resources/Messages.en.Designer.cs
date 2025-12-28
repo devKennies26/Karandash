@@ -332,5 +332,35 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("PasswordResetNotAllowed", resourceCulture);
             }
         }
+        
+        internal static string RoleChangeNotAllowed {
+            get {
+                return ResourceManager.GetString("RoleChangeNotAllowed", resourceCulture);
+            }
+        }
+        
+        internal static string RoleChangedSuccessfully {
+            get {
+                return ResourceManager.GetString("RoleChangedSuccessfully", resourceCulture);
+            }
+        }
+        
+        internal static string RoleChangeFailed {
+            get {
+                return ResourceManager.GetString("RoleChangeFailed", resourceCulture);
+            }
+        }
+        
+        internal static string ActorUserNotFound {
+            get {
+                return ResourceManager.GetString("ActorUserNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string TargetUserNotFound {
+            get {
+                return ResourceManager.GetString("TargetUserNotFound", resourceCulture);
+            }
+        }
     }
 }

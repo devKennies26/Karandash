@@ -162,4 +162,19 @@
     <data name="PasswordResetNotAllowed" xml:space="preserve">
         <value>Не удалось сбросить пароль. Пожалуйста, проверьте корректность ссылки и попробуйте снова.</value>
     </data>
+    <data name="RoleChangeNotAllowed" xml:space="preserve">
+        <value>Нет разрешения на изменение этой роли.</value>
+    </data>
+    <data name="RoleChangedSuccessfully" xml:space="preserve">
+        <value>Роль успешно изменена.</value>
+    </data>
+    <data name="RoleChangeFailed" xml:space="preserve">
+        <value>Не удалось изменить роль.</value>
+    </data>
+    <data name="ActorUserNotFound" xml:space="preserve">
+        <value>Пользователь-исполнитель не найден.</value>
+    </data>
+    <data name="TargetUserNotFound" xml:space="preserve">
+        <value>Целевой пользователь не найден.</value>
+    </data>
 </root>
