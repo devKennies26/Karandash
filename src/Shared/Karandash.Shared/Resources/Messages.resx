@@ -168,4 +168,7 @@
     <data name="InvalidTargetUserId" xml:space="preserve">
         <value />
     </data>
+    <data name="InvalidPassword" xml:space="preserve">
+        <value />
+    </data>
 </root>

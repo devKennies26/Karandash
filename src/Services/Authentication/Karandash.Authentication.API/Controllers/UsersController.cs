@@ -48,9 +48,11 @@ public class UsersController(UserService userService) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult>
-        DeactivateAccount() /* Burada 3 role'a görə ignore situasiyası servis based olunub, ona görə də bir də burada yoxlamağa gərək yoxdur! */
+        DeactivateAccount(
+            [FromBody] DeactivateAccountDto
+                deactivateAccountDto) /* Burada 3 role'a görə ignore situasiyası servis based olunub, ona görə də bir də burada yoxlamağa gərək yoxdur! */
     {
-        (bool result, string message) = await _userService.DeactivateAccountAsync();
+        (bool result, string message) = await _userService.DeactivateAccountAsync(deactivateAccountDto.Password);
 
         return !result
             ? StatusCode(StatusCodes.Status500InternalServerError, new { Message = message })
