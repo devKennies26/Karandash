@@ -338,5 +338,11 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("TargetUserNotFound", resourceCulture);
             }
         }
+        
+        internal static string InvalidTargetUserId {
+            get {
+                return ResourceManager.GetString("InvalidTargetUserId", resourceCulture);
+            }
+        }
     }
 }

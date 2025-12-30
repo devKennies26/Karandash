@@ -160,19 +160,19 @@ public class UserService(
                           .FirstOrDefaultAsync(u => u.Id == targetUserId)
                       ?? throw new UserFriendlyBusinessException("TargetUserNotFound");
 
-        bool isSelfService = actor.Id == target.Id;
-
         if (target.UserRole == newRole)
             return (true, MessageHelper.GetMessage("RoleChangedSuccessfully"));
-        
+
+        bool isSelfService = actor.Id == target.Id;
+
         if (!RoleChangePolicy.CanChangeRole(actor.UserRole, target.UserRole, newRole, isSelfService))
             throw new UserFriendlyBusinessException("RoleChangeNotAllowed");
 
         target.UserRole = newRole;
         target.UpdatedAt = DateTime.UtcNow;
 
-        target.IsVerified = newRole.IsSystemRole();
-        
+        target.IsVerified = newRole.IsSystemRole() || target.IsVerified;
+
         _dbContext.Users.Update(target);
         bool success = await _dbContext.SaveChangesAsync() > 0;
 

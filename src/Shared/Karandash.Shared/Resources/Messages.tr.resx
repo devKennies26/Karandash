@@ -177,4 +177,7 @@
     <data name="TargetUserNotFound" xml:space="preserve">
         <value>Hedef kullanıcı bulunamadı.</value>
     </data>
+    <data name="InvalidTargetUserId" xml:space="preserve">
+        <value>Kullanıcı kimliği geçersizdir.</value>
+    </data>
 </root>

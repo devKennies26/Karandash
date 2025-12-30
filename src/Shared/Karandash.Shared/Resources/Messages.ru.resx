@@ -177,4 +177,7 @@
     <data name="TargetUserNotFound" xml:space="preserve">
         <value>Целевой пользователь не найден.</value>
     </data>
+    <data name="InvalidTargetUserId" xml:space="preserve">
+        <value>Идентификатор пользователя недействителен.</value>
+    </data>
 </root>
