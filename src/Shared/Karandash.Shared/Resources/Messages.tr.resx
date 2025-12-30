@@ -183,4 +183,10 @@
     <data name="InvalidPassword" xml:space="preserve">
         <value>Girdiğiniz parola hatalıdır.</value>
     </data>
+    <data name="SystemRoleReactivationNotAllowed" xml:space="preserve">
+        <value>Bu rol için hesabın yeniden etkinleştirilmesine izin verilmemektedir. Lütfen sistem yöneticisi ile iletişime geçin.</value>
+    </data>
+    <data name="AccountAlreadyActive" xml:space="preserve">
+        <value>Bu hesap zaten aktiftir. Yeniden etkinleştirmenize gerek yoktur.</value>
+    </data>
 </root>

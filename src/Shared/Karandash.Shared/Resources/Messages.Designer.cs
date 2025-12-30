@@ -350,5 +350,17 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("InvalidPassword", resourceCulture);
             }
         }
+        
+        internal static string AccountAlreadyActive {
+            get {
+                return ResourceManager.GetString("AccountAlreadyActive", resourceCulture);
+            }
+        }
+        
+        internal static string SystemRoleReactivationNotAllowed {
+            get {
+                return ResourceManager.GetString("SystemRoleReactivationNotAllowed", resourceCulture);
+            }
+        }
     }
 }

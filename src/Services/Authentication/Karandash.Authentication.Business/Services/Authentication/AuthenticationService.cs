@@ -2,12 +2,14 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text.Json;
 using Karandash.Authentication.Business.DTOs.Auth;
+using Karandash.Authentication.Business.DTOs.Users;
 using Karandash.Authentication.Business.Exceptions;
 using Karandash.Authentication.Business.Services.Utils;
 using Karandash.Authentication.Core.Entities;
 using Karandash.Authentication.DataAccess.Contexts;
 using Karandash.Shared.Enums.Auth;
 using Karandash.Shared.Exceptions;
+using Karandash.Shared.Extensions.Role;
 using Karandash.Shared.Utils;
 using Karandash.Shared.Utils.Infrastructure;
 using Karandash.Shared.Utils.Methods;
@@ -35,8 +37,9 @@ public class AuthenticationService(
 
         switch (isAdminAction)
         {
-            case false when IsSystemSideRole(registerDto.UserRole):
+            case false when registerDto.UserRole.IsSystemRole():
                 return (false, MessageHelper.GetMessage("UserRoleAreNotAllowed"));
+
             case true when registerDto.UserRole == UserRole.Admin:
                 return (false, MessageHelper.GetMessage("AdminCannotBeRegistered"));
         }
@@ -223,8 +226,100 @@ public class AuthenticationService(
         await _dbContext.SaveChangesAsync();
     }
 
-    private static bool IsSystemSideRole(UserRole role) =>
-        role is UserRole.Admin or UserRole.Moderator or UserRole.ContentCreator;
+    public async Task<(bool result, string message)> DeactivateAccountAsync(string password)
+    {
+        User? user = await _dbContext.Users
+            .IgnoreQueryFilters()
+            .Include(u => u.PasswordToken)
+            .FirstOrDefaultAsync(u => u.Id == _currentUser.UserGuid);
+
+        if (user is null)
+            throw
+                new UserFriendlyBusinessException(
+                    "UserNotFoundForDeactivation");
+        if (user.IsDeleted)
+            throw new UserFriendlyBusinessException("AccountDeleted");
+
+        if (user.UserRole is UserRole.Admin or UserRole.Moderator or UserRole.ContentCreator)
+            throw new UserFriendlyBusinessException("SystemRoleDeactivationNotAllowed");
+
+        if (!_passwordHasher.Verify(password, user.PasswordHash, user.PasswordSalt))
+            throw new UserFriendlyBusinessException("InvalidPassword");
+
+        user.IsDeleted = true;
+        user.RemovedAt = DateTime.UtcNow;
+        user.UpdatedAt = DateTime.UtcNow;
+
+        user.RefreshToken = null;
+        user.RefreshTokenExpireDate = null;
+
+        if (user.PasswordToken is not null)
+        {
+            _dbContext.PasswordTokens.Remove(user.PasswordToken);
+            user.PasswordToken = null;
+        }
+
+        if (!(await _dbContext.SaveChangesAsync() > 0))
+            return (false, MessageHelper.GetMessage("AccountDeactivationFailed"));
+
+        _emailService.SendAccountDeactivationEmail(
+            user.Email,
+            $"{user.FirstName} {user.LastName}"
+        );
+        return (true, MessageHelper.GetMessage("AccountDeactivatedSuccessfully"));
+    }
+
+    public async Task<TokenResponseDto> ReactivateAccountAsync(ReactivateAccountDto reactivateAccountDto)
+    {
+        User? user = await _dbContext.Users
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(u => u.Email == reactivateAccountDto.Email);
+
+        if (user is null)
+            throw new UserFriendlyBusinessException("InvalidEmailOrPassword");
+
+        if (!user.IsDeleted)
+            throw new UserFriendlyBusinessException("AccountAlreadyActive");
+
+        if (user.UserRole.IsSystemRole())
+            throw new UserFriendlyBusinessException("SystemRoleReactivationNotAllowed");
+
+        if (!_passwordHasher.Verify(reactivateAccountDto.Password, user.PasswordHash, user.PasswordSalt))
+            throw new UserFriendlyBusinessException("InvalidEmailOrPassword");
+
+        user.IsDeleted = false;
+        user.RemovedAt = null;
+        user.UpdatedAt = DateTime.UtcNow;
+
+        string accessToken = _tokenHandler.GenerateAccessToken(user, expireMinutes: 60);
+        RefreshToken refreshToken =
+            _tokenHandler.GenerateRefreshToken(accessToken, minutes: 10080);
+
+        user.RefreshToken = refreshToken.TokenValue;
+        user.RefreshTokenExpireDate = refreshToken.ExpiresAt;
+
+        await _dbContext.SaveChangesAsync();
+
+        return new TokenResponseDto
+        {
+            UserId = user.Id.ToString(),
+            FullName = $"{user.FirstName} {user.LastName}",
+            RoleId = (byte)user.UserRole,
+            AccessToken = accessToken,
+            RefreshToken = refreshToken.TokenValue,
+            ExpiresDate = refreshToken.ExpiresAt
+        };
+    }
+
+    public void ValidatePassword(string password)
+    {
+        if (password.Length < 8 ||
+            password.Length > 64 ||
+            !password.Any(char.IsUpper) ||
+            !password.Any(char.IsNumber) ||
+            !password.Any(char.IsPunctuation))
+            throw new UserFriendlyBusinessException("PasswordInvalid");
+    }
 
     private async Task CheckEmailExistsAsync(string email)
     {
@@ -240,16 +335,6 @@ public class AuthenticationService(
             false => new UserFriendlyBusinessException("EmailAlreadyExists"),
             true => new UserFriendlyBusinessException("EmailBelongsToDeletedUser")
         };
-    }
-
-    public void ValidatePassword(string password)
-    {
-        if (password.Length < 8 ||
-            password.Length > 64 ||
-            !password.Any(char.IsUpper) ||
-            !password.Any(char.IsNumber) ||
-            !password.Any(char.IsPunctuation))
-            throw new UserFriendlyBusinessException("PasswordInvalid");
     }
 
     private async Task AddOutboxEventAsync(User user)

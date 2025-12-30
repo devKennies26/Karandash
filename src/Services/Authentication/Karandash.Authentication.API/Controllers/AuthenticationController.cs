@@ -1,4 +1,5 @@
 using Karandash.Authentication.Business.DTOs.Auth;
+using Karandash.Authentication.Business.DTOs.Users;
 using Karandash.Authentication.Business.Services.Authentication;
 using Karandash.Shared.Attributes;
 using Karandash.Shared.Enums.Auth;
@@ -9,7 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Karandash.Authentication.API.Controllers;
 
 [Route("api/[controller]/[action]"), ApiController]
-public class AuthenticationController(AuthenticationService authenticationService) : ControllerBase
+public class AuthenticationController(AuthenticationService authenticationService)
+    : ControllerBase
 {
     private readonly AuthenticationService _authenticationService = authenticationService;
 
@@ -107,4 +109,26 @@ public class AuthenticationController(AuthenticationService authenticationServic
             Message = MessageHelper.GetMessage("PasswordReset-Success")
         });
     }
+
+    [HttpPost]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult>
+        DeactivateAccount(
+            [FromBody] DeactivateAccountDto
+                deactivateAccountDto) /* Burada 3 role'a görə ignore situasiyası servis based olunub, ona görə də bir də burada yoxlamağa gərək yoxdur! */
+    {
+        (bool result, string message) =
+            await _authenticationService.DeactivateAccountAsync(deactivateAccountDto.Password);
+
+        return !result
+            ? StatusCode(StatusCodes.Status500InternalServerError, new { Message = message })
+            : Ok(new { Message = message });
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<IActionResult> ReactivateAccount([FromBody] ReactivateAccountDto reactivateAccountDto) => Ok(
+        await _authenticationService.ReactivateAccountAsync(reactivateAccountDto));
 }

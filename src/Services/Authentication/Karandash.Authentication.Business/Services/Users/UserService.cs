@@ -103,49 +103,6 @@ public class UserService(
             : (false, MessageHelper.GetMessage("PasswordChangeFailed"));
     }
 
-    public async Task<(bool result, string message)> DeactivateAccountAsync(string password)
-    {
-        User? user = await _dbContext.Users
-            .IgnoreQueryFilters()
-            .Include(u => u.PasswordToken)
-            .FirstOrDefaultAsync(u => u.Id == _currentUser.UserGuid);
-
-        if (user is null)
-            throw
-                new UserFriendlyBusinessException(
-                    "UserNotFoundForDeactivation");
-        if (user.IsDeleted)
-            throw new UserFriendlyBusinessException("AccountDeleted");
-
-        if (user.UserRole is UserRole.Admin or UserRole.Moderator or UserRole.ContentCreator)
-            throw new UserFriendlyBusinessException("SystemRoleDeactivationNotAllowed");
-
-        if (!_passwordHasher.Verify(password, user.PasswordHash, user.PasswordSalt))
-            throw new UserFriendlyBusinessException("InvalidPassword");
-
-        user.IsDeleted = true;
-        user.RemovedAt = DateTime.UtcNow;
-        user.UpdatedAt = DateTime.UtcNow;
-
-        user.RefreshToken = null;
-        user.RefreshTokenExpireDate = null;
-
-        if (user.PasswordToken is not null)
-        {
-            _dbContext.PasswordTokens.Remove(user.PasswordToken);
-            user.PasswordToken = null;
-        }
-
-        if (!(await _dbContext.SaveChangesAsync() > 0))
-            return (false, MessageHelper.GetMessage("AccountDeactivationFailed"));
-
-        _emailService.SendAccountDeactivationEmail(
-            user.Email,
-            $"{user.FirstName} {user.LastName}"
-        );
-        return (true, MessageHelper.GetMessage("AccountDeactivatedSuccessfully"));
-    }
-
     public async Task<(bool result, string message)> ChangeUserRoleAsync(
         Guid targetUserId,
         UserRole newRole)
@@ -183,13 +140,6 @@ public class UserService(
         return (success, message);
     }
 
-    private static readonly UserRole[] SystemRoles =
-    [
-        UserRole.Admin,
-        UserRole.Moderator,
-        UserRole.ContentCreator
-    ];
-
     private IQueryable<User> ApplyFilters(IQueryable<User> query, GetAllUsersFilterDto filter)
     {
         if (!string.IsNullOrWhiteSpace(filter.FullName))
@@ -212,4 +162,11 @@ public class UserService(
 
         return query;
     }
+    
+    private static readonly UserRole[] SystemRoles =
+    [
+        UserRole.Admin,
+        UserRole.Moderator,
+        UserRole.ContentCreator
+    ];
 }

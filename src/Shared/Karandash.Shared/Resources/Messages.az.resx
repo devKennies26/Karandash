@@ -176,4 +176,10 @@
     <data name="InvalidPassword" xml:space="preserve">
         <value>Daxil etdiyiniz parol yanlışdır.</value>
     </data>
+    <data name="AccountAlreadyActive" xml:space="preserve">
+        <value>Bu hesab artıq aktivdir. Yenidən aktiv etməyə ehtiyac yoxdur.</value>
+    </data>
+    <data name="SystemRoleReactivationNotAllowed" xml:space="preserve">
+        <value>Bu rol üçün hesabın yenidən aktiv edilməsi icazəli deyil. Zəhmət olmasa sistem administratoru ilə əlaqə saxlayın.</value>
+    </data>
 </root>
