@@ -183,4 +183,10 @@
     <data name="InvalidPassword" xml:space="preserve">
         <value>The password you entered is incorrect.</value>
     </data>
+    <data name="AccountAlreadyActive" xml:space="preserve">
+        <value>This account is already active. Reactivation is not required.</value>
+    </data>
+    <data name="SystemRoleReactivationNotAllowed" xml:space="preserve">
+        <value>Reactivation is not allowed for this role. Please contact the system administrator.</value>
+    </data>
 </root>

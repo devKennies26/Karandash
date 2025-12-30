@@ -183,4 +183,10 @@
     <data name="InvalidPassword" xml:space="preserve">
         <value>Введённый пароль неверен.</value>
     </data>
+    <data name="AccountAlreadyActive" xml:space="preserve">
+        <value>Этот аккаунт уже активен. Повторная активация не требуется.</value>
+    </data>
+    <data name="SystemRoleReactivationNotAllowed" xml:space="preserve">
+        <value>Повторная активация аккаунта с данной ролью запрещена. Пожалуйста, обратитесь к системному администратору.</value>
+    </data>
 </root>
