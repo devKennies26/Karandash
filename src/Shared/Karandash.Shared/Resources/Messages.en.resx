@@ -177,4 +177,7 @@
     <data name="TargetUserNotFound" xml:space="preserve">
         <value>Target user not found.</value>
     </data>
+    <data name="InvalidTargetUserId" xml:space="preserve">
+        <value>The user identifier is invalid.</value>
+    </data>
 </root>

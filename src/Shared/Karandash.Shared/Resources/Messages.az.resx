@@ -170,4 +170,7 @@
     <data name="TargetUserNotFound" xml:space="preserve">
         <value>Hədəf istifadəçi tapılmadı.</value>
     </data>
+    <data name="InvalidTargetUserId" xml:space="preserve">
+        <value>İstifadəçi identifikatoru etibarsızdır.</value>
+    </data>
 </root>
