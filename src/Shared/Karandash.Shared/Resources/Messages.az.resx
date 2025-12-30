@@ -173,4 +173,7 @@
     <data name="InvalidTargetUserId" xml:space="preserve">
         <value>İstifadəçi identifikatoru etibarsızdır.</value>
     </data>
+    <data name="InvalidPassword" xml:space="preserve">
+        <value>Daxil etdiyiniz parol yanlışdır.</value>
+    </data>
 </root>

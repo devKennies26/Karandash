@@ -103,11 +103,12 @@ public class UserService(
             : (false, MessageHelper.GetMessage("PasswordChangeFailed"));
     }
 
-    public async Task<(bool result, string message)> DeactivateAccountAsync()
+    public async Task<(bool result, string message)> DeactivateAccountAsync(string password)
     {
         User? user = await _dbContext.Users
             .IgnoreQueryFilters()
-            .Where(u => u.Id == _currentUser.UserGuid).Include(user => user.PasswordToken).FirstOrDefaultAsync();
+            .Include(u => u.PasswordToken)
+            .FirstOrDefaultAsync(u => u.Id == _currentUser.UserGuid);
 
         if (user is null)
             throw
@@ -119,9 +120,13 @@ public class UserService(
         if (user.UserRole is UserRole.Admin or UserRole.Moderator or UserRole.ContentCreator)
             throw new UserFriendlyBusinessException("SystemRoleDeactivationNotAllowed");
 
-        user.IsDeleted = true;
+        if (!_passwordHasher.Verify(password, user.PasswordHash, user.PasswordSalt))
+            throw new UserFriendlyBusinessException("InvalidPassword");
 
-        /* NOTE: İstifadəçi deaktiv olandan sonra artıq refresh token dəyərindən istifadə edə bilməyəcək. */
+        user.IsDeleted = true;
+        user.RemovedAt = DateTime.UtcNow;
+        user.UpdatedAt = DateTime.UtcNow;
+
         user.RefreshToken = null;
         user.RefreshTokenExpireDate = null;
 
@@ -131,13 +136,8 @@ public class UserService(
             user.PasswordToken = null;
         }
 
-        user.UpdatedAt = DateTime.UtcNow;
-        user.RemovedAt = DateTime.UtcNow;
-
-        _dbContext.Users.Update(user);
-        bool success = await _dbContext.SaveChangesAsync() > 0;
-
-        if (!success) return (false, MessageHelper.GetMessage("AccountDeactivationFailed"));
+        if (!(await _dbContext.SaveChangesAsync() > 0))
+            return (false, MessageHelper.GetMessage("AccountDeactivationFailed"));
 
         _emailService.SendAccountDeactivationEmail(
             user.Email,

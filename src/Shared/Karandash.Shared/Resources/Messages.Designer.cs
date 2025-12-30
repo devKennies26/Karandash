@@ -344,5 +344,11 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("InvalidTargetUserId", resourceCulture);
             }
         }
+        
+        internal static string InvalidPassword {
+            get {
+                return ResourceManager.GetString("InvalidPassword", resourceCulture);
+            }
+        }
     }
 }

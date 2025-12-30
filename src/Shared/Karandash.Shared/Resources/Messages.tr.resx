@@ -180,4 +180,7 @@
     <data name="InvalidTargetUserId" xml:space="preserve">
         <value>Kullanıcı kimliği geçersizdir.</value>
     </data>
+    <data name="InvalidPassword" xml:space="preserve">
+        <value>Girdiğiniz parola hatalıdır.</value>
+    </data>
 </root>
