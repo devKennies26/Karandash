@@ -30,7 +30,7 @@ public class User : BaseEntity, ISoftDeletable
     public string? RefreshToken { get; set; }
     public DateTime? RefreshTokenExpireDate { get; set; }
 
-    public PasswordToken? PasswordToken { get; set; }
+    public UserToken? UserToken { get; set; }
 
     public bool IsDeleted { get; set; }
 }

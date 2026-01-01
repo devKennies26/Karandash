@@ -6,6 +6,7 @@ using Karandash.Authentication.Business.DTOs.Users;
 using Karandash.Authentication.Business.Exceptions;
 using Karandash.Authentication.Business.Services.Utils;
 using Karandash.Authentication.Core.Entities;
+using Karandash.Authentication.Core.Enums;
 using Karandash.Authentication.DataAccess.Contexts;
 using Karandash.Shared.Enums.Auth;
 using Karandash.Shared.Exceptions;
@@ -162,32 +163,34 @@ public class AuthenticationService(
         if (user.IsDeleted)
             throw new UserFriendlyBusinessException("AccountDeleted");
 
-        PasswordToken? passwordToken =
-            await _dbContext.PasswordTokens.FirstOrDefaultAsync(pt => pt.UserId == user.Id);
+        UserToken? userToken =
+            await _dbContext.UserTokens.FirstOrDefaultAsync(ut =>
+                ut.UserId == user.Id && ut.TokenType == TokenType.PasswordReset);
 
         DateTime expiresDate = DateTime.UtcNow.AddHours(1);
         string token = _tokenHandler.GeneratePasswordResetToken(user, expiresDate);
 
-        if (passwordToken is null)
+        if (userToken is null)
         {
-            passwordToken = new PasswordToken
+            userToken = new UserToken()
             {
                 UserId = user.Id,
+                InsertedAt = DateTime.UtcNow,
+                UpdatedAt = null, /* NOTE: ilk dəfə şifrəni dəyişmək istədikdə update at dəyəri null olmalıdır! */
                 Value = token,
                 ExpiresDate = expiresDate,
-                InsertedAt = DateTime.UtcNow,
-                UpdatedAt = null /* NOTE: ilk dəfə şifrəni dəyişmək istədikdə update at dəyəri null olmalıdır! */
+                TokenType = TokenType.PasswordReset
             };
 
-            await _dbContext.PasswordTokens.AddAsync(passwordToken);
+            await _dbContext.UserTokens.AddAsync(userToken);
         }
         else
         {
-            passwordToken.Value = token;
-            passwordToken.ExpiresDate = expiresDate;
-            passwordToken.UpdatedAt = DateTime.UtcNow;
+            userToken.Value = token;
+            userToken.ExpiresDate = expiresDate;
+            userToken.UpdatedAt = DateTime.UtcNow;
 
-            _dbContext.PasswordTokens.Update(passwordToken);
+            _dbContext.UserTokens.Update(userToken);
         }
 
         user.UpdatedAt = DateTime.UtcNow;
@@ -211,10 +214,10 @@ public class AuthenticationService(
         if (user is null || user.IsDeleted)
             throw new UserFriendlyBusinessException("PasswordResetNotAllowed");
 
-        PasswordToken? passwordToken = await _dbContext.PasswordTokens.FirstOrDefaultAsync(pt =>
-                                           pt.Value == passwordResetDto.Token && pt.UserId == user.Id &&
-                                           pt.ExpiresDate >= DateTime.UtcNow)
-                                       ?? throw new UserFriendlyBusinessException("PasswordResetNotAllowed");
+        UserToken? userToken = await _dbContext.UserTokens.FirstOrDefaultAsync(ut =>
+                                   ut.Value == passwordResetDto.Token && ut.UserId == user.Id &&
+                                   ut.TokenType == TokenType.PasswordReset && ut.ExpiresDate >= DateTime.UtcNow)
+                               ?? throw new UserFriendlyBusinessException("PasswordResetNotAllowed");
 
         byte[] salt = _passwordHasher.GenerateSalt();
 
@@ -222,7 +225,7 @@ public class AuthenticationService(
         user.PasswordSalt = salt;
         user.UpdatedAt = DateTime.UtcNow;
 
-        _dbContext.PasswordTokens.Remove(passwordToken);
+        _dbContext.UserTokens.Remove(userToken);
         await _dbContext.SaveChangesAsync();
     }
 
@@ -230,7 +233,7 @@ public class AuthenticationService(
     {
         User? user = await _dbContext.Users
             .IgnoreQueryFilters()
-            .Include(u => u.PasswordToken)
+            .Include(u => u.UserToken)
             .FirstOrDefaultAsync(u => u.Id == _currentUser.UserGuid);
 
         if (user is null)
@@ -253,10 +256,10 @@ public class AuthenticationService(
         user.RefreshToken = null;
         user.RefreshTokenExpireDate = null;
 
-        if (user.PasswordToken is not null)
+        if (user.UserToken is not null)
         {
-            _dbContext.PasswordTokens.Remove(user.PasswordToken);
-            user.PasswordToken = null;
+            _dbContext.UserTokens.Remove(user.UserToken);
+            user.UserToken = null;
         }
 
         if (!(await _dbContext.SaveChangesAsync() > 0))

@@ -5,7 +5,6 @@ using Karandash.Authentication.Core.Entities;
 using Karandash.Authentication.DataAccess.Contexts;
 using Karandash.Shared.Enums.Auth;
 using Karandash.Shared.Exceptions;
-using Karandash.Shared.Extensions.Role;
 using Karandash.Shared.Filters.Pagination;
 using Karandash.Shared.Policies.Role;
 using Karandash.Shared.Utils;
@@ -127,8 +126,6 @@ public class UserService(
 
         target.UserRole = newRole;
         target.UpdatedAt = DateTime.UtcNow;
-
-        target.IsVerified = newRole.IsSystemRole() || target.IsVerified;
 
         _dbContext.Users.Update(target);
         bool success = await _dbContext.SaveChangesAsync() > 0;
