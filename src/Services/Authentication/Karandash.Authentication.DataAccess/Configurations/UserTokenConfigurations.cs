@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Karandash.Authentication.DataAccess.Configurations;
 
-public class PasswordTokenConfigurations : IEntityTypeConfiguration<PasswordToken>
+public class UserTokenConfigurations : IEntityTypeConfiguration<UserToken>
 {
-    public void Configure(EntityTypeBuilder<PasswordToken> builder)
+    public void Configure(EntityTypeBuilder<UserToken> builder)
     {
-        builder.ToTable("PasswordTokens");
+        builder.ToTable("UserTokens");
 
         builder.HasKey(pt => pt.Id);
 
@@ -20,8 +20,8 @@ public class PasswordTokenConfigurations : IEntityTypeConfiguration<PasswordToke
             .IsRequired();
 
         builder.HasOne(pt => pt.User)
-            .WithOne(u => u.PasswordToken)
-            .HasForeignKey<PasswordToken>(pt => pt.UserId)
+            .WithOne(u => u.UserToken)
+            .HasForeignKey<UserToken>(pt => pt.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

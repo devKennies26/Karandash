@@ -4,6 +4,7 @@ using Karandash.Authentication.DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Karandash.Authentication.DataAccess.Migrations
 {
     [DbContext(typeof(AuthenticationDbContext))]
-    partial class AuthenticationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260101085944_UserTokenEntityWasModified")]
+    partial class UserTokenEntityWasModified
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,7 +100,7 @@ namespace Karandash.Authentication.DataAccess.Migrations
                             Id = new Guid("88b608c2-94a6-4c7d-9d55-b128018cab4e"),
                             Email = "info.karandashmmc@gmail.com",
                             FirstName = "System",
-                            InsertedAt = new DateTime(2026, 1, 1, 9, 8, 24, 244, DateTimeKind.Utc).AddTicks(4792),
+                            InsertedAt = new DateTime(2026, 1, 1, 8, 59, 43, 832, DateTimeKind.Utc).AddTicks(8979),
                             IsDeleted = false,
                             IsVerified = true,
                             LastName = "Administrator",
@@ -138,7 +141,7 @@ namespace Karandash.Authentication.DataAccess.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("UserTokens", (string)null);
+                    b.ToTable("PasswordTokens", (string)null);
                 });
 
             modelBuilder.Entity("Karandash.Shared.Utils.Infrastructure.OutboxEvent", b =>
@@ -177,7 +180,7 @@ namespace Karandash.Authentication.DataAccess.Migrations
             modelBuilder.Entity("Karandash.Authentication.Core.Entities.UserToken", b =>
                 {
                     b.HasOne("Karandash.Authentication.Core.Entities.User", "User")
-                        .WithOne("UserToken")
+                        .WithOne("PasswordToken")
                         .HasForeignKey("Karandash.Authentication.Core.Entities.UserToken", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -187,7 +190,7 @@ namespace Karandash.Authentication.DataAccess.Migrations
 
             modelBuilder.Entity("Karandash.Authentication.Core.Entities.User", b =>
                 {
-                    b.Navigation("UserToken");
+                    b.Navigation("PasswordToken");
                 });
 #pragma warning restore 612, 618
         }

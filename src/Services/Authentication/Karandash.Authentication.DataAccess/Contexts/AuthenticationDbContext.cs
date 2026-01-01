@@ -9,7 +9,7 @@ public class AuthenticationDbContext(DbContextOptions options) : DbContext(optio
     public DbSet<OutboxEvent> OutboxEvents { get; set; }
 
     public DbSet<User> Users { get; set; }
-    public DbSet<PasswordToken> PasswordTokens { get; set; }
+    public DbSet<UserToken> UserTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
