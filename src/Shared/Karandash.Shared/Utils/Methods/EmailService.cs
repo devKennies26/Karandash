@@ -32,6 +32,12 @@ public class EmailService(IOptions<SmtpSettings> smtpSettings, EmailTemplate ema
         SendEmail(toEmail, emailMessage);
     }
 
+    public void SendEmailVerificationEmail(string toEmail, string fullName, string token)
+    {
+        EmailMessageDto emailMessage = _emailTemplate.EmailVerification(fullName, token);
+        SendEmail(toEmail, emailMessage);
+    }
+
     public void SendAccountDeactivationEmail(string toEmail, string fullName)
     {
         EmailMessageDto emailMessage = _emailTemplate.AccountDeactivated(fullName);

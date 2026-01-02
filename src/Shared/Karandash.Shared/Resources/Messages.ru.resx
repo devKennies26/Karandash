@@ -189,4 +189,22 @@
     <data name="SystemRoleReactivationNotAllowed" xml:space="preserve">
         <value>Повторная активация аккаунта с данной ролью запрещена. Пожалуйста, обратитесь к системному администратору.</value>
     </data>
+    <data name="Unauthorized" xml:space="preserve">
+        <value>Пожалуйста, убедитесь, что вы правильно вошли в систему, чтобы продолжить. Затем повторите действие.</value>
+    </data>
+    <data name="EmailAlreadyVerified" xml:space="preserve">
+        <value>Этот адрес электронной почты уже подтверждён.</value>
+    </data>
+    <data name="SessionExpiredRetryAction" xml:space="preserve">
+        <value>Ваша сессия истекла. Пожалуйста, повторите действие.</value>
+    </data>
+    <data name="EmailVerificationNotAllowed" xml:space="preserve">
+        <value>Не удалось подтвердить адрес электронной почты. Пожалуйста, проверьте, что ссылка действительна, и попробуйте снова.</value>
+    </data>
+    <data name="EmailVerification-EmailMessage" xml:space="preserve">
+        <value>Запрос принят. Пожалуйста, проверьте вашу электронную почту, чтобы подтвердить адрес.</value>
+    </data>
+    <data name="EmailVerification-Success" xml:space="preserve">
+        <value>Ваш адрес электронной почты успешно подтверждён.</value>
+    </data>
 </root>

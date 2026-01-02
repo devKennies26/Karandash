@@ -189,4 +189,22 @@
     <data name="SystemRoleReactivationNotAllowed" xml:space="preserve">
         <value>Reactivation is not allowed for this role. Please contact the system administrator.</value>
     </data>
+    <data name="Unauthorized" xml:space="preserve">
+        <value>Please make sure you are logged in correctly to continue. Then try the operation again.</value>
+    </data>
+    <data name="EmailAlreadyVerified" xml:space="preserve">
+        <value>This email address has already been verified.</value>
+    </data>
+    <data name="SessionExpiredRetryAction" xml:space="preserve">
+        <value>Your session has expired. Please try the action again.</value>
+    </data>
+    <data name="EmailVerificationNotAllowed" xml:space="preserve">
+        <value>Email verification could not be completed. Please check that your link is valid and try again.</value>
+    </data>
+    <data name="EmailVerification-EmailMessage" xml:space="preserve">
+        <value>Request received. Please check your email to verify your address.</value>
+    </data>
+    <data name="EmailVerification-Success" xml:space="preserve">
+        <value>Your email address has been successfully verified.</value>
+    </data>
 </root>

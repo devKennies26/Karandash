@@ -59,6 +59,30 @@ public class TokenHandler(IConfiguration configuration, PasswordHasher passwordH
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
+    public string GenerateEmailVerificationToken(User user, DateTime expiresDate)
+    {
+        List<Claim> claims =
+        [
+            new Claim(ClaimTypes.Sid, user.Id.ToString()),
+            new Claim(ClaimTypes.Email, user.Email)
+        ];
+
+        SymmetricSecurityKey securityKey = new(
+            Encoding.UTF8.GetBytes(_configuration["Jwt:SigningKey"]!));
+
+        SigningCredentials credentials = new(securityKey, SecurityAlgorithms.HmacSha256);
+
+        JwtSecurityToken token = new JwtSecurityToken(
+            issuer: _configuration["Jwt:Issuer"],
+            audience: _configuration["Jwt:Audience"],
+            claims: claims,
+            notBefore: DateTime.UtcNow,
+            expires: expiresDate,
+            signingCredentials: credentials);
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
     public RefreshToken GenerateRefreshToken(string accessToken, int minutes)
     {
         return new RefreshToken()
