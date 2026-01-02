@@ -177,4 +177,25 @@
     <data name="SystemRoleReactivationNotAllowed" xml:space="preserve">
         <value />
     </data>
+    <data name="UserNotFound" xml:space="preserve">
+        <value />
+    </data>
+    <data name="Unauthorized" xml:space="preserve">
+        <value />
+    </data>
+    <data name="EmailAlreadyVerified" xml:space="preserve">
+        <value />
+    </data>
+    <data name="SessionExpiredRetryAction" xml:space="preserve">
+        <value />
+    </data>
+    <data name="EmailVerificationNotAllowed" xml:space="preserve">
+        <value />
+    </data>
+    <data name="EmailVerification-EmailMessage" xml:space="preserve">
+        <value />
+    </data>
+    <data name="EmailVerification-Success" xml:space="preserve">
+        <value />
+    </data>
 </root>

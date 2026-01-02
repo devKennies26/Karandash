@@ -189,4 +189,22 @@
     <data name="AccountAlreadyActive" xml:space="preserve">
         <value>Bu hesap zaten aktiftir. Yeniden etkinleştirmenize gerek yoktur.</value>
     </data>
+    <data name="Unauthorized" xml:space="preserve">
+        <value>Devam edebilmek için hesabınıza doğru şekilde giriş yaptığınızdan emin olun. Daha sonra işlemi tekrar deneyin.</value>
+    </data>
+    <data name="EmailAlreadyVerified" xml:space="preserve">
+        <value>Bu e-posta adresi zaten doğrulanmış.</value>
+    </data>
+    <data name="SessionExpiredRetryAction" xml:space="preserve">
+        <value>Oturumunuzun süresi doldu. Lütfen işlemi tekrar deneyin.</value>
+    </data>
+    <data name="EmailVerificationNotAllowed" xml:space="preserve">
+        <value>E-posta doğrulaması gerçekleştirilemedi. Lütfen bağlantınızın geçerli olduğundan emin olun ve tekrar deneyin.</value>
+    </data>
+    <data name="EmailVerification-EmailMessage" xml:space="preserve">
+        <value>Talep alındı. Lütfen e-postanızı kontrol ederek adresinizi doğrulayın.</value>
+    </data>
+    <data name="EmailVerification-Success" xml:space="preserve">
+        <value>E-posta adresiniz başarıyla doğrulandı.</value>
+    </data>
 </root>

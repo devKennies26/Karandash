@@ -3,6 +3,7 @@ using Karandash.Authentication.Business.Services.Users;
 using Karandash.Shared.Attributes;
 using Karandash.Shared.Enums.Auth;
 using Karandash.Shared.Filters.Pagination;
+using Karandash.Shared.Utils.Methods;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -55,5 +56,32 @@ public class UsersController(UserService userService) : ControllerBase
         return !result
             ? StatusCode(StatusCodes.Status500InternalServerError, new { Message = message })
             : Ok(new { Message = message });
+    }
+
+    /// <summary>
+    /// Generates and sends email verification token to current user.
+    /// </summary>
+    [HttpPost("send-email-verification")]
+    public async Task<IActionResult> SendEmailVerificationToken()
+    {
+        await _userService.GenerateAndSendEmailVerificationTokenAsync();
+        return Accepted(new
+        {
+            Message = MessageHelper.GetMessage("EmailVerification-EmailMessage")
+        });
+    }
+
+    /// <summary>
+    /// Confirms email verification using the token from email link.
+    /// </summary>
+    /// <param name="token">Token from verification email link</param>
+    [HttpPost("confirm-email-verification")]
+    public async Task<IActionResult> ConfirmEmailVerification([FromQuery] string token)
+    {
+        await _userService.ConfirmEmailVerificationAsync(token);
+        return Ok(new
+        {
+            Message = MessageHelper.GetMessage("EmailVerification-Success")
+        });
     }
 }

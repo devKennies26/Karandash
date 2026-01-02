@@ -386,5 +386,41 @@ namespace Karandash.Shared.Resources {
                 return ResourceManager.GetString("SystemRoleReactivationNotAllowed", resourceCulture);
             }
         }
+        
+        internal static string Unauthorized {
+            get {
+                return ResourceManager.GetString("Unauthorized", resourceCulture);
+            }
+        }
+        
+        internal static string EmailAlreadyVerified {
+            get {
+                return ResourceManager.GetString("EmailAlreadyVerified", resourceCulture);
+            }
+        }
+        
+        internal static string SessionExpiredRetryAction {
+            get {
+                return ResourceManager.GetString("SessionExpiredRetryAction", resourceCulture);
+            }
+        }
+        
+        internal static string EmailVerificationNotAllowed {
+            get {
+                return ResourceManager.GetString("EmailVerificationNotAllowed", resourceCulture);
+            }
+        }
+        
+        internal static string EmailVerification_EmailMessage {
+            get {
+                return ResourceManager.GetString("EmailVerification-EmailMessage", resourceCulture);
+            }
+        }
+        
+        internal static string EmailVerification_Success {
+            get {
+                return ResourceManager.GetString("EmailVerification-Success", resourceCulture);
+            }
+        }
     }
 }

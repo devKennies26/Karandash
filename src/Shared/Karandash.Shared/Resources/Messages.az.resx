@@ -182,4 +182,22 @@
     <data name="SystemRoleReactivationNotAllowed" xml:space="preserve">
         <value>Bu rol üçün hesabın yenidən aktiv edilməsi icazəli deyil. Zəhmət olmasa sistem administratoru ilə əlaqə saxlayın.</value>
     </data>
+    <data name="Unauthorized" xml:space="preserve">
+        <value>Sistemdə işləməyi davam etdirmək üçün hesabınıza düzgün daxil olduğunuzdan əmin olun. Daha sonra əməliyyatı təkrar edin.</value>
+    </data>
+    <data name="EmailAlreadyVerified" xml:space="preserve">
+        <value>Bu e-poçt ünvanı artıq təsdiqlənib.</value>
+    </data>
+    <data name="SessionExpiredRetryAction" xml:space="preserve">
+        <value>Sessiyanızın müddəti bitib. Zəhmət olmasa, əməliyyatı yenidən icra edin.</value>
+    </data>
+    <data name="EmailVerificationNotAllowed" xml:space="preserve">
+        <value>E-poçtunuzu təsdiqləmək mümkün olmadı. Zəhmət olmasa linkin etibarlı olduğunu yoxlayın və yenidən cəhd edin.</value>
+    </data>
+    <data name="EmailVerification-EmailMessage" xml:space="preserve">
+        <value>Sorğu qəbul edildi. Zəhmət olmasa e-poçtunuzu təsdiqləmək üçün maili yoxlayın.</value>
+    </data>
+    <data name="EmailVerification-Success" xml:space="preserve">
+        <value>E-poçt ünvanınız uğurla təsdiqləndi.</value>
+    </data>
 </root>

@@ -57,7 +57,7 @@ public class EmailTemplate(IConfiguration configuration, ICurrentUser currentUse
                 break;
         }
 
-        string actionUrl = _configuration["Urls:RegisterCompleted"];
+        string? actionUrl = _configuration["Urls:RegisterCompleted"];
 
         string content = $@"
         <html>
@@ -80,7 +80,7 @@ public class EmailTemplate(IConfiguration configuration, ICurrentUser currentUse
                                     </p>
                                     <p style='font-size: 16px; color: #333;'>{callToAction}</p>
                                     <div style='text-align: center; margin: 30px 0;'>
-                                        <a href='{actionUrl}'
+                                        <a href='{actionUrl!}'
                                            style='background-color: #4CAF50; color: #fff; padding: 12px 25px;
                                                   font-size: 16px; text-decoration: none; border-radius: 6px;
                                                   display: inline-block; font-weight: bold;'>
@@ -159,8 +159,8 @@ public class EmailTemplate(IConfiguration configuration, ICurrentUser currentUse
                 break;
         }
 
-        string baseUrl = _configuration["Urls:PasswordReset"];
-        string actionUrl = $"{baseUrl}?token={token}";
+        string? baseUrl = _configuration["Urls:PasswordReset"];
+        string actionUrl = $"{baseUrl!}?token={token}";
 
         string content = $@"
     <html>
@@ -200,6 +200,108 @@ public class EmailTemplate(IConfiguration configuration, ICurrentUser currentUse
         </table>
     </body>
     </html>";
+
+        return new EmailMessageDto
+        {
+            Subject = subject,
+            Content = content
+        };
+    }
+
+    public EmailMessageDto EmailVerification(string fullName, string token)
+    {
+        LanguageCode lang = _currentUser.LanguageCode;
+
+        string title, subject, greeting, callToAction, buttonText, followUs, signature;
+
+        switch (lang)
+        {
+            case LanguageCode.En:
+                title = "Verify Your Email Address";
+                subject = "Email Verification";
+                greeting = $"Hello, {fullName},";
+                callToAction = "Click the button below to verify your email address. The link will expire in 24 hours.";
+                buttonText = "Verify Email";
+                followUs = "If you did not create an account, please ignore this email.";
+                signature = "Best regards,<br/><b>The Karandash Team</b>";
+                break;
+
+            case LanguageCode.Ru:
+                title = "Подтвердите свой адрес электронной почты";
+                subject = "Проверка электронной почты";
+                greeting = $"Здравствуйте, {fullName},";
+                callToAction =
+                    "Нажмите кнопку ниже, чтобы подтвердить свой адрес электронной почты. Ссылка действительна 24 часа.";
+                buttonText = "Подтвердить email";
+                followUs = "Если вы не создавали аккаунт, просто игнорируйте это письмо.";
+                signature = "С уважением,<br/><b>Команда Karandash</b>";
+                break;
+
+            case LanguageCode.Tr:
+                title = "E-posta Adresinizi Doğrulayın";
+                subject = "E-posta Doğrulama";
+                greeting = $"Merhaba, {fullName},";
+                callToAction =
+                    "E-posta adresinizi doğrulamak için aşağıdaki butona tıklayın. Link 24 saat geçerli olacaktır.";
+                buttonText = "E-postayı Doğrula";
+                followUs = "Hesap oluşturmadıysanız, lütfen bu e-postayı görmezden gelin.";
+                signature = "Saygılarımızla,<br/><b>Karandash Ekibi</b>";
+                break;
+
+            case LanguageCode.Az:
+            default:
+                title = "E-poçtunuzu təsdiqləyin";
+                subject = "E-poçt Təsdiqi";
+                greeting = $"Salam, {fullName},";
+                callToAction =
+                    "E-poçtunuzu təsdiqləmək üçün aşağıdakı düyməyə klikləyin. Keçid 24 saat ərzində etibarlıdır.";
+                buttonText = "E-poçtu Təsdiqlə";
+                followUs = "Əgər hesab yaratmamısınızsa, bu məktubu nəzərə almayın.";
+                signature = "Hörmətlə,<br/><b>Karandash Komandası</b>";
+                break;
+        }
+
+        string? baseUrl = _configuration["Urls:EmailVerification"];
+        string actionUrl = $"{baseUrl!}?token={token}";
+
+        string content = $@"
+<html>
+<body style='font-family: Arial, sans-serif; background-color: #f7f7f7; margin: 0; padding: 0;'>
+    <table width='100%' cellspacing='0' cellpadding='0' style='background-color: #f7f7f7; padding: 20px 0;'>
+        <tr>
+            <td align='center'>
+                <table width='600' cellpadding='20' cellspacing='0' 
+                       style='background-color: #ffffff; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);'>
+                    <tr>
+                        <td align='center' style='padding-bottom: 0;'>
+                            <h1 style='color: #4CAF50; margin: 0;'>{title}</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p style='font-size: 16px; color: #333;'>{greeting}</p>
+                            <p style='font-size: 16px; color: #333;'>{callToAction}</p>
+                            <div style='text-align: center; margin: 30px 0;'>
+                                <a href='{actionUrl}'
+                                   style='background-color: #4CAF50; color: #fff; padding: 12px 25px;
+                                          font-size: 16px; text-decoration: none; border-radius: 6px;
+                                          display: inline-block; font-weight: bold;'>
+                                   {buttonText}
+                                </a>
+                            </div>
+                            <hr style='border: none; border-top: 1px solid #eee; margin: 30px 0;'/>
+                            <p style='font-size: 14px; color: #777;'>{followUs}</p>
+                            <p style='font-size: 14px; color: #777; margin-top: 20px;'>
+                                {signature}
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>";
 
         return new EmailMessageDto
         {
